@@ -8,23 +8,22 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 <section class="sp-section">
 	<div class="sp-wrap sp-founders">
 		<div class="sp-founders__text">
-			<span class="sp-badge sp-badge--accent">فقط ۵۰ نفر</span>
+			<p class="sp-script">فقط ۵۰ نفر</p>
 			<h1 class="sp-h1">عضو بنیان‌گذار سودپز شو</h1>
 			<p class="sp-lead">سالانه <b>۳۹۰ هزار تومان</b>، و این قیمت برای تو هیچ‌وقت بالا نمی‌ره. قیمت عادی پرو سالانه ۶۹۰ هزار تومانه.</p>
 			<?php if ( '' !== $sp_s['founders_left'] ) : ?>
 				<p class="sp-note"><?php echo esc_html( sp_fa( $sp_s['founders_left'] ) ); ?> جا از ۵۰ تا مونده.</p>
 			<?php endif; ?>
 
-			<h2 class="sp-h3">چی می‌گیری</h2>
-			<ul class="sp-checks">
-				<li>سودپز پرو کامل، قبل از همه</li>
-				<li>دستورهات رو خودمون برات وارد می‌کنیم (برای ۳۰ نفر اول)</li>
-				<li>گروه بنیان‌گذارها: هر ویژگی‌ای که لازم داری رو بگو، اول برای شما ساخته می‌شه</li>
-				<li>قیمت ۳۹۰ هزار، تا وقتی تمدید می‌کنی، برای همیشه</li>
-			</ul>
+			<div class="sp-perks">
+				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'spark', 22 ); ?></span><b>پرو کامل، قبل از همه</b><small>هر ویژگی جدید اول دست شما می‌رسه.</small></div>
+				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'book', 22 ); ?></span><b>دستورهات رو ما وارد می‌کنیم</b><small>برای ۳۰ نفر اول، رایگان.</small></div>
+				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#8A4FBF"><?php echo sp_icon( 'users', 22 ); ?></span><b>گروه بنیان‌گذارها</b><small>بگو چی لازم داری؛ اول برای شما ساخته می‌شه.</small></div>
+				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#E9A23B"><?php echo sp_icon( 'lock', 22 ); ?></span><b>قیمت قفل، برای همیشه</b><small>۳۹۰ هزار، تا وقتی تمدید می‌کنی.</small></div>
+			</div>
 
 			<h2 class="sp-h3">چطوری</h2>
-			<ol class="sp-numbered">
+			<ol class="sp-howto">
 				<li>فرم رو پر کن.</li>
 				<li>تا ۲۴ ساعت بهت پیام می‌دیم و شماره‌کارت رو می‌فرستیم.</li>
 				<li>بعد از واریز، رسید رو بفرست؛ عضویتت تا ۲۴ ساعت فعال می‌شه.</li>
@@ -43,6 +42,7 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 				<?php elseif ( 'expired' === $sp_state ) : ?>
 					<div class="sp-verdict sp-verdict--warn" role="alert">صفحه خیلی وقت باز مونده بود؛ یه بار دیگه بفرست.</div>
 				<?php endif; ?>
+				<h2>جاتو نگه دار</h2>
 				<form class="sp-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<input type="hidden" name="action" value="sp_founder">
 					<input type="hidden" name="sp_nonce" value="<?php echo esc_attr( wp_create_nonce( 'sp_founder' ) ); ?>">
@@ -68,7 +68,7 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 						<label for="f-note">چی می‌پزی و هفته‌ای چند تا سفارش داری؟ (اختیاری)</label>
 						<textarea id="f-note" name="note" rows="3"></textarea>
 					</div>
-					<button class="sp-btn sp-btn--primary sp-btn--block" type="submit">جامو نگه دار</button>
+					<button class="sp-btn sp-btn--coral sp-btn--block" type="submit">جامو نگه دار</button>
 					<p class="sp-small">شماره‌ت فقط برای همین پیام استفاده می‌شه.</p>
 				</form>
 			<?php endif; ?>

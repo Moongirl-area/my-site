@@ -31,7 +31,13 @@
 		if (!touched[id]) el.value = val ? faNum(val, decimals) : '';
 	}
 
-	function recipe() { return D.recipes[$('sp-recipe').value]; }
+	function recipeKey() { var r = form.querySelector('input[name="sp-recipe"]:checked'); return r ? r.value : Object.keys(D.recipes)[0]; }
+	function recipe() { return D.recipes[recipeKey()]; }
+	function showPhotos() {
+		var k = recipeKey();
+		Array.prototype.forEach.call(document.querySelectorAll('[data-cake-photo]'), function (el) { el.hidden = el.getAttribute('data-cake-photo') !== k; });
+		$('r-name').textContent = recipe().name + '، ' + faNum(weight(), 2) + ' کیلو';
+	}
 	function weight() { var w = num($('sp-weight').value); return w > 0 ? w : 1; }
 
 	function fillDefaults() {
@@ -127,15 +133,17 @@
 		}
 	}
 
-	$('sp-recipe').addEventListener('change', function () {
+	form.addEventListener('change', function (e) {
+		if (e.target.name !== 'sp-recipe') return;
 		touched['sp-hours'] = touched['sp-ovenh'] = false;
-		fillDefaults(); buildTable(); calc();
+		fillDefaults(); buildTable(); showPhotos(); calc();
 	});
 	$('sp-weight').addEventListener('input', function () {
-		fillDefaults(); buildTable(); calc();
+		fillDefaults(); buildTable(); showPhotos(); calc();
 	});
 	form.addEventListener('input', function (e) {
 		var t = e.target;
+		if (t.name === 'sp-recipe') return;
 		if (t.dataset && t.dataset.key) {
 			userPrices[t.dataset.key] = num(t.value);
 		} else if (t.id && t.id !== 'sp-weight') {
@@ -144,5 +152,5 @@
 		calc();
 	});
 
-	fillDefaults(); buildTable(); calc();
+	fillDefaults(); buildTable(); showPhotos(); calc();
 })();

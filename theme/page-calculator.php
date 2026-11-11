@@ -3,29 +3,46 @@
 get_header();
 $sp_s     = sp_settings();
 $sp_ready = sp_prices_ready();
+$sp_cake  = isset( $_GET['cake'] ) ? sanitize_key( wp_unslash( $_GET['cake'] ) ) : '';
+if ( ! isset( sp_recipes()[ $sp_cake ] ) ) {
+	$sp_cake = array_key_first( sp_recipes() );
+}
 ?>
 
 <section class="sp-section sp-section--tight">
 	<div class="sp-wrap">
-		<h1 class="sp-h1">ماشین‌حساب قیمت کیک خانگی ۱۴۰۵</h1>
-		<p class="sp-sub">یه کیک انتخاب کن، وزن و دستمزدت رو بنویس، ببین واقعاً چند تموم می‌شه و چند باید بفروشی.</p>
+		<div class="sp-calc-hero">
+			<div>
+				<p class="sp-script">ماشین‌حساب رایگان</p>
+				<h1 class="sp-h1">ماشین‌حساب قیمت کیک خانگی ۱۴۰۵</h1>
+				<p class="sp-sub">یه کیک انتخاب کن، وزن و دستمزدت رو بنویس، ببین واقعاً چند تموم می‌شه و چند باید بفروشی.</p>
+				<?php if ( $sp_ready && $sp_s['prices_date'] ) : ?>
+					<p class="sp-note"><?php echo sp_icon( 'tag', 20 ); ?> قیمت مواد: <?php echo esc_html( $sp_s['prices_date'] ); ?>. همیشه می‌تونی قیمت خودت رو توی جدول بذاری.</p>
+				<?php elseif ( ! $sp_ready ) : ?>
+					<p class="sp-note sp-note--warn"><?php echo sp_icon( 'bell', 20 ); ?> قیمت مرجع مواد این هفته هنوز وارد نشده. فعلاً قیمتی که خودت خریدی رو توی جدول مواد بنویس.</p>
+				<?php endif; ?>
+			</div>
+			<?php foreach ( sp_recipes() as $key => $r ) : ?>
+				<div class="sp-plate" data-cake-photo="<?php echo esc_attr( $key ); ?>"<?php echo $key === $sp_cake ? '' : ' hidden'; ?>><?php echo sp_img( $r['img'], $r['name'], 'sp-plate__img' ); ?></div>
+			<?php endforeach; ?>
+		</div>
 
-		<?php if ( $sp_ready && $sp_s['prices_date'] ) : ?>
-			<p class="sp-note">قیمت مواد: <?php echo esc_html( $sp_s['prices_date'] ); ?>. همیشه می‌تونی قیمت خودت رو توی جدول بذاری.</p>
-		<?php elseif ( ! $sp_ready ) : ?>
-			<p class="sp-note sp-note--warn">قیمت مرجع مواد این هفته هنوز وارد نشده. فعلاً قیمتی که خودت خریدی رو توی جدول مواد بنویس.</p>
-		<?php endif; ?>
-
-		<form class="sp-calc" id="sp-calc" onsubmit="return false" novalidate>
+<form class="sp-calc-form" id="sp-calc" onsubmit="return false" novalidate>
+		<fieldset class="sp-cakes">
+			<legend>کدوم کیک؟</legend>
+			<?php foreach ( sp_recipes() as $key => $r ) : ?>
+				<label class="sp-cake" style="--c:<?php echo esc_attr( $r['color'] ); ?>">
+					<input type="radio" name="sp-recipe" value="<?php echo esc_attr( $key ); ?>"<?php checked( $key, $sp_cake ); ?>>
+					<span class="sp-cake__body">
+						<span class="sp-cake__ico"><?php echo sp_icon( $r['icon'], 20 ); ?></span>
+						<?php echo sp_img( $r['img'], $r['name'], 'sp-cake__img' ); ?>
+						<?php echo esc_html( $r['name'] ); ?>
+					</span>
+				</label>
+			<?php endforeach; ?>
+		</fieldset>
+		<div class="sp-calc">
 			<div class="sp-calc__inputs">
-				<div class="sp-field">
-					<label for="sp-recipe">کدوم کیک؟</label>
-					<select id="sp-recipe">
-						<?php foreach ( sp_recipes() as $key => $r ) : ?>
-							<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $r['name'] ); ?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
 				<div class="sp-field-row">
 					<div class="sp-field">
 						<label for="sp-weight">وزن کیک (کیلو)</label>
@@ -43,7 +60,7 @@ $sp_ready = sp_prices_ready();
 				</div>
 
 				<details class="sp-more">
-					<summary>فر، بسته‌بندی و درصد سود</summary>
+					<summary><?php echo sp_icon( 'flame', 18 ); ?> فر، بسته‌بندی و درصد سود</summary>
 					<div class="sp-field-row">
 						<div class="sp-field">
 							<label for="sp-oven">گاز و برق هر ساعت فر (تومان)</label>
@@ -82,6 +99,12 @@ $sp_ready = sp_prices_ready();
 
 			<aside class="sp-calc__result" aria-live="polite">
 				<div class="sp-result">
+					<div class="sp-result__head">
+						<?php foreach ( sp_recipes() as $key => $r ) : ?>
+							<div class="sp-plate" data-cake-photo="<?php echo esc_attr( $key ); ?>"<?php echo $key === $sp_cake ? '' : ' hidden'; ?>><?php echo sp_img( $r['img'], $r['name'], 'sp-plate__img' ); ?></div>
+						<?php endforeach; ?>
+						<b id="r-name"></b>
+					</div>
 					<div class="sp-result__row"><span>هزینه‌ی مواد</span><b id="r-mat">—</b></div>
 					<div class="sp-result__row"><span>دستمزد</span><b id="r-wage">—</b></div>
 					<div class="sp-result__row"><span>فر و بسته‌بندی</span><b id="r-other">—</b></div>
@@ -100,6 +123,7 @@ $sp_ready = sp_prices_ready();
 					<a class="sp-btn sp-btn--primary sp-btn--block" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">عضو بنیان‌گذار شو</a>
 				</div>
 			</aside>
+		</div>
 		</form>
 	</div>
 </section>

@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#3B2418">
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Vazirmatn-var.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/NotoNaskh-700.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -21,7 +22,7 @@
 			<a href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"<?php echo is_page( 'calculator' ) ? ' aria-current="page"' : ''; ?>>ماشین‌حساب رایگان</a>
 			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>>قیمت‌ها</a>
 		</nav>
-		<a class="sp-btn sp-btn--primary sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">بنیان‌گذار شو</a>
+		<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">بنیان‌گذار شو</a>
 	</div>
 </header>
 <main id="main">
