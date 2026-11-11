@@ -1,0 +1,43 @@
+name: آپلود پوسته روی هاست
+
+on:
+  push:
+    branches: [main]
+    paths: ["theme/**", ".github/workflows/deploy.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: بررسی خطای PHP
+        run: find theme -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: ساختن فایل zip پوسته (راه جایگزین آپلود دستی)
+        run: |
+          mkdir -p dist
+          cp -r theme dist/soodpaz
+          cd dist && zip -qr soodpaz-theme.zip soodpaz
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: soodpaz-theme
+          path: dist/soodpaz-theme.zip
+
+      - name: آپلود با FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./theme/
+          server-dir: ./
+          timeout: 120000
