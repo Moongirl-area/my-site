@@ -71,6 +71,7 @@
 				'<td><input type="text" inputmode="numeric" aria-label=""></td>' +
 				'<td class="sp-table__cost"></td>';
 			tr.cells[0].textContent = ing.name;
+			tr.cells[3].setAttribute('data-label', 'هزینه');
 			tr.cells[1].textContent = qtyText;
 			var input = tr.cells[2].firstChild;
 			input.setAttribute('aria-label', 'قیمت هر ' + ing.unit + ' ' + ing.name);
@@ -106,6 +107,7 @@
 		$('r-other').textContent = other ? toman(other) : '—';
 		$('r-cost').textContent = cost ? toman(cost) : '—';
 		$('r-price').textContent = price ? toman(price) : '—';
+		var mini = $('r-mini'); if (mini) { mini.textContent = price ? toman(price) : '—'; $('sp-minibar').hidden = !price || resultVisible; }
 		$('r-perkg').textContent = price && w !== 1 ? 'کیلویی ' + toman(round5k(price / w)) : '';
 
 		var v = $('r-verdict');
@@ -151,6 +153,12 @@
 		}
 		calc();
 	});
+
+	// وقتی خود کارت نتیجه دیده می‌شود، نوار پایین لازم نیست.
+	var resultVisible = false;
+	if ('IntersectionObserver' in window && $('sp-result')) {
+		new IntersectionObserver(function (en) { resultVisible = en[0].isIntersecting; calc(); }, { threshold: 0.25 }).observe($('sp-result'));
+	}
 
 	fillDefaults(); buildTable(); showPhotos(); calc();
 })();

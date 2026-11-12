@@ -29,7 +29,7 @@ $sp_s = sp_settings();
 				<span class="sp-plan__ico"><?php echo sp_icon( 'calc', 26 ); ?></span>
 				<h2>رایگان</h2>
 				<p class="sp-plan__for">برای شروع</p>
-				<p class="sp-plan__price">۰ <small>تومان</small></p>
+				<p class="sp-plan__price">مجانی <small>برای همیشه</small></p>
 				<ul>
 					<li>ماشین‌حساب عمومی قیمت کیک</li>
 					<li>۱۴ روز پرو رایگان بعد از ثبت‌نام</li>

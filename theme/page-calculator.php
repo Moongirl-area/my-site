@@ -97,7 +97,7 @@ if ( ! isset( sp_recipes()[ $sp_cake ] ) ) {
 				</div>
 			</div>
 
-			<aside class="sp-calc__result" aria-live="polite">
+			<aside class="sp-calc__result" id="sp-result" aria-live="polite">
 				<div class="sp-result">
 					<div class="sp-result__head">
 						<?php foreach ( sp_recipes() as $key => $r ) : ?>
@@ -125,6 +125,7 @@ if ( ! isset( sp_recipes()[ $sp_cake ] ) ) {
 			</aside>
 		</div>
 		</form>
+		<a class="sp-minibar" href="#sp-result" id="sp-minibar" hidden><span>قیمت پیشنهادی</span><b id="r-mini">—</b><em>جزئیات ↓</em></a>
 	</div>
 </section>
 
