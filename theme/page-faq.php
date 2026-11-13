@@ -27,8 +27,9 @@ $sp_faq = array(
 	),
 );
 ?>
-<section class="sp-page-head">
+<section class="sp-page-head sp-page-head--soodi">
 	<div class="sp-wrap">
+		<?php echo sp_soodi( 'thinking', 'sp-soodi--head', 'سودی در حال فکر کردن', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<p class="sp-script">سؤال‌های رایج</p>
 		<h1 class="sp-h1">هر چی می‌خوای بدونی</h1>
 		<p class="sp-sub">جوابت رو پیدا نکردی؟ <a href="<?php echo esc_url( sp_url( 'contact' ) ); ?>">بهمون پیام بده</a>.</p>

@@ -24,6 +24,19 @@ function sp_en_digits( $str ) {
 	) );
 }
 
+/**
+ * سودی، شخصیت سودپز. حالت‌ها در assets/img/soodi:
+ * hero, happy, laugh, wink, thinking, worried, shocked, sad, celebrating, waving
+ * (نسخه‌ی اصلی PNG هر حالت در brand/soodi ریپو است.)
+ */
+function sp_soodi_url( $pose = 'hero' ) {
+	return SP_URI . '/assets/img/soodi/' . sanitize_key( $pose ) . '.webp';
+}
+
+function sp_soodi( $pose = 'hero', $class = '', $alt = 'سودی، شخصیت سودپز', $eager = false ) {
+	return '<img class="sp-soodi ' . esc_attr( $class ) . '" src="' . esc_url( sp_soodi_url( $pose ) ) . '" alt="' . esc_attr( $alt ) . '"' . ( $eager ? '' : ' loading="lazy"' ) . ' decoding="async">';
+}
+
 /** لوگوی سودپز: برش کیک با لایه‌های پله‌ای رو به بالا و گیلاس زعفرانی. */
 function sp_logo_svg( $size = 36 ) {
 	return '<svg class="sp-logo-mark" width="' . (int) $size . '" height="' . (int) $size . '" viewBox="0 0 48 48" aria-hidden="true" focusable="false">'

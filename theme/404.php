@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <section class="sp-404">
 	<div class="sp-wrap">
+		<?php echo sp_soodi( 'shocked', 'sp-soodi--404', 'سودی تعجب کرده', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<p class="sp-404__num">۴۰۴</p>
 		<h1 class="sp-h1">این صفحه سوخت!</h1>
 		<p class="sp-sub">صفحه‌ای که دنبالش بودی پیدا نشد. شاید آدرسش عوض شده.</p>

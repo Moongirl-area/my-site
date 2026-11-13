@@ -8,6 +8,7 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 <section class="sp-section">
 	<div class="sp-wrap sp-founders">
 		<div class="sp-founders__text">
+			<?php echo sp_soodi( 'celebrating', 'sp-soodi--founders', 'سودی جشن گرفته', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<p class="sp-script">فقط ۵۰ نفر</p>
 			<h1 class="sp-h1">عضو بنیان‌گذار سودپز شو</h1>
 			<p class="sp-lead">برای قنادهای خانگی و آشپزهای غذای خانگی. سالانه <b>۳۹۰ هزار تومان</b>، و این قیمت برای تو هیچ‌وقت بالا نمی‌ره. قیمت عادی پرو سالانه ۶۹۰ هزار تومانه.</p>

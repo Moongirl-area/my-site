@@ -174,6 +174,7 @@ function sp_settings() {
 function sp_calculator_data() {
 	$s = sp_settings();
 	return array(
+		'soodi'       => SP_URI . '/assets/img/soodi/',
 		'ingredients' => sp_ingredients(),
 		'prices'      => sp_current_prices(),
 		'recipes'     => sp_recipes(),

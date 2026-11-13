@@ -53,6 +53,8 @@ $sp_firsts  = array(
 				<div class="sp-widget__good"><?php echo sp_icon( 'up', 16 ); ?> ۳۰٪ سود</div>
 			</div>
 
+			<?php echo sp_soodi( 'hero', 'sp-soodi--hero', 'سودی، رفیق حسابگر آشپزخونه', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+
 			<div class="sp-widget sp-widget--alert">
 				<span class="sp-widget__ico"><?php echo sp_icon( 'bell', 18 ); ?></span>
 				<p><b>گوشت گرون شد.</b> قیمت ۳ غذات عوض شد؛ ببین.</p>

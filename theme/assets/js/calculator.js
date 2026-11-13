@@ -179,26 +179,38 @@
 		var current = num($('sp-current').value);
 		var what = food ? 'هر پرس' : 'هر کیک';
 		if (missing) {
-			v.hidden = false;
-			v.className = 'sp-verdict sp-verdict--info';
-			v.textContent = 'قیمت ' + faNum(missing) + ' ماده رو هنوز ننوشتی؛ تا ننویسی، عددها کامل نیست.';
+			verdict(v, 'info', 'thinking', 'قیمت ' + faNum(missing) + ' ماده رو هنوز ننوشتی؛ تا ننویسی، عددها کامل نیست.');
 		} else if (current > 0 && unitCost > 0) {
 			var profit = current - unitCost;
 			var pct = Math.round(profit / current * 100);
-			v.hidden = false;
 			if (profit < 0) {
-				v.className = 'sp-verdict sp-verdict--bad';
-				v.textContent = '▼ با این قیمت، از ' + what + ' ' + toman(-profit) + ' ضرر می‌کنی' + (food ? '؛ یعنی کل این دیگ ' + toman(-profit * n) + '.' : '.');
+				verdict(v, 'bad', 'sad', '▼ با این قیمت، از ' + what + ' ' + toman(-profit) + ' ضرر می‌کنی' + (food ? '؛ یعنی کل این دیگ ' + toman(-profit * n) + '.' : '.'));
 			} else if (pct < marginPct) {
-				v.className = 'sp-verdict sp-verdict--warn';
-				v.textContent = '! سودت از ' + what + ' ' + toman(profit) + ' است، یعنی ' + faNum(pct) + '٪؛ کمتر از ' + faNum(marginPct) + '٪ که می‌خواستی.';
+				verdict(v, 'warn', 'worried', '! سودت از ' + what + ' ' + toman(profit) + ' است، یعنی ' + faNum(pct) + '٪؛ کمتر از ' + faNum(marginPct) + '٪ که می‌خواستی.');
 			} else {
-				v.className = 'sp-verdict sp-verdict--good';
-				v.textContent = '▲ از ' + what + ' ' + toman(profit) + ' سود می‌بری، یعنی ' + faNum(pct) + '٪. آفرین.';
+				verdict(v, 'good', 'celebrating', '▲ از ' + what + ' ' + toman(profit) + ' سود می‌بری، یعنی ' + faNum(pct) + '٪. آفرین.');
 			}
 		} else {
 			v.hidden = true;
 		}
+	}
+
+	/* پیام نتیجه، با حالت مناسب سودی کنارش. */
+	function verdict(v, kind, pose, text) {
+		v.hidden = false;
+		v.className = 'sp-verdict sp-verdict--' + kind;
+		v.textContent = '';
+		if (D.soodi) {
+			var img = document.createElement('img');
+			img.className = 'sp-verdict__soodi';
+			img.src = D.soodi + pose + '.webp';
+			img.alt = '';
+			img.width = 56;
+			v.appendChild(img);
+		}
+		var span = document.createElement('span');
+		span.textContent = text;
+		v.appendChild(span);
 	}
 
 	function refresh() { fillDefaults(); buildTable(); showPhotos(); calc(); }

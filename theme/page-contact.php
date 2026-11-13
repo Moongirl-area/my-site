@@ -3,8 +3,9 @@
 get_header();
 $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '';
 ?>
-<section class="sp-page-head">
+<section class="sp-page-head sp-page-head--soodi">
 	<div class="sp-wrap">
+		<?php echo sp_soodi( 'waving', 'sp-soodi--head', 'سودی دست تکان می‌دهد', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<p class="sp-script">تماس</p>
 		<h1 class="sp-h1">بهمون بگو</h1>
 		<p class="sp-sub">سؤال، پیشنهاد یا همکاری؛ معمولاً تا ۲۴ ساعت جواب می‌دیم.</p>

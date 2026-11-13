@@ -584,3 +584,21 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-plate--hero2 { width: 270px; right: 10px; bottom: 10px; }
 @media (max-width: 680px) { .sp-hero__art .sp-widget--alert { bottom: 0; width: 220px; } .sp-plate--hero2 { width: 150px; bottom: 70px; right: 0; } }
 .sp-result__big span span, .sp-result__row span span { display: inline; }
+
+/* سودی، شخصیت سودپز */
+.sp-soodi { display: block; height: auto; user-select: none; -webkit-user-drag: none; }
+.sp-soodi--hero { position: absolute; z-index: 3; left: 4%; bottom: -10px; width: 170px; filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .18)); }
+.sp-soodi--404 { width: 160px; margin: 0 auto 4px; }
+.sp-page-head--soodi .sp-wrap { position: relative; }
+.sp-soodi--head { position: absolute; left: 0; bottom: -6px; width: 150px; }
+.sp-soodi--founders { width: 110px; margin-bottom: 4px; }
+.sp-verdict { display: flex; align-items: center; gap: 10px; }
+.sp-verdict__soodi { width: 56px; height: auto; flex: none; }
+@media (max-width: 860px) {
+	.sp-soodi--hero { width: 120px; left: 0; bottom: 0; }
+	.sp-soodi--head { width: 100px; }
+}
+@media (max-width: 600px) {
+	.sp-soodi--head { position: static; width: 90px; margin-bottom: 6px; }
+	.sp-soodi--hero { width: 100px; }
+}
