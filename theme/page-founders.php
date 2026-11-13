@@ -10,14 +10,14 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 		<div class="sp-founders__text">
 			<p class="sp-script">فقط ۵۰ نفر</p>
 			<h1 class="sp-h1">عضو بنیان‌گذار سودپز شو</h1>
-			<p class="sp-lead">سالانه <b>۳۹۰ هزار تومان</b>، و این قیمت برای تو هیچ‌وقت بالا نمی‌ره. قیمت عادی پرو سالانه ۶۹۰ هزار تومانه.</p>
+			<p class="sp-lead">برای قنادهای خانگی و آشپزهای غذای خانگی. سالانه <b>۳۹۰ هزار تومان</b>، و این قیمت برای تو هیچ‌وقت بالا نمی‌ره. قیمت عادی پرو سالانه ۶۹۰ هزار تومانه.</p>
 			<?php if ( '' !== $sp_s['founders_left'] ) : ?>
 				<p class="sp-note"><?php echo esc_html( sp_fa( $sp_s['founders_left'] ) ); ?> جا از ۵۰ تا مونده.</p>
 			<?php endif; ?>
 
 			<div class="sp-perks">
 				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'spark', 22 ); ?></span><b>پرو کامل، قبل از همه</b><small>هر ویژگی جدید اول دست شما می‌رسه.</small></div>
-				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'book', 22 ); ?></span><b>دستورهات رو ما وارد می‌کنیم</b><small>برای ۳۰ نفر اول، رایگان.</small></div>
+				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'book', 22 ); ?></span><b>دستورهات رو ما وارد می‌کنیم</b><small>کیک یا غذا؛ برای ۳۰ نفر اول، رایگان.</small></div>
 				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#8A4FBF"><?php echo sp_icon( 'users', 22 ); ?></span><b>گروه بنیان‌گذارها</b><small>بگو چی لازم داری؛ اول برای شما ساخته می‌شه.</small></div>
 				<div class="sp-perk"><span class="sp-feature__ico" style="--c:#E9A23B"><?php echo sp_icon( 'lock', 22 ); ?></span><b>قیمت قفل، برای همیشه</b><small>۳۹۰ هزار، تا وقتی تمدید می‌کنی.</small></div>
 			</div>
@@ -65,7 +65,15 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 						<input id="f-insta" name="instagram" type="text" dir="ltr" placeholder="@">
 					</div>
 					<div class="sp-field">
-						<label for="f-note">چی می‌پزی و هفته‌ای چند تا سفارش داری؟ (اختیاری)</label>
+						<span class="sp-label" id="f-kitchen-l"><b>چی می‌پزی؟</b></span>
+						<div class="sp-radios" role="radiogroup" aria-labelledby="f-kitchen-l">
+							<label><input type="radio" name="kitchen" value="sweet"> کیک و شیرینی</label>
+							<label><input type="radio" name="kitchen" value="food"> غذای خانگی</label>
+							<label><input type="radio" name="kitchen" value="both"> هر دو</label>
+						</div>
+					</div>
+					<div class="sp-field">
+						<label for="f-note">چی‌ها می‌پزی و هفته‌ای چند تا سفارش داری؟ (اختیاری)</label>
 						<textarea id="f-note" name="note" rows="3"></textarea>
 					</div>
 					<button class="sp-btn sp-btn--coral sp-btn--block" type="submit">جامو نگه دار</button>
@@ -76,4 +84,12 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 	</div>
 </section>
 
+<script>
+(function () {
+	// انتخاب پیش‌فرض «چی می‌پزی؟» از سوئیچ شیرینی | غذا
+	var k = document.documentElement.getAttribute('data-k');
+	var r = document.querySelector('.sp-radios input[value="' + k + '"]');
+	if (r && !document.querySelector('.sp-radios input:checked')) { r.checked = true; }
+})();
+</script>
 <?php get_footer(); ?>

@@ -6,6 +6,14 @@
 	<meta name="theme-color" content="#3B2418">
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Vazirmatn-var.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/NotoNaskh-700.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
+	<script>
+	/* آشپزخونه‌ی انتخابی (شیرینی/غذا) قبل از نمایش صفحه، تا چیزی جابه‌جا نپرد. */
+	(function () {
+		var k = <?php echo wp_json_encode( sp_kitchen_from_request() ); ?>;
+		try { if (!k) { k = localStorage.getItem('sp_k') || ''; } } catch (e) {}
+		document.documentElement.setAttribute('data-k', k === 'food' ? 'food' : 'sweet');
+	})();
+	</script>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

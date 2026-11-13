@@ -37,7 +37,7 @@ function sp_logo_svg( $size = 36 ) {
 
 /**
  * عکس از assets/img؛ اگر هنوز آپلود نشده، یک قاب جای‌خالی نشان می‌دهد.
- * $name بدون پسوند (jpg یا webp).
+ * $name بدون پسوند (webp، jpg یا png؛ اولی که پیدا شود).
  */
 function sp_img( $name, $alt = '', $class = '', $eager = false ) {
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
@@ -76,6 +76,11 @@ function sp_icon( $name, $size = 24 ) {
 		'up'        => '<path d="M12 19V5M6 11l6-6 6 6"/>',
 		'down'      => '<path d="M12 5v14M6 13l6 6 6-6"/>',
 		'users'     => '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/>',
+		'pot'       => '<path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M2 10h20M9 6.5c0-1.2 1-1.3 1-2.5M14 6.5c0-1.2 1-1.3 1-2.5"/>',
+		'bowl'      => '<path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M8 11a4 2 0 0 1 8 0"/><path d="M10 7c0-1.2 1-1.3 1-2.5M14 7c0-1.2 1-1.3 1-2.5"/>',
+		'drumstick' => '<path d="M14.5 3.5a5.5 5.5 0 0 1 3.9 9.4c-1.9 1.9-4.8 2.2-6.8.9l-2.4 2.4a2 2 0 1 1-2.4 2.4 2 2 0 1 1 1-3.4l2.4-2.4c-1.3-2-1-4.9.9-6.8a5.5 5.5 0 0 1 3.4-2.5z"/>',
+		'patty'     => '<ellipse cx="12" cy="13" rx="9" ry="5.5"/><path d="M6.5 12.5c1.8-1 3.6 1 5.5 0s3.7 1 5.5 0"/>',
+		'pasta'     => '<path d="M3 13h18a9 8 0 0 1-18 0z"/><path d="M7 13c0-3 2-5 2-9M11.5 13c0-3 1.5-6 3-8.5M16 13c0-2.5 1-4.5 3-6"/>',
 		'spark'     => '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
 	);
 	if ( ! isset( $p[ $name ] ) ) {
@@ -115,10 +120,42 @@ function sp_cta_box() {
 	?>
 	<div class="sp-cta-box">
 		<div>
-			<h3>قیمت کیک خودت رو حساب کن</h3>
+			<h3>قیمت کیک یا هر پرس غذات رو حساب کن</h3>
 			<p>رایگان، بدون ثبت‌نام، دو دقیقه.</p>
 		</div>
 		<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>ماشین‌حساب رایگان</a>
 	</div>
 	<?php
+}
+
+/**
+ * سوئیچ «شیرینی | غذا». انتخاب روی <html data-k> می‌نشیند و در مرورگر یادش می‌ماند؛
+ * هر چیزی با data-only="food" یا data-only="sweet" فقط در همان حالت دیده می‌شود.
+ */
+function sp_kitchen_switch( $label = 'تو چی می‌پزی؟', $light = false ) {
+	?>
+	<div class="sp-kswitch<?php echo $light ? ' sp-kswitch--light' : ''; ?>" role="group" aria-label="<?php echo esc_attr( $label ); ?>">
+		<span class="sp-kswitch__label"><?php echo esc_html( $label ); ?></span>
+		<?php foreach ( sp_kitchens() as $k => $kit ) : ?>
+			<button type="button" data-set-k="<?php echo esc_attr( $k ); ?>" aria-pressed="false"><?php echo sp_icon( $kit['icon'], 20 ); // phpcs:ignore ?><span><?php echo esc_html( $kit['name'] ); ?></span></button>
+		<?php endforeach; ?>
+	</div>
+	<?php
+}
+
+/** آشپزخونه‌ای که از آدرس صفحه معلوم است (?k=food، یا ?cake=/?dish= یک دستور غذا)؛ وگرنه خالی. */
+function sp_kitchen_from_request() {
+	if ( isset( $_GET['k'] ) && in_array( $_GET['k'], array( 'sweet', 'food' ), true ) ) { // phpcs:ignore
+		return sanitize_key( $_GET['k'] ); // phpcs:ignore
+	}
+	foreach ( array( 'dish', 'cake' ) as $param ) {
+		if ( isset( $_GET[ $param ] ) ) { // phpcs:ignore
+			$key = sanitize_key( wp_unslash( $_GET[ $param ] ) ); // phpcs:ignore
+			$all = sp_recipes();
+			if ( isset( $all[ $key ] ) ) {
+				return $all[ $key ]['kitchen'];
+			}
+		}
+	}
+	return '';
 }

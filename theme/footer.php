@@ -7,7 +7,7 @@
 				<span class="sp-brand__name">سودپز</span>
 			</a>
 			<p class="sp-footer__tag">بپز، بفروش، ضرر نکن.</p>
-			<p class="sp-footer__note">روی سرور ایرانی؛ موقع قطعی اینترنت هم بازه.</p>
+			<p class="sp-footer__note">قیمت‌گذاری کیک و غذای خانگی. روی سرور ایرانی؛ موقع قطعی اینترنت هم بازه.</p>
 		</div>
 		<div class="sp-footer__cols sp-footer__links">
 			<div>
@@ -38,6 +38,30 @@
 	</div>
 	<div class="sp-wrap sp-footer__copy">© سودپز</div>
 </footer>
+<script>
+/* سوئیچ شیرینی | غذا */
+(function () {
+	var root = document.documentElement;
+	function sync() {
+		var k = root.getAttribute('data-k');
+		Array.prototype.forEach.call(document.querySelectorAll('[data-set-k]'), function (b) {
+			b.setAttribute('aria-pressed', b.getAttribute('data-set-k') === k ? 'true' : 'false');
+		});
+	}
+	window.spSetKitchen = function (k) {
+		k = k === 'food' ? 'food' : 'sweet';
+		root.setAttribute('data-k', k);
+		try { localStorage.setItem('sp_k', k); } catch (e) {}
+		sync();
+		document.dispatchEvent(new CustomEvent('sp:kitchen', { detail: k }));
+	};
+	document.addEventListener('click', function (e) {
+		var b = e.target.closest ? e.target.closest('[data-set-k]') : null;
+		if (b) { window.spSetKitchen(b.getAttribute('data-set-k')); }
+	});
+	sync();
+})();
+</script>
 <?php wp_footer(); ?>
 </body>
 </html>

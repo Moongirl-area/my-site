@@ -7,8 +7,8 @@ $sp_q     = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publis
 <section class="sp-page-head">
 	<div class="sp-wrap">
 		<p class="sp-script">آموزش</p>
-		<h1 class="sp-h1">قیمت‌گذاری کیک خانگی، ساده و بدون ضرر</h1>
-		<p class="sp-sub">آموزش‌های کوتاه درباره‌ی حساب قیمت تمام‌شده، سود، و حرف زدن با مشتری درباره‌ی قیمت.</p>
+		<h1 class="sp-h1">قیمت‌گذاری کیک و غذای خانگی، ساده و بدون ضرر</h1>
+		<p class="sp-sub">آموزش‌های کوتاه درباره‌ی حساب قیمت تمام‌شده‌ی هر کیک و هر پرس، سود، و حرف زدن با مشتری درباره‌ی قیمت.</p>
 	</div>
 </section>
 <section class="sp-section sp-section--tight">

@@ -507,3 +507,80 @@ p { margin: 0 0 1em; }
 	.sp-split__donut { --s: 96px; }
 	.sp-page-head { padding: 32px 0 8px; }
 }
+
+/* ---------- نسخه‌ی ۴: دو آشپزخونه (شیرینی + غذای خانگی) ---------- */
+
+/* فقط چیزهای آشپزخونه‌ی انتخاب‌شده دیده می‌شوند */
+html[data-k="sweet"] [data-only="food"],
+html[data-k="food"] [data-only="sweet"] { display: none !important; }
+:root { --food: #3F8A4E; }
+
+/* سوئیچ شیرینی | غذا */
+.sp-kswitch { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; width: max-content; max-width: 100%; margin: 0 auto 22px; background: #fff; padding: 6px; border-radius: 999px; box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 30px rgba(0, 0, 0, .08); }
+.sp-kswitch__label { font-weight: 700; font-size: 14px; color: var(--muted); padding: 0 12px 0 6px; }
+.sp-kswitch button { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 700; font-size: 15px; border: 0; background: transparent; color: var(--muted); padding: 9px 18px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+.sp-kswitch button:hover { color: var(--ink); }
+.sp-kswitch button[aria-pressed="true"] { background: var(--coral); color: #fff; box-shadow: 0 6px 16px rgba(232, 103, 60, .3); }
+.sp-kswitch button[data-set-k="food"][aria-pressed="true"] { background: var(--food); box-shadow: 0 6px 16px rgba(63, 138, 78, .3); }
+.sp-kswitch--light { background: rgba(20, 14, 10, .55); box-shadow: none; border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(6px); margin-bottom: 34px; }
+.sp-kswitch--light .sp-kswitch__label, .sp-kswitch--light button { color: #E7DCCF; }
+
+/* دو در ورودی صفحه‌ی اول */
+.sp-doors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 26px 0 0; max-width: 560px; }
+.sp-door { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #fff; border-radius: 20px; text-decoration: none; border: 2px solid transparent; box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 26px rgba(0, 0, 0, .07); transition: transform .15s, border-color .15s; }
+.sp-door:hover { transform: translateY(-2px); border-color: var(--c); }
+.sp-door > span:nth-child(2) { display: flex; flex-direction: column; line-height: 1.45; flex: 1; }
+.sp-door small { color: var(--muted); font-size: 13px; }
+.sp-door b { font-size: 15.5px; }
+.sp-door > .sp-ico:last-child { color: var(--c); }
+.sp-door__ico { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: var(--c); color: #fff; flex: none; }
+
+/* بشقاب دوم (غذا) در سرصفحه */
+.sp-plate--hero2 { position: absolute; width: 250px; right: 0; bottom: 0; box-shadow: 0 30px 60px rgba(0, 0, 0, .25), 0 0 0 8px #1c1c1e, 0 0 0 10px rgba(63, 138, 78, .6); }
+.sp-hero .sp-display { font-size: clamp(38px, 5.4vw, 66px); }
+
+/* دردها با سوئیچ */
+.sp-pains { margin-top: -50px; }
+
+/* میز چوبی: پرچم‌ها بیشتر شدن */
+.sp-flag { height: 68px; }
+.sp-flag[aria-selected="true"]::before { border-width: 34px 0 34px 20px; }
+
+/* ماشین‌حساب: تب آشپزخونه */
+.sp-calc-form .sp-kswitch { margin: 26px 0 0; }
+.sp-cakes { margin-top: 18px; }
+.sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0, 0, .25), 0 0 0 10px #1c1c1e, 0 0 0 12px rgba(232, 103, 60, .55); }
+html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0, 0, .25), 0 0 0 10px #1c1c1e, 0 0 0 12px rgba(63, 138, 78, .6); }
+
+/* قیمت‌ها: مقایسه‌ی ارزش */
+.sp-worth { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 860px; margin: 36px auto 0; }
+.sp-worth__card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; display: flex; gap: 14px; align-items: flex-start; }
+.sp-worth__card p { margin: 0; font-size: 15px; color: var(--muted); line-height: 1.8; }
+.sp-worth__card b { color: var(--ink); }
+
+/* فرم بنیان‌گذار: انتخاب آشپزخونه */
+.sp-radios { display: flex; flex-wrap: wrap; gap: 8px; }
+.sp-radios label { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; font-size: 15px; background: var(--paper); border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.sp-radios input { accent-color: var(--coral); }
+
+@media (max-width: 1000px) {
+	.sp-plate--hero2 { width: 210px; right: 0; }
+	.sp-cakes { grid-template-columns: repeat(5, 140px); }
+}
+@media (max-width: 680px) {
+	.sp-doors, .sp-worth { grid-template-columns: 1fr; }
+	.sp-plate--hero2 { width: 150px; bottom: 30px; }
+	.sp-pains { margin-top: 0; }
+	.sp-kswitch__label { width: 100%; text-align: center; padding: 2px 0 0; }
+	.sp-kswitch { border-radius: 24px; }
+	.sp-hero .sp-display { font-size: 36px; }
+}
+@media (max-width: 380px) {
+	.sp-plate--hero2 { width: 130px; }
+}
+.sp-label { font-size: 15px; }
+/* سرصفحه: هشدار پایین سمت چپ، بشقاب غذا پایین سمت راست تا روی هم نیفتند */
+.sp-hero__art .sp-widget--alert { right: auto; left: 0; bottom: 24px; }
+.sp-plate--hero2 { width: 270px; right: 10px; bottom: 10px; }
+@media (max-width: 680px) { .sp-hero__art .sp-widget--alert { bottom: 0; width: 220px; } .sp-plate--hero2 { width: 150px; bottom: 70px; right: 0; } }
+.sp-result__big span span, .sp-result__row span span { display: inline; }

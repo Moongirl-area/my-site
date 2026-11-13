@@ -29,6 +29,7 @@ add_action( 'init', function () {
 function sp_lead_fields() {
 	return array(
 		'mobile'    => 'موبایل',
+		'kitchen'   => 'آشپزخونه',
 		'city'      => 'شهر',
 		'instagram' => 'اینستاگرام',
 		'note'      => 'توضیح',
@@ -37,7 +38,7 @@ function sp_lead_fields() {
 
 /* ستون‌های فهرست درخواست‌ها */
 add_filter( 'manage_sp_lead_posts_columns', function () {
-	return array( 'cb' => '<input type="checkbox">', 'title' => 'نام', 'mobile' => 'موبایل', 'city' => 'شهر', 'instagram' => 'اینستاگرام', 'date' => 'تاریخ' );
+	return array( 'cb' => '<input type="checkbox">', 'title' => 'نام', 'mobile' => 'موبایل', 'kitchen' => 'آشپزخونه', 'city' => 'شهر', 'instagram' => 'اینستاگرام', 'date' => 'تاریخ' );
 } );
 add_action( 'manage_sp_lead_posts_custom_column', function ( $col, $post_id ) {
 	echo esc_html( get_post_meta( $post_id, '_sp_' . $col, true ) );
@@ -75,6 +76,9 @@ function sp_handle_founder_form() {
 	$mobile    = isset( $_POST['mobile'] ) ? preg_replace( '/\D/', '', sp_en_digits( wp_unslash( $_POST['mobile'] ) ) ) : '';
 	$city      = isset( $_POST['city'] ) ? sanitize_text_field( wp_unslash( $_POST['city'] ) ) : '';
 	$instagram = isset( $_POST['instagram'] ) ? sanitize_text_field( wp_unslash( $_POST['instagram'] ) ) : '';
+	$kitchens  = array( 'sweet' => 'شیرینی', 'food' => 'غذا', 'both' => 'هر دو' );
+	$kitchen   = isset( $_POST['kitchen'] ) ? sanitize_key( wp_unslash( $_POST['kitchen'] ) ) : '';
+	$kitchen   = isset( $kitchens[ $kitchen ] ) ? $kitchens[ $kitchen ] : '';
 	$note      = isset( $_POST['note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['note'] ) ) : '';
 
 	if ( preg_match( '/^98(9\d{9})$/', $mobile, $m ) ) {
@@ -91,13 +95,13 @@ function sp_handle_founder_form() {
 		'post_title'  => $name,
 	) );
 	if ( $id && ! is_wp_error( $id ) ) {
-		foreach ( compact( 'mobile', 'city', 'instagram', 'note' ) as $key => $val ) {
+		foreach ( compact( 'mobile', 'kitchen', 'city', 'instagram', 'note' ) as $key => $val ) {
 			update_post_meta( $id, '_sp_' . $key, $val );
 		}
 		wp_mail(
 			get_option( 'admin_email' ),
 			'درخواست جدید بنیان‌گذار سودپز: ' . $name,
-			"نام: $name\nموبایل: $mobile\nشهر: $city\nاینستاگرام: $instagram\nتوضیح: $note\n\nهمه‌ی درخواست‌ها: " . admin_url( 'edit.php?post_type=sp_lead' )
+			"نام: $name\nموبایل: $mobile\nآشپزخونه: $kitchen\nشهر: $city\nاینستاگرام: $instagram\nتوضیح: $note\n\nهمه‌ی درخواست‌ها: " . admin_url( 'edit.php?post_type=sp_lead' )
 		);
 	}
 

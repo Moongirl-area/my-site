@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_VERSION', '0.3.0' );
+define( 'SP_VERSION', '0.4.0' );
 define( 'SP_DIR', get_template_directory() );
 define( 'SP_URI', get_template_directory_uri() );
 
