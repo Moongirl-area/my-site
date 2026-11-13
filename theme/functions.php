@@ -16,6 +16,9 @@ require_once SP_DIR . '/inc/prices.php';
 require_once SP_DIR . '/inc/leads.php';
 require_once SP_DIR . '/inc/contact.php';
 require_once SP_DIR . '/inc/content.php';
+require_once SP_DIR . '/inc/blog.php';
+require_once SP_DIR . '/inc/blog-import.php';
+require_once SP_DIR . '/inc/blog-seo.php';
 
 /* ---------- راه‌اندازی پوسته ---------- */
 add_action( 'after_setup_theme', function () {

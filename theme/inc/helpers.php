@@ -82,6 +82,12 @@ function sp_icon( $name, $size = 24 ) {
 		'patty'     => '<ellipse cx="12" cy="13" rx="9" ry="5.5"/><path d="M6.5 12.5c1.8-1 3.6 1 5.5 0s3.7 1 5.5 0"/>',
 		'pasta'     => '<path d="M3 13h18a9 8 0 0 1-18 0z"/><path d="M7 13c0-3 2-5 2-9M11.5 13c0-3 1.5-6 3-8.5M16 13c0-2.5 1-4.5 3-6"/>',
 		'spark'     => '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
+		'list'      => '<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
+		'link'      => '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+		'send'      => '<path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M10 13l4.5-4.5"/>',
+		'search'    => '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+		'info'      => '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/>',
+		'warn'      => '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
 	);
 	if ( ! isset( $p[ $name ] ) ) {
 		return '';
@@ -101,9 +107,16 @@ function sp_img_url( $name ) {
 }
 
 /** عکس کارت/سرآغاز یک آموزش: عکس شاخص وردپرس، وگرنه عکس پوسته (متای _sp_img). */
-function sp_post_img( $post_id, $class = '', $eager = false ) {
+function sp_post_img( $post_id, $class = '', $eager = false, $sizes = '' ) {
 	if ( has_post_thumbnail( $post_id ) ) {
-		return get_the_post_thumbnail( $post_id, 'large', array( 'class' => $class, 'loading' => $eager ? 'eager' : 'lazy' ) );
+		$attr = array( 'class' => $class, 'loading' => $eager ? 'eager' : 'lazy', 'decoding' => 'async' );
+		if ( $eager ) {
+			$attr['fetchpriority'] = 'high';
+		}
+		if ( $sizes ) {
+			$attr['sizes'] = $sizes;
+		}
+		return get_the_post_thumbnail( $post_id, 'full', $attr );
 	}
 	$name = get_post_meta( $post_id, '_sp_img', true );
 	return sp_img( $name ? $name : 'hero-cake', get_the_title( $post_id ), $class, $eager );

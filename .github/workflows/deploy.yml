@@ -41,3 +41,9 @@ jobs:
           local-dir: ./theme/
           server-dir: ./
           timeout: 120000
+
+      - name: باز کردن سایت تا مطالب جدید مجله وارد وردپرس شوند
+        run: |
+          sleep 5
+          curl -s -o /dev/null -w "home %{http_code}\n" -m 60 https://soodpaz.com/ || true
+          curl -s -o /dev/null -w "blog %{http_code}\n" -m 60 https://soodpaz.com/blog/ || true

@@ -186,9 +186,9 @@ function sp_starter_posts() {
 }
 
 function sp_create_starter_posts() {
-	$cat = term_exists( 'قیمت‌گذاری', 'category' );
+	$cat = term_exists( 'cake-pricing', 'category' );
 	if ( ! $cat ) {
-		$cat = wp_insert_term( 'قیمت‌گذاری', 'category', array( 'slug' => 'pricing-tips' ) );
+		$cat = wp_insert_term( 'قیمت‌گذاری کیک و شیرینی', 'category', array( 'slug' => 'cake-pricing' ) );
 	}
 	$cat_id = is_array( $cat ) ? (int) $cat['term_id'] : 0;
 

@@ -21,7 +21,9 @@
 			<div>
 				<h4>بیشتر بدون</h4>
 				<nav aria-label="درباره">
-					<a href="<?php echo esc_url( sp_url( 'learn' ) ); ?>">آموزش قیمت‌گذاری</a>
+					<a href="<?php echo esc_url( sp_blog_url() ); ?>">مجله‌ی سودپز</a>
+					<a href="<?php echo esc_url( sp_blog_url( 'cake-pricing' ) ); ?>">قیمت‌گذاری کیک</a>
+					<a href="<?php echo esc_url( sp_blog_url( 'home-food' ) ); ?>">قیمت‌گذاری غذای خانگی</a>
 					<a href="<?php echo esc_url( sp_url( 'faq' ) ); ?>">سؤال‌های رایج</a>
 					<a href="<?php echo esc_url( sp_url( 'about' ) ); ?>">درباره‌ی سودپز</a>
 					<a href="<?php echo esc_url( sp_url( 'contact' ) ); ?>">تماس با ما</a>

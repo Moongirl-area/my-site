@@ -29,7 +29,7 @@
 			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>">امکانات</a>
 			<a href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"<?php echo is_page( 'calculator' ) ? ' aria-current="page"' : ''; ?>>ماشین‌حساب رایگان</a>
 			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>>قیمت‌ها</a>
-			<a href="<?php echo esc_url( sp_url( 'learn' ) ); ?>"<?php echo ( is_page( 'learn' ) || is_singular( 'post' ) ) ? ' aria-current="page"' : ''; ?>>آموزش</a>
+			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>>مجله</a>
 		</nav>
 		<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">بنیان‌گذار شو</a>
 	</div>
