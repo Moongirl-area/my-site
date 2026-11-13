@@ -28,7 +28,7 @@ while ( have_posts() ) :
 					<p class="sp-post__dek"><?php echo esc_html( get_the_excerpt() ); ?></p>
 				<?php endif; ?>
 				<div class="sp-post__meta">
-					<span class="sp-post__by"><?php echo sp_logo_svg( 30 ); // phpcs:ignore ?><span><b>تیم سودپز</b><small>رفیق حسابگر آشپزخونه</small></span></span>
+					<span class="sp-post__by"><?php echo sp_logo_svg( 34 ); // phpcs:ignore ?><span><b>تیم سودپز</b><small>رفیق حسابگر آشپزخونه</small></span></span>
 					<span><?php echo sp_icon( 'clock', 16 ); ?><?php echo esc_html( sp_fa( sp_read_minutes( $sp_id ) ) ); ?> دقیقه مطالعه</span>
 					<span><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( sp_post_jdate( $sp_id ) ); ?></time></span>
 					<?php if ( $sp_updated ) : ?>

@@ -14,6 +14,11 @@
 		document.documentElement.setAttribute('data-k', k === 'food' ? 'food' : 'sweet');
 	})();
 	</script>
+	<?php if ( ! has_site_icon() ) : ?>
+	<link rel="icon" href="<?php echo esc_url( SP_URI . '/assets/img/logo/favicon.svg' ); ?>" type="image/svg+xml">
+	<link rel="icon" href="<?php echo esc_url( SP_URI . '/assets/img/logo/favicon-32.png' ); ?>" sizes="32x32" type="image/png">
+	<link rel="apple-touch-icon" href="<?php echo esc_url( SP_URI . '/assets/img/logo/apple-touch-icon.png' ); ?>">
+	<?php endif; ?>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -22,7 +27,7 @@
 <header class="sp-header">
 	<div class="sp-wrap sp-header__inner">
 		<a class="sp-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="سودپز، صفحه‌ی اصلی">
-			<?php echo sp_logo_svg( 36 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+			<?php echo sp_logo_svg( 46 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<span class="sp-brand__name">سودپز</span>
 		</a>
 		<nav class="sp-nav" aria-label="منوی اصلی">

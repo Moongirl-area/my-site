@@ -3,7 +3,7 @@
 	<div class="sp-wrap sp-footer__inner">
 		<div>
 			<a class="sp-brand sp-brand--light" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php echo sp_logo_svg( 30 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				<?php echo sp_logo_svg( 42 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				<span class="sp-brand__name">سودپز</span>
 			</a>
 			<p class="sp-footer__tag">بپز، بفروش، ضرر نکن.</p>

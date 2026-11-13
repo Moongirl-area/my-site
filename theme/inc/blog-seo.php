@@ -119,7 +119,7 @@ add_action( 'wp_head', function () {
 			'mainEntityOfPage' => get_permalink(),
 			'image'            => $img ? array( '@type' => 'ImageObject', 'url' => $img[0], 'width' => $img[1], 'height' => $img[2] ) : null,
 			'author'           => array( '@type' => 'Organization', 'name' => 'سودپز', 'url' => home_url( '/' ) ),
-			'publisher'        => array( '@type' => 'Organization', 'name' => 'سودپز', 'url' => home_url( '/' ) ),
+			'publisher'        => array( '@type' => 'Organization', 'name' => 'سودپز', 'url' => home_url( '/' ), 'logo' => array( '@type' => 'ImageObject', 'url' => SP_URI . '/assets/img/logo/icon-512.png', 'width' => 512, 'height' => 512 ) ),
 			'articleSection'   => sp_blog_cat( sp_post_cat_slug( $id ) )['name'],
 			'keywords'         => get_post_meta( $id, '_sp_focus_kw', true ),
 			'wordCount'        => count( preg_split( '/\s+/u', wp_strip_all_tags( get_post_field( 'post_content', $id ) ), -1, PREG_SPLIT_NO_EMPTY ) ),
