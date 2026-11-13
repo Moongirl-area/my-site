@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_BLOG_VERSION', 5 );
+define( 'SP_BLOG_VERSION', 6 );
 
 /**
  * سرفصل‌های مجله (دایرکتوری). ترتیب همین‌جا ترتیب نمایش است.
@@ -124,6 +124,17 @@ function sp_blog_setup_terms() {
 				wp_set_post_categories( $id, array( (int) $new->term_id ), false );
 			}
 			wp_delete_term( $old->term_id, 'category' );
+		}
+	}
+	// آموزش‌های غذای پوسته (food-*) که قبلاً در سرفصل کیک ساخته شده‌اند، به سرفصل غذا بروند.
+	$food = get_term_by( 'slug', 'home-food', 'category' );
+	if ( ! $food ) {
+		$r    = wp_insert_term( sp_blog_cats()['home-food']['name'], 'category', array( 'slug' => 'home-food' ) );
+		$food = is_wp_error( $r ) ? null : get_term( $r['term_id'], 'category' );
+	}
+	if ( $food ) {
+		foreach ( get_posts( array( 'post_type' => 'post', 'post_status' => 'any', 'numberposts' => 20, 'post_name__in' => array( 'food-portion-pricing' ) ) ) as $fp ) {
+			wp_set_post_categories( $fp->ID, array( (int) $food->term_id ), false );
 		}
 	}
 	foreach ( sp_blog_cats() as $slug => $c ) {
@@ -346,10 +357,10 @@ function sp_post_cta( $post_id ) {
 		?>
 		<div class="sp-cta-box sp-cta-box--food">
 			<div>
-				<h3>قیمت‌گذاری غذای خانگی داره به سودپز اضافه می‌شه</h3>
-				<p>بنیان‌گذار شو تا اولین نفری باشی که قیمت هر پرس رو با یه کلیک حساب می‌کنه.</p>
+				<h3>قیمت هر پرس غذات رو حساب کن</h3>
+				<p>رایگان، بدون ثبت‌نام، با قیمت مواد این هفته.</p>
 			</div>
-			<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"><?php echo sp_icon( 'spark', 20 ); ?>بنیان‌گذار شو</a>
+			<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( add_query_arg( 'k', 'food', sp_url( 'calculator' ) ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>ماشین‌حساب غذا</a>
 		</div>
 		<?php
 		return;

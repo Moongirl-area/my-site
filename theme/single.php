@@ -127,10 +127,11 @@ while ( have_posts() ) :
 						</ol>
 					</nav>
 				<?php endif; ?>
+				<?php $sp_food = 'food' === get_post_meta( $sp_id, '_sp_cta', true ); ?>
 				<div class="sp-side-cta">
 					<?php echo sp_icon( 'calc', 26 ); ?>
-					<p><b>قیمت کیکت رو حساب کن</b><br>رایگان، بدون ثبت‌نام</p>
-					<a class="sp-btn sp-btn--coral sp-btn--sm sp-btn--block" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>">ماشین‌حساب</a>
+					<p><b><?php echo $sp_food ? 'قیمت هر پرس غذات رو حساب کن' : 'قیمت کیکت رو حساب کن'; ?></b><br>رایگان، بدون ثبت‌نام</p>
+					<a class="sp-btn sp-btn--coral sp-btn--sm sp-btn--block" href="<?php echo esc_url( add_query_arg( 'k', $sp_food ? 'food' : 'sweet', sp_url( 'calculator' ) ) ); ?>">ماشین‌حساب</a>
 				</div>
 			</aside>
 		</div>

@@ -197,6 +197,13 @@ function sp_create_starter_posts() {
 		if ( get_option( 'sp_post_made_' . $slug ) || get_page_by_path( $slug, OBJECT, 'post' ) ) {
 			continue;
 		}
+		// آموزش‌های غذا در سرفصل غذای خانگی مجله
+		if ( 0 === strpos( $slug, 'food-' ) ) {
+			$food = get_term_by( 'slug', 'home-food', 'category' );
+			$this_cat = $food ? (int) $food->term_id : $cat_id;
+		} else {
+			$this_cat = $cat_id;
+		}
 		$id = wp_insert_post( array(
 			'post_type'     => 'post',
 			'post_status'   => 'publish',
@@ -205,7 +212,7 @@ function sp_create_starter_posts() {
 			'post_excerpt'  => $p['excerpt'],
 			'post_content'  => trim( $p['content'] ),
 			'post_author'   => sp_owner_id(),
-			'post_category' => $cat_id ? array( $cat_id ) : array(),
+			'post_category' => $this_cat ? array( $this_cat ) : array(),
 		) );
 		if ( $id && ! is_wp_error( $id ) ) {
 			update_post_meta( $id, '_sp_img', $p['img'] );
