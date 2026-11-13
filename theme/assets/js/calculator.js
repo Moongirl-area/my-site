@@ -110,6 +110,37 @@
 		var mini = $('r-mini'); if (mini) { mini.textContent = price ? toman(price) : '—'; $('sp-minibar').hidden = !price || resultVisible; }
 		$('r-perkg').textContent = price && w !== 1 ? 'کیلویی ' + toman(round5k(price / w)) : '';
 
+		// نمودار دایره‌ای: سهم هر بخش از قیمت فروش
+		var split = $('r-split');
+		if (split) {
+			var profitAmt = Math.max(price - cost, 0);
+			split.hidden = !(price > 0 && !missing);
+			if (!split.hidden) {
+				var parts = [mat, wage, other, profitAmt];
+				var colors = ['#F2A33A', '#7FC8C4', '#B9A3D6', '#5FD08F'];
+				var ids = ['s-mat', 's-wage', 's-other', 's-profit'];
+				var acc = 0, stops = [];
+				parts.forEach(function (p, i) {
+					var pct = p / price * 100;
+					stops.push(colors[i] + ' ' + acc + '% ' + (acc + pct) + '%');
+					acc += pct;
+					$(ids[i]).textContent = faNum(Math.round(pct)) + '٪';
+				});
+				$('r-donut').style.background = 'conic-gradient(' + stops.join(',') + ')';
+				$('r-donut-c').textContent = faNum(Math.round(profitAmt / price * 100)) + '٪ سود';
+			}
+		}
+
+		// متن آماده برای مشتری (هزینه و سود داخلش نیست)
+		var qBox = $('r-quote-box');
+		if (qBox) {
+			qBox.hidden = !(price > 0 && !missing);
+			if (!qBox.hidden) {
+				$('r-quote').value = 'سلام 🌸\n' + r.name + ' ' + faNum(w, 2) + ' کیلویی: ' + toman(price) +
+					'\nبرای ثبت سفارش، تاریخ تحویل رو بفرستید.';
+			}
+		}
+
 		var v = $('r-verdict');
 		var current = num($('sp-current').value);
 		if (missing) {
@@ -153,6 +184,17 @@
 		}
 		calc();
 	});
+
+	var copyBtn = $('r-copy');
+	if (copyBtn) {
+		copyBtn.addEventListener('click', function () {
+			var ta = $('r-quote'), label = copyBtn.querySelector('span');
+			var done = function () { label.textContent = 'کپی شد ✓'; setTimeout(function () { label.textContent = 'کپی برای دایرکت'; }, 2000); };
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(ta.value).then(done, function () { ta.select(); document.execCommand('copy'); done(); });
+			} else { ta.select(); document.execCommand('copy'); done(); }
+		});
+	}
 
 	// وقتی خود کارت نتیجه دیده می‌شود، نوار پایین لازم نیست.
 	var resultVisible = false;

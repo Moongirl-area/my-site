@@ -413,3 +413,97 @@ p { margin: 0 0 1em; }
 	.sp-table input { min-width: 0; }
 	.sp-table-wrap { overflow: visible; }
 }
+
+/* ---------- نسخه‌ی ۳: تفکیک قیمت، متن مشتری، صفحه‌های جدید ---------- */
+
+/* نمودار دایره‌ای تفکیک قیمت (کارت نتیجه) */
+.sp-split { display: flex; align-items: center; gap: 18px; margin: 14px 0 4px; }
+.sp-split__donut { --s: 112px; width: var(--s); height: var(--s); border-radius: 50%; flex: none; display: grid; place-items: center; position: relative; transition: background .3s; }
+.sp-split__donut::after { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: var(--ink); }
+.sp-split__donut span { position: relative; z-index: 1; font-size: 13px; font-weight: 800; color: #5FD08F; text-align: center; line-height: 1.3; }
+.sp-split__legend { list-style: none; margin: 0; padding: 0; font-size: 14px; color: #C9C5BE; flex: 1; }
+.sp-split__legend li { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+.sp-split__legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; }
+.sp-split__legend b { margin-inline-start: auto; color: #fff; }
+
+/* متن قیمت برای مشتری */
+.sp-quote { background: rgba(255, 255, 255, .06); border: 1px dashed rgba(255, 255, 255, .25); border-radius: 16px; padding: 14px; margin-bottom: 16px; }
+.sp-quote__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.sp-quote__head small { color: #C9C5BE; font-size: 12px; }
+.sp-quote textarea { width: 100%; font: inherit; font-size: 15px; line-height: 1.8; color: #fff; background: transparent; border: 0; resize: vertical; padding: 0; margin-bottom: 8px; }
+.sp-quote textarea:focus { outline: none; }
+
+/* صفحه‌ی اول: مقایسه‌ی حساب سرانگشتی با سودپز */
+.sp-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
+.sp-compare__card { background: #fff; border-radius: 24px; padding: 28px; box-shadow: var(--shadow); }
+.sp-compare__card--bad { border-top: 6px solid var(--red); }
+.sp-compare__card--good { border-top: 6px solid var(--good); }
+.sp-compare__card h3 { display: flex; align-items: center; gap: 10px; font-size: 20px; }
+.sp-compare__row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #F0ECE5; font-size: 15px; }
+.sp-compare__row span { color: var(--muted); }
+.sp-compare__row--miss b { color: var(--muted); text-decoration: line-through; font-weight: 500; }
+.sp-compare__end { margin: 16px 0 0; padding: 12px 14px; border-radius: 14px; font-weight: 800; }
+.sp-compare__card--bad .sp-compare__end { background: #FCE3E3; color: var(--red); }
+.sp-compare__card--good .sp-compare__end { background: #E1F2E9; color: var(--good); }
+
+/* سرصفحه‌ی صفحه‌های داخلی */
+.sp-page-head { padding: 56px 0 20px; }
+.sp-page-head .sp-sub { max-width: 40em; }
+
+/* آموزش‌ها */
+.sp-posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.sp-post-card { background: #fff; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; text-decoration: none; transition: transform .2s; }
+.sp-post-card:hover { transform: translateY(-3px); }
+.sp-post-card__img { aspect-ratio: 16 / 10; width: 100%; object-fit: cover; background: var(--stone); }
+.sp-post-card__body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.sp-post-card__body h2 { font-size: 20px; margin: 0; }
+.sp-post-card__body p { color: var(--muted); font-size: 15px; margin: 0; }
+.sp-post-card__more { margin-top: auto; padding-top: 10px; color: var(--coral); font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; }
+.sp-article { max-width: 760px; margin: 0 auto; }
+.sp-article__meta { color: var(--muted); font-size: 14px; display: flex; gap: 14px; align-items: center; }
+.sp-article__img { border-radius: 24px; margin: 24px 0; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.sp-article h2 { font-family: var(--display); font-size: 28px; margin-top: 1.6em; }
+.sp-article ul, .sp-article ol { padding-inline-start: 1.4em; }
+.sp-article li { margin-bottom: .4em; }
+.sp-cta-box { background: var(--ink); color: #fff; border-radius: 24px; padding: 28px; margin: 48px 0 0; display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.sp-cta-box h3 { margin: 0 0 4px; font-size: 22px; }
+.sp-cta-box p { margin: 0; color: #C9C5BE; }
+
+/* درباره */
+.sp-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 36px 0; }
+.sp-value { background: #fff; border-radius: 22px; padding: 24px; box-shadow: var(--shadow); }
+.sp-value .sp-feature__ico { margin-bottom: 12px; }
+.sp-value h3 { font-size: 18px; }
+.sp-value p { color: var(--muted); font-size: 15px; margin: 0; }
+
+/* تماس */
+.sp-contact { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start; }
+.sp-contact__card { background: #fff; border-radius: 24px; padding: 28px; box-shadow: var(--shadow); }
+.sp-contact__list { list-style: none; margin: 20px 0 0; padding: 0; }
+.sp-contact__list li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.sp-contact__list .sp-ico { color: var(--coral); margin-top: 4px; }
+
+/* حقوقی */
+.sp-legal h2 { font-family: inherit; font-size: 22px; }
+.sp-legal .sp-small { margin-bottom: 2em; }
+
+/* ۴۰۴ */
+.sp-404 { text-align: center; padding: 90px 0; }
+.sp-404__num { font-family: var(--display); font-size: clamp(90px, 18vw, 180px); line-height: 1; color: var(--coral); margin: 0; }
+.sp-404 .sp-actions { justify-content: center; }
+
+/* فوتر چندستونه */
+.sp-footer__cols { display: grid; grid-template-columns: repeat(3, auto); gap: 16px 56px; }
+.sp-footer__cols h4 { margin: 0 0 8px; font-size: 14px; color: var(--mustard); font-weight: 700; }
+.sp-footer__cols nav { display: flex; flex-direction: column; gap: 4px; }
+
+@media (max-width: 1000px) {
+	.sp-posts { grid-template-columns: 1fr 1fr; }
+	.sp-contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+	.sp-compare, .sp-posts, .sp-values { grid-template-columns: 1fr; }
+	.sp-footer__cols { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+	.sp-split__donut { --s: 96px; }
+	.sp-page-head { padding: 32px 0 8px; }
+}

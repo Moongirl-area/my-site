@@ -109,6 +109,15 @@ if ( ! isset( sp_recipes()[ $sp_cake ] ) ) {
 					<div class="sp-result__row"><span>دستمزد</span><b id="r-wage">—</b></div>
 					<div class="sp-result__row"><span>فر و بسته‌بندی</span><b id="r-other">—</b></div>
 					<div class="sp-result__row sp-result__row--total"><span>قیمت تمام‌شده</span><b id="r-cost">—</b></div>
+					<div class="sp-split" id="r-split" hidden>
+						<div class="sp-split__donut" id="r-donut" role="img" aria-label="سهم هر بخش از قیمت فروش"><span id="r-donut-c"></span></div>
+						<ul class="sp-split__legend">
+							<li style="--c:#F2A33A"><i></i>مواد <b id="s-mat"></b></li>
+							<li style="--c:#7FC8C4"><i></i>دستمزد <b id="s-wage"></b></li>
+							<li style="--c:#B9A3D6"><i></i>فر و بسته‌بندی <b id="s-other"></b></li>
+							<li style="--c:#5FD08F"><i></i>سود <b id="s-profit"></b></li>
+						</ul>
+					</div>
 					<div class="sp-result__big">
 						<span>قیمت پیشنهادی</span>
 						<b id="r-price">—</b>
@@ -119,6 +128,11 @@ if ( ! isset( sp_recipes()[ $sp_cake ] ) ) {
 						<input id="sp-current" type="text" inputmode="numeric" placeholder="مثلاً ۷۵۰٬۰۰۰">
 					</div>
 					<div id="r-verdict" class="sp-verdict" hidden></div>
+					<div class="sp-quote" id="r-quote-box" hidden>
+						<div class="sp-quote__head"><b>متن قیمت برای مشتری</b><small>بدون هزینه‌ها و سودت</small></div>
+						<textarea id="r-quote" rows="4" aria-label="متن قیمت برای فرستادن به مشتری"></textarea>
+						<button class="sp-btn sp-btn--paper sp-btn--sm" type="button" id="r-copy"><?php echo sp_icon( 'story', 18 ); ?><span>کپی برای دایرکت</span></button>
+					</div>
 					<p class="sp-result__cta">این قیمت با قیمت مواد امروز حساب شده. هفته‌ی بعد که کره گرون‌تر شد، دوباره باید حساب کنی؛ سودپز پرو این کار رو خودش انجام می‌ده.</p>
 					<a class="sp-btn sp-btn--primary sp-btn--block" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">عضو بنیان‌گذار شو</a>
 				</div>

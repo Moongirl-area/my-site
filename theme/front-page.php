@@ -63,6 +63,38 @@ $sp_wood    = sp_img_url( 'wood' );
 	</div>
 </section>
 
+<!-- ۲.۵ حساب سرانگشتی در برابر سودپز -->
+<section class="sp-section">
+	<div class="sp-wrap">
+		<p class="sp-script sp-center">یه کیک، دو حساب</p>
+		<h2 class="sp-display sp-display--md sp-center">حساب سرانگشتی کجا ضرر می‌ده؟</h2>
+		<p class="sp-sub sp-center">کیک شکلاتی ۱ کیلویی (عددها نمونه‌ان).</p>
+		<div class="sp-compare">
+			<div class="sp-compare__card sp-compare__card--bad">
+				<h3><?php echo sp_icon( 'calc', 24 ); ?> حساب سرانگشتی</h3>
+				<div class="sp-compare__row"><span>مواد</span><b>۴۲۰ هزار</b></div>
+				<div class="sp-compare__row sp-compare__row--miss"><span>دستمزد ۲٫۵ ساعت</span><b>حساب نشد</b></div>
+				<div class="sp-compare__row sp-compare__row--miss"><span>گاز فر و جعبه</span><b>حساب نشد</b></div>
+				<div class="sp-compare__row"><span>«یه کم بذارم روش»</span><b>+ ۱۳۰ هزار</b></div>
+				<div class="sp-compare__row"><span>قیمت فروش</span><b>۵۵۰ هزار</b></div>
+				<p class="sp-compare__end"><?php echo sp_icon( 'down', 18 ); ?> هزینه‌ی واقعی ۶۴۲ هزاره؛ از هر کیک ۹۲ هزار تومان ضرر.</p>
+			</div>
+			<div class="sp-compare__card sp-compare__card--good">
+				<h3><?php echo sp_icon( 'check', 24 ); ?> با سودپز</h3>
+				<div class="sp-compare__row"><span>مواد با قیمت امروز</span><b>۴۲۰ هزار</b></div>
+				<div class="sp-compare__row"><span>دستمزد ۲٫۵ ساعت</span><b>۱۸۷ هزار</b></div>
+				<div class="sp-compare__row"><span>گاز فر و جعبه</span><b>۳۵ هزار</b></div>
+				<div class="sp-compare__row"><span>قیمت تمام‌شده</span><b>۶۴۲ هزار</b></div>
+				<div class="sp-compare__row"><span>قیمت فروش با ۳۰٪ سود</span><b>۹۲۰ هزار</b></div>
+				<p class="sp-compare__end"><?php echo sp_icon( 'up', 18 ); ?> هم دستمزدت رو گرفتی، هم ۲۷۸ هزار تومان سود.</p>
+			</div>
+		</div>
+		<div class="sp-actions" style="justify-content:center;margin-top:32px">
+			<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>کیک خودت رو حساب کن</a>
+		</div>
+	</div>
+</section>
+
 <!-- ۳. چطور کار می‌کنه (بخش تیره) -->
 <section class="sp-dark">
 	<div class="sp-dark__grid">

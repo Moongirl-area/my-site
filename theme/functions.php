@@ -7,13 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_VERSION', '0.1.0' );
+define( 'SP_VERSION', '0.3.0' );
 define( 'SP_DIR', get_template_directory() );
 define( 'SP_URI', get_template_directory_uri() );
 
 require_once SP_DIR . '/inc/helpers.php';
 require_once SP_DIR . '/inc/prices.php';
 require_once SP_DIR . '/inc/leads.php';
+require_once SP_DIR . '/inc/contact.php';
+require_once SP_DIR . '/inc/content.php';
 
 /* ---------- راه‌اندازی پوسته ---------- */
 add_action( 'after_setup_theme', function () {
@@ -43,24 +45,8 @@ add_action( 'wp_enqueue_scripts', function () {
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
-/* ---------- ساختن خودکار صفحه‌ها هنگام فعال‌سازی ---------- */
-add_action( 'after_switch_theme', 'sp_create_pages' );
-function sp_create_pages() {
-	$pages = array(
-		'calculator' => 'ماشین‌حساب قیمت کیک خانگی ۱۴۰۵',
-		'pricing'    => 'قیمت‌ها',
-		'founders'   => 'عضو بنیان‌گذار سودپز',
-	);
-	foreach ( $pages as $slug => $title ) {
-		if ( get_page_by_path( $slug ) ) {
-			continue;
-		}
-		wp_insert_post( array(
-			'post_type'   => 'page',
-			'post_status' => 'publish',
-			'post_name'   => $slug,
-			'post_title'  => $title,
-		) );
-	}
-	flush_rewrite_rules();
-}
+/* ---------- ساختن خودکار صفحه‌ها و آموزش‌ها (inc/content.php) ---------- */
+add_action( 'after_switch_theme', function () {
+	sp_create_pages();
+	sp_create_starter_posts();
+} );

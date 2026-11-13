@@ -1,0 +1,202 @@
+<?php
+/**
+ * صفحه‌ها و آموزش‌های اولیه‌ی سایت.
+ * بعد از هر آپلود، فقط چیزهایی که هنوز وجود ندارند ساخته می‌شوند؛
+ * چیزی که خودت در پیشخوان ویرایش یا پاک کرده باشی دوباره ساخته یا بازنویسی نمی‌شود.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+define( 'SP_CONTENT_VERSION', 3 );
+
+add_action( 'init', function () {
+	if ( (int) get_option( 'sp_content_version', 0 ) >= SP_CONTENT_VERSION ) {
+		return;
+	}
+	// قفل ساده تا دو بازدید هم‌زمان دو بار نسازند.
+	if ( ! add_option( 'sp_content_lock', time(), '', 'no' ) ) {
+		if ( time() - (int) get_option( 'sp_content_lock' ) < 60 ) {
+			return;
+		}
+		update_option( 'sp_content_lock', time() );
+	}
+	sp_create_pages();
+	sp_create_starter_posts();
+	sp_trash_default_post();
+	update_option( 'sp_content_version', SP_CONTENT_VERSION );
+	delete_option( 'sp_content_lock' );
+}, 20 );
+
+/** صفحه‌ها: نامک ← عنوان. محتوای هر صفحه در فایل page-{نامک}.php است. */
+function sp_pages() {
+	return array(
+		'calculator' => 'ماشین‌حساب قیمت کیک خانگی ۱۴۰۵',
+		'pricing'    => 'قیمت‌ها',
+		'founders'   => 'عضو بنیان‌گذار سودپز',
+		'learn'      => 'آموزش قیمت‌گذاری کیک خانگی',
+		'faq'        => 'سؤال‌های رایج',
+		'about'      => 'درباره‌ی سودپز',
+		'contact'    => 'تماس با ما',
+		'privacy'    => 'حریم خصوصی',
+		'terms'      => 'قوانین و مقررات',
+	);
+}
+
+function sp_owner_id() {
+	$admins = get_users( array( 'role' => 'administrator', 'number' => 1, 'fields' => 'ID' ) );
+	return $admins ? (int) $admins[0] : 0;
+}
+
+function sp_create_pages() {
+	$made = false;
+	foreach ( sp_pages() as $slug => $title ) {
+		if ( get_page_by_path( $slug, OBJECT, 'page' ) ) {
+			continue;
+		}
+		wp_insert_post( array(
+			'post_type'   => 'page',
+			'post_status' => 'publish',
+			'post_name'   => $slug,
+			'post_title'  => $title,
+			'post_author' => sp_owner_id(),
+		) );
+		$made = true;
+	}
+	if ( $made ) {
+		flush_rewrite_rules();
+	}
+}
+
+/** سه آموزش اول. img = نام عکس در assets/img. */
+function sp_starter_posts() {
+	return array(
+		'cake-pricing-formula' => array(
+			'title'   => 'فرمول قیمت‌گذاری کیک خانگی، قدم‌به‌قدم',
+			'img'     => 'cake-chocolate',
+			'excerpt' => 'چهار عدد که باید بدونی، و یه فرمول ساده که از هر کیک سود واقعی بگیری.',
+			'content' => '
+<p>بیشتر قنادهای خانگی قیمت رو با یکی از این دو روش می‌ذارن: «بقیه چند می‌فروشن؟» یا «مواد رو حساب کنم، یه کم بذارم روش». هر دو روش یه مشکل مشترک دارن: معلوم نیست آخرش سود کردی یا مجانی کار کردی.</p>
+<h2>قدم ۱: هزینه‌ی مواد رو دقیق حساب کن</h2>
+<p>برای هر ماده، مقداری که توی کیک می‌ره رو ضرب در قیمت هر واحدش کن. مثلاً اگه کره کیلویی X تومانه و ۸۰ گرم مصرف می‌کنی، هزینه‌ی کره می‌شه ۰٫۰۸ × X. قیمت <strong>امروز</strong> رو بنویس، نه قیمتی که دو ماه پیش خریدی.</p>
+<h2>قدم ۲: دستمزد خودت رو اضافه کن</h2>
+<p>ساعت‌هایی که پای این کیک گذاشتی رو ضرب در دستمزد ساعتی‌ت کن: خرید، آماده‌سازی، پخت، تزئین، شستن ظرف و جواب دادن به مشتری. دستمزد منطقی، مبلغیه که اگه کس دیگه‌ای جای تو کار می‌کرد باید بهش می‌دادی.</p>
+<h2>قدم ۳: هزینه‌های جانبی</h2>
+<p>گاز و برق فر (هزینه‌ی هر ساعت × ساعت روشن بودن فر)، جعبه، مقوای زیر کیک، روبان، شمع و رفت‌وآمد.</p>
+<h2>قدم ۴: سود رو درست حساب کن</h2>
+<p>جمع سه قدم بالا می‌شه <strong>قیمت تمام‌شده</strong>. حالا:</p>
+<p><strong>قیمت فروش = قیمت تمام‌شده ÷ (۱ − درصد سود)</strong></p>
+<p>برای ۳۰٪ سود، قیمت تمام‌شده رو تقسیم بر ۰٫۷ کن. چرا ضرب در ۱٫۳ نه؟ توی <a href="#sp-link-margin-vs-markup">این آموزش</a> توضیح دادیم.</p>
+<h2>خلاصه</h2>
+<ol>
+<li>مواد با قیمت امروز</li>
+<li>+ دستمزد ساعتی × ساعت کار</li>
+<li>+ فر، جعبه و بسته‌بندی</li>
+<li>÷ (۱ − درصد سود)</li>
+</ol>
+<p>اگه حوصله‌ی حساب‌کتاب نداری، <a href="#sp-link-calculator">ماشین‌حساب رایگان سودپز</a> همین چهار قدم رو در دو دقیقه برات انجام می‌ده.</p>',
+		),
+		'hidden-costs' => array(
+			'title'   => '۹ هزینه‌ی پنهان که قنادهای خانگی یادشون می‌ره',
+			'img'     => 'baking-hands',
+			'excerpt' => 'فکر می‌کنی سود می‌کنی؟ این ۹ هزینه رو چک کن؛ احتمالاً چند تاش توی قیمتت نیست.',
+			'content' => '
+<p>وقتی فقط مواد رو حساب می‌کنی، کیکت «ارزون» به نظر می‌رسه. ولی این هزینه‌ها بی‌صدا از سودت کم می‌شن:</p>
+<ol>
+<li><strong>دستمزد خودت.</strong> بزرگ‌ترین هزینه‌ی پنهان. اگه حسابش نکنی، یعنی مجانی کار کردی.</li>
+<li><strong>گاز و برق فر.</strong> مخصوصاً برای کیک‌هایی که بیشتر از یه ساعت توی فر می‌مونن.</li>
+<li><strong>جعبه و مقوای زیر کیک.</strong> جعبه‌ی خوب گاهی قیمت یکی از مواد اصلیه.</li>
+<li><strong>تزئینات کوچیک.</strong> شمع، تاپر، روبان، اسپرینکل، رنگ خوراکی.</li>
+<li><strong>مواد دورریز.</strong> خامه‌ای که زیادی زدی، لایه‌ای که خراب شد.</li>
+<li><strong>رفت‌وآمد.</strong> خرید مواد و تحویل سفارش.</li>
+<li><strong>استهلاک وسایل.</strong> همزن، قالب و قیف‌ها بالاخره عوض می‌شن.</li>
+<li><strong>اینترنت و تبلیغات.</strong> بسته‌ی اینترنت برای اینستاگرام و هر تبلیغی که دادی.</li>
+<li><strong>کارمزد پرداخت.</strong> اگه با درگاه یا اپ پرداخت پول می‌گیری.</li>
+</ol>
+<h2>همه‌ی این‌ها رو چطور حساب کنم؟</h2>
+<p>لازم نیست برای هر کیک جدا حساب کنی. هزینه‌های ماهانه (مثل اینترنت و استهلاک) رو جمع کن و تقسیم بر تعداد کیک‌هایی که در ماه می‌فروشی. عددی که درمیاد رو به «بسته‌بندی» هر کیک اضافه کن.</p>
+<p>با <a href="#sp-link-calculator">ماشین‌حساب رایگان</a> امتحانش کن و ببین قیمت واقعیت چقدر فرق می‌کنه.</p>',
+		),
+		'margin-vs-markup' => array(
+			'title'   => '۳۰٪ سود یا ۳۰٪ اضافه؟ اشتباهی که سودت رو می‌خوره',
+			'img'     => 'cake-carrot',
+			'excerpt' => 'ضرب کردن در ۱٫۳ بهت ۳۰٪ سود نمی‌ده. با یه مثال ساده ببین چقدر از سودت گم می‌شه.',
+			'content' => '
+<p>خیلی‌ها برای ۳۰٪ سود، قیمت تمام‌شده رو ضرب در ۱٫۳ می‌کنن. نتیجه؟ سود واقعیشون حدود ۲۳٪ می‌شه، نه ۳۰٪.</p>
+<h2>یه مثال</h2>
+<p>کیکی که ۷۰۰ هزار تومان برات تموم می‌شه:</p>
+<ul>
+<li><strong>با ۳۰٪ اضافه:</strong> ۷۰۰ × ۱٫۳ = ۹۱۰ هزار. سودت ۲۱۰ هزاره، یعنی ۲۳٪ از قیمت فروش.</li>
+<li><strong>با ۳۰٪ سود واقعی:</strong> ۷۰۰ ÷ ۰٫۷ = ۱ میلیون. سودت ۳۰۰ هزاره، یعنی دقیقاً ۳۰٪.</li>
+</ul>
+<p>فرقش روی هر کیک ۹۰ هزار تومانه. با ۲۰ سفارش در ماه، می‌شه ۱ میلیون و ۸۰۰ هزار تومان.</p>
+<h2>چرا این‌طوریه؟</h2>
+<p>«اضافه» (markup) رو روی هزینه حساب می‌کنی، ولی «سود» (margin) سهمیه از قیمت فروش. وقتی می‌گی «۳۰٪ سود می‌خوام»، یعنی از هر ۱۰۰ تومانی که مشتری می‌ده، ۳۰ تومانش مال خودت باشه.</p>
+<h2>جدول تبدیل سریع</h2>
+<ul>
+<li>۲۰٪ سود ← تقسیم بر ۰٫۸ (یعنی ۲۵٪ اضافه)</li>
+<li>۳۰٪ سود ← تقسیم بر ۰٫۷ (یعنی حدود ۴۳٪ اضافه)</li>
+<li>۴۰٪ سود ← تقسیم بر ۰٫۶ (یعنی حدود ۶۷٪ اضافه)</li>
+</ul>
+<p><a href="#sp-link-calculator">ماشین‌حساب سودپز</a> همیشه با روش درست حساب می‌کنه.</p>',
+		),
+	);
+}
+
+function sp_create_starter_posts() {
+	$cat = term_exists( 'قیمت‌گذاری', 'category' );
+	if ( ! $cat ) {
+		$cat = wp_insert_term( 'قیمت‌گذاری', 'category', array( 'slug' => 'pricing-tips' ) );
+	}
+	$cat_id = is_array( $cat ) ? (int) $cat['term_id'] : 0;
+
+	// به ترتیب برعکس، تا اولین آموزش جدیدترین باشد و اول نمایش داده شود.
+	foreach ( array_reverse( sp_starter_posts(), true ) as $slug => $p ) {
+		if ( get_option( 'sp_post_made_' . $slug ) || get_page_by_path( $slug, OBJECT, 'post' ) ) {
+			continue;
+		}
+		$id = wp_insert_post( array(
+			'post_type'     => 'post',
+			'post_status'   => 'publish',
+			'post_name'     => $slug,
+			'post_title'    => $p['title'],
+			'post_excerpt'  => $p['excerpt'],
+			'post_content'  => trim( $p['content'] ),
+			'post_author'   => sp_owner_id(),
+			'post_category' => $cat_id ? array( $cat_id ) : array(),
+		) );
+		if ( $id && ! is_wp_error( $id ) ) {
+			update_post_meta( $id, '_sp_img', $p['img'] );
+			// اگر بعداً پاکش کردی، دوباره ساخته نمی‌شود.
+			update_option( 'sp_post_made_' . $slug, $id, false );
+		}
+	}
+}
+
+/** لینک‌های داخلی آموزش‌ها: href="#sp-link-نامک" به آدرس واقعی صفحه یا نوشته تبدیل می‌شود. */
+add_filter( 'the_content', function ( $html ) {
+	return preg_replace_callback( '/href="#sp-link-([a-z0-9-]+)"/', function ( $m ) {
+		$obj = get_page_by_path( $m[1], OBJECT, array( 'page', 'post' ) );
+		$url = $obj ? get_permalink( $obj ) : home_url( '/' . $m[1] . '/' );
+		return 'href="' . esc_url( $url ) . '"';
+	}, $html );
+} );
+
+/**
+ * نوشته‌ی پیش‌فرض «سلام دنیا!» وردپرس در صفحه‌ی آموزش‌ها نمایش داده می‌شد.
+ * فقط اگر دست‌نخورده باشد به زباله‌دان می‌رود (از پیشخوان ← نوشته‌ها ← زباله‌دان قابل بازگرداندن است).
+ */
+function sp_trash_default_post() {
+	$p = get_page_by_path( 'hello-world', OBJECT, 'post' );
+	if ( ! $p ) {
+		$p = get_post( 1 );
+	}
+	if ( ! $p || 'post' !== $p->post_type || 'publish' !== $p->post_status ) {
+		return;
+	}
+	$is_default = in_array( $p->post_name, array( 'hello-world', rawurlencode( 'سلام-دنیا' ) ), true ) || in_array( $p->post_title, array( 'Hello world!', 'سلام دنیا!' ), true );
+	if ( $is_default && $p->post_modified === $p->post_date ) {
+		wp_trash_post( $p->ID );
+	}
+}

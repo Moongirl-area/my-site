@@ -94,3 +94,31 @@ function sp_img_url( $name ) {
 	}
 	return '';
 }
+
+/** عکس کارت/سرآغاز یک آموزش: عکس شاخص وردپرس، وگرنه عکس پوسته (متای _sp_img). */
+function sp_post_img( $post_id, $class = '', $eager = false ) {
+	if ( has_post_thumbnail( $post_id ) ) {
+		return get_the_post_thumbnail( $post_id, 'large', array( 'class' => $class, 'loading' => $eager ? 'eager' : 'lazy' ) );
+	}
+	$name = get_post_meta( $post_id, '_sp_img', true );
+	return sp_img( $name ? $name : 'hero-cake', get_the_title( $post_id ), $class, $eager );
+}
+
+/** زمان تقریبی خواندن (دقیقه). */
+function sp_read_minutes( $post_id ) {
+	$words = count( preg_split( '/\s+/u', wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), -1, PREG_SPLIT_NO_EMPTY ) );
+	return max( 1, (int) round( $words / 120 ) );
+}
+
+/** کادر دعوت به ماشین‌حساب، پایین صفحه‌های داخلی. */
+function sp_cta_box() {
+	?>
+	<div class="sp-cta-box">
+		<div>
+			<h3>قیمت کیک خودت رو حساب کن</h3>
+			<p>رایگان، بدون ثبت‌نام، دو دقیقه.</p>
+		</div>
+		<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>ماشین‌حساب رایگان</a>
+	</div>
+	<?php
+}
