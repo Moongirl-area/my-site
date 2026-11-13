@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_BLOG_VERSION', 6 );
+define( 'SP_BLOG_VERSION', 7 );
 
 /**
  * سرفصل‌های مجله (دایرکتوری). ترتیب همین‌جا ترتیب نمایش است.
@@ -126,16 +126,10 @@ function sp_blog_setup_terms() {
 			wp_delete_term( $old->term_id, 'category' );
 		}
 	}
-	// آموزش‌های غذای پوسته (food-*) که قبلاً در سرفصل کیک ساخته شده‌اند، به سرفصل غذا بروند.
-	$food = get_term_by( 'slug', 'home-food', 'category' );
-	if ( ! $food ) {
-		$r    = wp_insert_term( sp_blog_cats()['home-food']['name'], 'category', array( 'slug' => 'home-food' ) );
-		$food = is_wp_error( $r ) ? null : get_term( $r['term_id'], 'category' );
-	}
-	if ( $food ) {
-		foreach ( get_posts( array( 'post_type' => 'post', 'post_status' => 'any', 'numberposts' => 20, 'post_name__in' => array( 'food-portion-pricing' ) ) ) as $fp ) {
-			wp_set_post_categories( $fp->ID, array( (int) $food->term_id ), false );
-		}
+	// آموزش کوتاه «قیمت هر پرس» در راهنمای کامل غذا (home-food-price-guide) ادغام شده؛
+	// به زباله‌دان می‌رود (قابل بازگرداندن) و آدرسش با ۳۰۱ به راهنما می‌رود.
+	foreach ( get_posts( array( 'post_type' => 'post', 'post_status' => array( 'publish', 'draft' ), 'numberposts' => 5, 'post_name__in' => array_keys( sp_merged_posts() ) ) ) as $mp ) {
+		wp_trash_post( $mp->ID );
 	}
 	foreach ( sp_blog_cats() as $slug => $c ) {
 		$t = get_term_by( 'slug', $slug, 'category' );
@@ -145,6 +139,13 @@ function sp_blog_setup_terms() {
 			wp_insert_term( $c['name'], 'category', array( 'slug' => $slug, 'description' => $c['desc'] ) );
 		}
 	}
+}
+
+/** نامک مطلب ادغام‌شده => array( سرفصل مقصد, نامک مقصد ) */
+function sp_merged_posts() {
+	return array(
+		'food-portion-pricing' => array( 'home-food', 'home-food-price-guide' ),
+	);
 }
 
 /* ---------- آدرس‌ها ---------- */
@@ -188,6 +189,16 @@ add_action( 'template_redirect', function () {
 	$path = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ); // phpcs:ignore
 	$path = rawurldecode( $path );
 
+	// مطالب ادغام‌شده
+	$last = basename( $path );
+	$merged = sp_merged_posts();
+	if ( isset( $merged[ $last ] ) && is_404() ) {
+		$to = get_page_by_path( $merged[ $last ][1], OBJECT, 'post' );
+		$ok = $to && 'publish' === $to->post_status;
+		// تا مقصد منتشر نشده، موقت (۳۰۲) به سرفصل؛ بعد دائمی (۳۰۱) به خود راهنما.
+		wp_safe_redirect( $ok ? get_permalink( $to ) : sp_blog_url( $merged[ $last ][0] ), $ok ? 301 : 302 );
+		exit;
+	}
 	if ( 'learn' === $path || 0 === strpos( $path, 'learn/' ) ) {
 		wp_safe_redirect( sp_blog_url(), 301 );
 		exit;
