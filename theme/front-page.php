@@ -175,30 +175,31 @@ $sp_firsts  = array(
 	</div>
 </section>
 
-<!-- ۴. چطور کار می‌کنه (بخش تیره) -->
-<section class="sp-dark">
-	<div class="sp-dark__grid">
-		<div class="sp-dark__text">
-			<p class="sp-script sp-script--light">سه قدم تا قیمت درست</p>
-			<h2 class="sp-display sp-display--md">چطور کار می‌کنه</h2>
-			<ol class="sp-timeline">
-				<li>
-					<span class="sp-timeline__n">۱</span>
-					<div><h3>دستورت رو انتخاب کن</h3><p>از کتابخونه‌ی کیک‌ها و غذاهای آماده بردار، یا دستور خودت رو با مواد و مقدارش بنویس.</p></div>
-				</li>
-				<li>
-					<span class="sp-timeline__n">۲</span>
-					<div><h3>قیمت واقعی رو ببین</h3><p>با قیمت به‌روز مواد، دستمزد خودت، گاز فر یا اجاق و بسته‌بندی؛ برای کیک کیلویی، برای غذا هر پرس.</p></div>
-				</li>
-				<li>
-					<span class="sp-timeline__n">۳</span>
-					<div><h3>لیست قیمت یا منوت رو بفرست</h3><p>لیست قیمت یا منوی هفتگیت رو برای استوری بگیر. گوشت یا خامه گرون شد؟ همه‌چی خودش به‌روز می‌شه.</p></div>
-				</li>
-			</ol>
-		</div>
-		<div class="sp-dark__photo">
-			<?php echo sp_img( 'baking-hands', 'دست‌های آشپز خانگی در حال کار', 'sp-dark__img' ); ?>
-		</div>
+<!-- ۴. چطور کار می‌کنه (سه کارت با سودی) -->
+<section class="sp-section sp-how">
+	<div class="sp-wrap">
+		<p class="sp-script sp-center">سه قدم تا قیمت درست</p>
+		<h2 class="sp-display sp-display--md sp-center">چطور کار می‌کنه</h2>
+		<ol class="sp-how__steps">
+			<li class="sp-how__step" style="--c:#E8673C">
+				<span class="sp-how__n">۱</span>
+				<div class="sp-how__art"><?php echo sp_soodi( 'thinking', 'sp-how__soodi', 'سودی در حال فکر کردن' ); // phpcs:ignore ?></div>
+				<h3><?php echo sp_icon( 'book', 20 ); ?>دستورت رو انتخاب کن</h3>
+				<p>از کتابخونه‌ی کیک‌ها و غذاهای آماده بردار، یا دستور خودت رو با مواد و مقدارش بنویس.</p>
+			</li>
+			<li class="sp-how__step" style="--c:#149C98">
+				<span class="sp-how__n">۲</span>
+				<div class="sp-how__art"><?php echo sp_soodi( 'shocked', 'sp-how__soodi', 'سودی تعجب کرده' ); // phpcs:ignore ?></div>
+				<h3><?php echo sp_icon( 'calc', 20 ); ?>قیمت واقعی رو ببین</h3>
+				<p>با قیمت به‌روز مواد، دستمزد خودت، گاز فر یا اجاق و بسته‌بندی؛ برای کیک کیلویی، برای غذا هر پرس.</p>
+			</li>
+			<li class="sp-how__step" style="--c:#E9A23B">
+				<span class="sp-how__n">۳</span>
+				<div class="sp-how__art"><?php echo sp_soodi( 'celebrating', 'sp-how__soodi', 'سودی جشن گرفته' ); // phpcs:ignore ?></div>
+				<h3><?php echo sp_icon( 'send', 20 ); ?>لیست قیمت یا منوت رو بفرست</h3>
+				<p>لیست قیمت یا منوی هفتگیت رو برای استوری بگیر. گوشت یا خامه گرون شد؟ همه‌چی خودش به‌روز می‌شه.</p>
+			</li>
+		</ol>
 	</div>
 </section>
 
