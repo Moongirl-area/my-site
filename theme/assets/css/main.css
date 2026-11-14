@@ -642,6 +642,7 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 /* بشقاب‌ها: حلقه‌های مداری و چرخش با اسکرول */
 .sp-plate--hero, .sp-plate--hero2 { overflow: visible; }
 .sp-plate--hero .sp-plate__img, .sp-plate--hero2 .sp-plate__img, .sp-plate--scene .sp-plate__img { transform: rotate(var(--spin, 0deg)); will-change: transform; }
+.sp-plate--hero .sp-plate__img { transform: rotate(calc(140deg + var(--spin, 0deg))); } /* برش کیک رو به بالا-چپ، دور از بشقاب غذا */
 .sp-plate--hero::before, .sp-plate--hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; }
 .sp-plate--hero::before { inset: -9%; border: 1.5px dashed rgba(145, 8, 37, .28); background: radial-gradient(circle at 50% 0, #EE9A2C 0 6px, transparent 7px), radial-gradient(circle at 0 50%, #910825 0 5px, transparent 6px); }
 .sp-plate--hero::after { inset: -19%; border: 1.5px solid rgba(232, 103, 60, .14); background: radial-gradient(circle at 100% 50%, #1FB5A8 0 5px, transparent 6px); }

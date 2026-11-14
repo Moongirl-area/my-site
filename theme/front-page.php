@@ -57,9 +57,9 @@ $sp_firsts  = array(
 
 			<div class="sp-widget sp-widget--price">
 				<span class="sp-chip">نمونه</span>
-				<div class="sp-widget__title"><?php echo sp_icon( 'pot', 18 ); ?> قورمه‌سبزی، هر پرس</div>
-				<div class="sp-widget__row"><span>تمام‌شده</span><b>۲۷۰ هزار</b></div>
-				<div class="sp-widget__big"><span>بفروش</span><b>۳۸۶ هزار</b></div>
+				<div class="sp-widget__title"><?php echo sp_icon( 'cake', 18 ); ?> کیک شکلاتی، هر کیلو</div>
+				<div class="sp-widget__row"><span>تمام‌شده</span><b>۶۴۲ هزار</b></div>
+				<div class="sp-widget__big"><span>بفروش</span><b>۹۲۰ هزار</b></div>
 				<div class="sp-widget__good"><?php echo sp_icon( 'up', 16 ); ?> ۳۰٪ سود</div>
 			</div>
 

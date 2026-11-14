@@ -58,7 +58,7 @@
 	if (hero) setTimeout(function () { $$('[data-count]', hero).forEach(countUp); }, 450);
 
 	/* ۴. چرخش بشقاب‌ها و پارالاکس عکس با اسکرول */
-	$$('.sp-plate--hero, .sp-plate--hero2, .sp-plate--scene').forEach(function (p, i) { p.setAttribute('data-spin', p.classList.contains('sp-plate--hero2') ? -50 : 70); });
+	$$('.sp-plate--hero, .sp-plate--hero2, .sp-plate--scene').forEach(function (p, i) { p.setAttribute('data-spin', p.classList.contains('sp-plate--hero2') ? -40 : (p.classList.contains('sp-plate--hero') ? 30 : 70)); });
 	$$('.sp-dark__img').forEach(function (i) { i.setAttribute('data-parallax', 60); });
 	var spin = $$('[data-spin]'), par = $$('[data-parallax]'), busy = false;
 	function update() {
