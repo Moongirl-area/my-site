@@ -276,23 +276,44 @@ $sp_firsts  = array(
 <!-- ۷. اعتماد -->
 <section class="sp-trust">
 	<div class="sp-wrap sp-trust__grid">
-		<div><?php echo sp_icon( 'server', 28 ); ?><strong>روی سرور ایرانی</strong><span>موقع قطعی اینترنت هم بازه.</span></div>
-		<div><?php echo sp_icon( 'lock', 28 ); ?><strong>دستورهات مال خودته</strong><span>بدون اجازه‌ی تو هیچ‌جا نمی‌ره.</span></div>
-		<div><?php echo sp_icon( 'refund', 28 ); ?><strong>۷ روز بازگشت پول</strong><span>بدون سؤال، پولت برمی‌گرده.</span></div>
+		<div class="sp-trust__item" style="--c:#149C98">
+			<span class="sp-trust__ico"><?php echo sp_icon( 'server', 26 ); ?></span>
+			<div><strong>روی سرور ایرانی</strong><span>موقع قطعی اینترنت هم بازه.</span></div>
+		</div>
+		<div class="sp-trust__item" style="--c:#910825">
+			<span class="sp-trust__ico"><?php echo sp_icon( 'lock', 26 ); ?></span>
+			<div><strong>دستورهات مال خودته</strong><span>بدون اجازه‌ی تو هیچ‌جا نمی‌ره.</span></div>
+		</div>
+		<div class="sp-trust__item" style="--c:#E9A23B">
+			<span class="sp-trust__ico"><?php echo sp_icon( 'refund', 26 ); ?></span>
+			<div><strong>۷ روز بازگشت پول</strong><span>بدون سؤال، پولت برمی‌گرده.</span></div>
+		</div>
 	</div>
 </section>
 
-<!-- ۸. پایان -->
+<!-- ۸. پایان: کارت بنیان‌گذار -->
+<?php $sp_set = sp_settings(); ?>
 <section class="sp-final">
-	<div class="sp-wrap sp-final__inner">
-		<div>
-			<p class="sp-script sp-script--light">فقط ۵۰ نفر</p>
-			<h2 class="sp-display sp-display--md">یه کیک یا یه دیگ غذای کم‌فروخته، گرون‌تر از اشتراک سودپزه.</h2>
-			<p>پرو ماهانه ۹۹ هزار یا سالانه ۶۹۰ هزار تومان. عضوهای بنیان‌گذار: سالانه <b>۳۹۰ هزار تومان</b>، برای همیشه.</p>
-		</div>
-		<div class="sp-final__cta">
-			<a class="sp-btn sp-btn--paper" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">جامو نگه دار</a>
-			<a class="sp-link-light" href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>">مقایسه‌ی پلن‌ها ←</a>
+	<div class="sp-wrap">
+		<div class="sp-final__card">
+			<span class="sp-final__ring sp-final__ring--a" aria-hidden="true"></span>
+			<span class="sp-final__ring sp-final__ring--b" aria-hidden="true"></span>
+			<div class="sp-final__text">
+				<span class="sp-final__badge"><?php echo sp_icon( 'spark', 16 ); ?><?php echo '' !== $sp_set['founders_left'] ? esc_html( sp_fa( $sp_set['founders_left'] ) ) . ' جا از ۵۰ تا مونده' : 'فقط برای ۵۰ نفر'; ?></span>
+				<h2 class="sp-final__h">یه کیک یا یه دیگ غذای کم‌فروخته، گرون‌تر از اشتراک سودپزه.</h2>
+				<div class="sp-final__prices">
+					<div class="sp-final__price"><small>پرو ماهانه</small><b>۹۹ هزار</b></div>
+					<div class="sp-final__price"><small>پرو سالانه</small><b>۶۹۰ هزار</b></div>
+					<div class="sp-final__price sp-final__price--hot"><small>بنیان‌گذار، سالانه برای همیشه</small><b><s>۶۹۰</s> ۳۹۰ هزار</b></div>
+				</div>
+				<div class="sp-final__cta">
+					<a class="sp-btn sp-final__btn" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"><?php echo sp_icon( 'spark', 18 ); ?>جامو نگه دار</a>
+					<a class="sp-final__link" href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>">مقایسه‌ی پلن‌ها <?php echo sp_icon( 'arrow', 16 ); ?></a>
+				</div>
+			</div>
+			<div class="sp-final__art">
+				<?php echo sp_soodi( 'celebrating', 'sp-final__soodi', 'سودی جشن گرفته' ); // phpcs:ignore ?>
+			</div>
 		</div>
 	</div>
 </section>

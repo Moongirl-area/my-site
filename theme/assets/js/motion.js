@@ -10,7 +10,7 @@
 	/* ۱. نمایش با اسکرول، با تأخیر پله‌ای بین هم‌خانواده‌ها */
 	var sel = ['.sp-pain', '.sp-section .sp-script', '.sp-section .sp-display--md', '.sp-section .sp-sub', '.sp-compare__card',
 		'.sp-section .sp-actions', '.sp-how__step',
-		'.sp-table-scene .sp-scene', '.sp-feature', '.sp-phone', '.sp-trust__grid > div', '.sp-final__inner > *', '.sp-marquee'];
+		'.sp-table-scene .sp-scene', '.sp-feature', '.sp-phone', '.sp-trust__item', '.sp-final__card', '.sp-marquee'];
 	var els = [];
 	sel.forEach(function (s) { $$(s).forEach(function (e) { if (!e.classList.contains('sp-rv')) { e.classList.add('sp-rv'); els.push(e); } }); });
 	els.forEach(function (e) {
