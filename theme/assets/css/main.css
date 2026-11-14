@@ -650,3 +650,114 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-footer__cols { grid-template-columns: 1fr 1fr; }
 	.sp-footer__bar { justify-content: center; text-align: center; }
 }
+
+/* ===== صفحه‌ی اول پویا (نسخه‌ی ۳) ===== */
+/* بشقاب‌ها: حلقه‌های مداری و چرخش با اسکرول */
+.sp-plate--hero, .sp-plate--hero2 { overflow: visible; }
+.sp-plate--hero .sp-plate__img, .sp-plate--hero2 .sp-plate__img, .sp-plate--scene .sp-plate__img { transform: rotate(var(--spin, 0deg)); will-change: transform; }
+.sp-plate--hero::before, .sp-plate--hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; }
+.sp-plate--hero::before { inset: -9%; border: 1.5px dashed rgba(145, 8, 37, .28); background: radial-gradient(circle at 50% 0, #EE9A2C 0 6px, transparent 7px), radial-gradient(circle at 0 50%, #910825 0 5px, transparent 6px); }
+.sp-plate--hero::after { inset: -19%; border: 1.5px solid rgba(232, 103, 60, .14); background: radial-gradient(circle at 100% 50%, #1FB5A8 0 5px, transparent 6px); }
+.sp-motion .sp-plate--hero::before { animation: sp-orbit 38s linear infinite; }
+.sp-motion .sp-plate--hero::after { animation: sp-orbit 60s linear infinite reverse; }
+@keyframes sp-orbit { to { transform: rotate(360deg); } }
+
+/* لکه‌های رنگی پس‌زمینه */
+.sp-hero { overflow-x: clip; }
+.sp-hero__art { isolation: isolate; }
+.sp-blob { position: absolute; z-index: -1; border-radius: 50%; filter: blur(50px); opacity: .55; pointer-events: none; }
+.sp-blob--a { width: 340px; height: 340px; background: #F6C08A; top: -30px; left: 10%; }
+.sp-blob--b { width: 260px; height: 260px; background: #F2B6A9; bottom: 20px; right: 4%; }
+.sp-motion .sp-blob--a { animation: sp-drift 14s ease-in-out infinite alternate; }
+.sp-motion .sp-blob--b { animation: sp-drift 18s ease-in-out infinite alternate-reverse; }
+@keyframes sp-drift { to { translate: 40px 30px; scale: 1.15; } }
+
+/* مواد شناور دور بشقاب */
+.sp-float { position: absolute; z-index: 2; width: 64px; height: 64px; border-radius: 50%; background: #fff; padding: 4px; box-shadow: 0 10px 24px rgba(35, 35, 38, .16); }
+.sp-float img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.sp-float--1 { top: -12px; left: 26%; }
+.sp-float--2 { top: 44%; left: -54px; width: 56px; height: 56px; }
+.sp-float--3 { bottom: 64px; left: 44%; width: 52px; height: 52px; }
+.sp-float--4 { top: 6px; left: -30px; width: 46px; height: 46px; }
+.sp-motion .sp-float { animation: sp-bob 5.5s ease-in-out infinite; }
+.sp-motion .sp-float--2 { animation-delay: -1.5s; animation-duration: 6.5s; }
+.sp-motion .sp-float--3 { animation-delay: -3s; }
+.sp-motion .sp-float--4 { animation-delay: -4.2s; animation-duration: 7s; }
+.sp-motion .sp-widget--price { animation: sp-bob 6s ease-in-out infinite; }
+.sp-motion .sp-widget--alert { animation: sp-bob 7s ease-in-out -3s infinite; }
+.sp-motion .sp-soodi--hero { animation: sp-sway 4.5s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes sp-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+@keyframes sp-sway { 0%, 100% { rotate: -4deg; } 50% { rotate: 4deg; } }
+
+/* ورود متن بالای صفحه */
+.sp-motion .sp-hero__text > * { animation: sp-rise .8s cubic-bezier(.2, .7, .2, 1) both; }
+.sp-motion .sp-hero__text > :nth-child(2) { animation-delay: .08s; }
+.sp-motion .sp-hero__text > :nth-child(3) { animation-delay: .16s; }
+.sp-motion .sp-hero__text > :nth-child(4) { animation-delay: .24s; }
+.sp-motion .sp-hero__text > :nth-child(5) { animation-delay: .32s; }
+.sp-motion .sp-hero__art > .sp-plate--hero { animation: sp-pop .9s cubic-bezier(.2, .8, .2, 1.1) .1s both; }
+.sp-motion .sp-hero__art > .sp-plate--hero2 { animation: sp-pop .9s cubic-bezier(.2, .8, .2, 1.1) .35s both; }
+@keyframes sp-rise { from { opacity: 0; translate: 0 26px; } }
+@keyframes sp-pop { from { opacity: 0; scale: .8; } }
+
+/* نمایش با اسکرول */
+.sp-motion .sp-rv { opacity: 0; translate: 0 36px; transition: opacity .7s ease var(--rv-d, 0ms), translate .8s cubic-bezier(.2, .7, .2, 1) var(--rv-d, 0ms); }
+.sp-motion .sp-rv.is-in { opacity: 1; translate: 0 0; }
+
+/* خط زعفرانی زیر تیترها */
+.sp-squiggle { display: block; width: 150px; height: 16px; margin: 6px 0 0; overflow: visible; }
+.sp-center .sp-squiggle, .sp-display--md.sp-center .sp-squiggle { margin-inline: auto; }
+.sp-squiggle path { fill: none; stroke: var(--mustard); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.sp-motion .sp-rv .sp-squiggle path { stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s ease calc(var(--rv-d, 0ms) + .35s); }
+.sp-motion .sp-rv.is-in .sp-squiggle path { stroke-dashoffset: 0; }
+
+/* کارت‌ها: بلند شدن با ماوس */
+.sp-pain { transition: box-shadow .2s ease, transform .2s ease; }
+.sp-pain:hover { transform: translateY(-4px); box-shadow: 0 2px 4px rgba(0, 0, 0, .04), 0 18px 40px rgba(0, 0, 0, .1); }
+.sp-pain:hover .sp-pain__ico { rotate: -8deg; scale: 1.08; }
+.sp-pain__ico, .sp-feature__ico { transition: rotate .25s ease, scale .25s ease; }
+.sp-feature:hover .sp-feature__ico { rotate: 8deg; scale: 1.08; }
+.sp-compare__card { transition: transform .25s ease, box-shadow .25s ease; }
+.sp-compare__card:hover { transform: translateY(-4px); }
+.sp-motion .sp-phone { animation: sp-phone 7s ease-in-out infinite; }
+@keyframes sp-phone { 0%, 100% { translate: 0 0; } 50% { translate: 0 -14px; } }
+
+/* پارالاکس عکس بخش تیره */
+.sp-dark__photo { overflow: hidden; }
+.sp-motion .sp-dark__img[data-parallax] { transform: translateY(var(--py, 0)) scale(1.14); will-change: transform; }
+
+/* نوار متحرک */
+.sp-marquee { position: relative; margin: 80px 0 10px; height: 150px; overflow: hidden; }
+.sp-marquee__band { position: absolute; left: -5%; width: 110%; padding: 14px 0; overflow: hidden; }
+.sp-marquee__band--a { top: 22px; background: var(--coral); color: #fff; rotate: -2.2deg; z-index: 2; box-shadow: 0 14px 30px rgba(232, 103, 60, .25); }
+.sp-marquee__band--b { top: 52px; background: var(--ink); color: #EDE6DC; rotate: 2deg; }
+.sp-marquee__track { display: flex; align-items: center; gap: 22px; width: max-content; direction: ltr; animation: sp-marquee 46s linear infinite; }
+.sp-marquee__track--rev { animation-direction: reverse; animation-duration: 54s; }
+.sp-marquee__item { display: inline-flex; align-items: center; gap: 10px; direction: rtl; font-family: var(--display); font-weight: 800; font-size: 21px; white-space: nowrap; }
+.sp-marquee__band--b .sp-marquee__item { font-size: 17px; font-weight: 700; }
+.sp-marquee__sep { color: #FFD9A8; font-size: 14px; }
+.sp-marquee__band--b .sp-marquee__sep { color: var(--mustard); font-size: 9px; }
+@keyframes sp-marquee { to { transform: translateX(-50%); } }
+.sp-marquee:hover .sp-marquee__track { animation-play-state: paused; }
+
+@media (max-width: 1000px) {
+	.sp-float--2 { left: 2%; }
+	.sp-float--4 { left: 8%; }
+}
+@media (max-width: 680px) {
+	.sp-float { width: 46px; height: 46px; padding: 3px; }
+	.sp-float--1 { top: 4px; left: 30%; }
+	.sp-float--2 { top: 46%; left: 0; width: 40px; height: 40px; }
+	.sp-float--3, .sp-float--4 { display: none; }
+	.sp-blob--a { width: 220px; height: 220px; }
+	.sp-blob--b { width: 180px; height: 180px; }
+	.sp-marquee { margin-top: 56px; height: 120px; }
+	.sp-marquee__band { padding: 10px 0; }
+	.sp-marquee__band--b { top: 46px; }
+	.sp-marquee__item { font-size: 17px; }
+	.sp-marquee__band--b .sp-marquee__item { font-size: 14px; }
+	.sp-squiggle { width: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.sp-marquee__track { animation: none; }
+}

@@ -38,6 +38,16 @@ $sp_firsts  = array(
 		</div>
 
 		<div class="sp-hero__art">
+			<span class="sp-blob sp-blob--a" aria-hidden="true"></span>
+			<span class="sp-blob sp-blob--b" aria-hidden="true"></span>
+			<?php
+			foreach ( array( 'ing-eggs' => 1, 'ing-chocolate' => 2, 'ing-flour' => 3, 'ing-butter' => 4 ) as $sp_ing_img => $sp_n ) {
+				$sp_ing_url = sp_img_url( $sp_ing_img );
+				if ( $sp_ing_url ) {
+					echo '<span class="sp-float sp-float--' . (int) $sp_n . '" aria-hidden="true"><img src="' . esc_url( $sp_ing_url ) . '" alt="" width="72" height="72" decoding="async"></span>';
+				}
+			}
+			?>
 			<div class="sp-plate sp-plate--hero">
 				<?php echo sp_img( 'hero-cake', 'کیک شکلاتی خانگی از بالا', 'sp-plate__img', true ); ?>
 			</div>
@@ -79,6 +89,31 @@ $sp_firsts  = array(
 		</div>
 	</div>
 </section>
+
+<!-- نوار متحرک دستورها و مواد -->
+<div class="sp-marquee" aria-hidden="true">
+	<div class="sp-marquee__band sp-marquee__band--a">
+		<div class="sp-marquee__track">
+			<?php for ( $sp_i = 0; $sp_i < 2; $sp_i++ ) : foreach ( $sp_recipes as $sp_r ) : ?>
+				<span class="sp-marquee__item"><?php echo sp_icon( $sp_r['icon'], 22 ); ?><?php echo esc_html( $sp_r['name'] ); ?></span><span class="sp-marquee__sep">✦</span>
+			<?php endforeach; endfor; ?>
+		</div>
+	</div>
+	<div class="sp-marquee__band sp-marquee__band--b">
+		<div class="sp-marquee__track sp-marquee__track--rev">
+			<?php
+			$sp_words = array( 'خامه', 'شکلات', 'گوشت', 'برنج', 'زعفران', 'کره', 'تخم‌مرغ', 'آرد', 'سبزی', 'لپه', 'مرغ', 'گردو' );
+			for ( $sp_i = 0; $sp_i < 2; $sp_i++ ) :
+				foreach ( $sp_words as $sp_w ) :
+					?>
+				<span class="sp-marquee__item">قیمت روز <?php echo esc_html( $sp_w ); ?></span><span class="sp-marquee__sep">●</span>
+					<?php
+				endforeach;
+			endfor;
+			?>
+		</div>
+	</div>
+</div>
 
 <!-- ۳. حساب سرانگشتی در برابر سودپز -->
 <section class="sp-section">

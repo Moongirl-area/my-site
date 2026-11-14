@@ -32,6 +32,11 @@ add_action( 'wp_enqueue_scripts', function () {
 	$css = SP_DIR . '/assets/css/main.css';
 	wp_enqueue_style( 'sp-main', SP_URI . '/assets/css/main.css', array(), file_exists( $css ) ? filemtime( $css ) : SP_VERSION );
 
+	if ( is_front_page() ) {
+		$mjs = SP_DIR . '/assets/js/motion.js';
+		wp_enqueue_script( 'sp-motion', SP_URI . '/assets/js/motion.js', array(), file_exists( $mjs ) ? filemtime( $mjs ) : SP_VERSION, true );
+	}
+
 	if ( is_page( 'calculator' ) ) {
 		$js = SP_DIR . '/assets/js/calculator.js';
 		wp_enqueue_script( 'sp-calc', SP_URI . '/assets/js/calculator.js', array(), file_exists( $js ) ? filemtime( $js ) : SP_VERSION, true );
