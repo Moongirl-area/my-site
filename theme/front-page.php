@@ -115,60 +115,98 @@ $sp_firsts  = array(
 	</div>
 </div>
 
-<!-- ۳. حساب سرانگشتی در برابر سودپز -->
-<section class="sp-section">
+<!-- ۳. حساب سرانگشتی در برابر سودپز (اینفوگرافیک با نوار هزینه) -->
+<?php
+/*
+ * داده‌ی مقایسه (هزار تومان؛ عددها نمونه‌اند).
+ * parts: [برچسب، مقدار، نوع رنگ، حساب شد؟]
+ */
+$sp_cmp = array(
+	'sweet' => array(
+		'note'  => 'کیک شکلاتی ۱ کیلویی (عددها نمونه‌ان).',
+		'scale' => 920,
+		'bad'   => array( 'parts' => array( array( 'مواد', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 0 ), array( 'گاز فر و جعبه', 35, 'gas', 0 ) ), 'extra' => array( '«یه کم بذارم روش»', '+ ۱۳۰ هزار' ), 'sale' => 550, 'cost' => 642, 'end' => 'هزینه‌ی واقعی ۶۴۲ هزاره؛ از هر کیک ۹۲ هزار تومان ضرر.' ),
+		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 1 ), array( 'گاز فر و جعبه', 35, 'gas', 1 ) ), 'sale' => 920, 'cost' => 642, 'end' => 'هم دستمزدت رو گرفتی، هم ۲۷۸ هزار تومان سود.' ),
+	),
+	'food'  => array(
+		'note'  => 'قورمه‌سبزی با برنج، هر پرس (از یه دیگ ۱۰ پرسی؛ عددها نمونه‌ان).',
+		'scale' => 386,
+		'bad'   => array( 'parts' => array( array( 'مواد هر پرس', 220, 'mat', 1 ), array( 'دستمزد (۳ ساعت برای ۱۰ پرس)', 30, 'lab', 0 ), array( 'گاز ۴ ساعته و ظرف', 20, 'gas', 0 ) ), 'extra' => array( '«رستوران بغلی چند می‌ده؟»', '۲۵۰ هزار' ), 'sale' => 250, 'cost' => 270, 'end' => 'هر پرس ۲۰ هزار ضرر؛ با ۵۰ پرس در هفته، یعنی ۱ میلیون تومان.' ),
+		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 220, 'mat', 1 ), array( 'سهم دستمزد', 30, 'lab', 1 ), array( 'سهم گاز و ظرف', 20, 'gas', 1 ) ), 'sale' => 386, 'cost' => 270, 'end' => 'هم دستمزدت رو گرفتی، هم از هر پرس ۱۱۶ هزار تومان سود.' ),
+	),
+);
+if ( ! function_exists( 'sp_cmp_card' ) ) {
+	function sp_cmp_card( $d, $scale, $good ) {
+		$pct  = function ( $v ) use ( $scale ) { return round( $v / $scale * 100, 2 ); };
+		$diff = $d['sale'] - $d['cost'];
+		ob_start();
+		?>
+		<div class="sp-compare__card sp-compare__card--<?php echo $good ? 'good' : 'bad'; ?>">
+			<div class="sp-cmp__head">
+				<span class="sp-cmp__ico"><?php echo sp_icon( $good ? 'check' : 'calc', 22 ); ?></span>
+				<div><h3><?php echo $good ? 'با سودپز' : 'حساب سرانگشتی'; ?></h3><small><?php echo $good ? 'همه‌ی هزینه‌ها، با قیمت امروز' : 'فقط مواد، بقیه حدسی'; ?></small></div>
+				<span class="sp-cmp__result"><?php echo $diff >= 0 ? '+' : '−'; ?><?php echo esc_html( sp_fa( abs( $diff ) ) ); ?><small>هزار <?php echo $diff >= 0 ? 'سود' : 'ضرر'; ?></small></span>
+			</div>
+
+			<div class="sp-cmp__bar" role="img" aria-label="<?php echo esc_attr( 'هزینه‌ی واقعی ' . sp_fa( $d['cost'] ) . ' هزار، قیمت فروش ' . sp_fa( $d['sale'] ) . ' هزار' ); ?>">
+				<div class="sp-cmp__fill">
+					<?php foreach ( $d['parts'] as $p ) : ?>
+						<span class="sp-cmp__seg sp-cmp__seg--<?php echo esc_attr( $p[2] ); ?><?php echo $p[3] ? '' : ' is-miss'; ?>" style="width:<?php echo esc_attr( $pct( $p[1] ) ); ?>%"></span>
+					<?php endforeach; ?>
+					<?php if ( $diff > 0 ) : ?>
+						<span class="sp-cmp__seg sp-cmp__seg--profit" style="width:<?php echo esc_attr( $pct( $diff ) ); ?>%"></span>
+					<?php endif; ?>
+				</div>
+				<?php if ( $diff < 0 ) : ?>
+					<span class="sp-cmp__loss" style="inset-inline-start:<?php echo esc_attr( $pct( $d['sale'] ) ); ?>%;width:<?php echo esc_attr( $pct( -$diff ) ); ?>%"></span>
+				<?php endif; ?>
+				<span class="sp-cmp__mark" style="inset-inline-start:<?php echo esc_attr( $pct( $d['sale'] ) ); ?>%"><em>فروش <?php echo esc_html( sp_fa( $d['sale'] ) ); ?></em></span>
+			</div>
+			<div class="sp-cmp__axis"><span>۰</span><span>هزینه‌ی واقعی: <?php echo esc_html( sp_fa( $d['cost'] ) ); ?> هزار</span></div>
+
+			<ul class="sp-cmp__rows">
+				<?php foreach ( $d['parts'] as $p ) : ?>
+					<li class="<?php echo $p[3] ? '' : 'is-miss'; ?>"><i class="sp-cmp__dot sp-cmp__dot--<?php echo esc_attr( $p[2] ); ?>"></i><span><?php echo esc_html( $p[0] ); ?></span><b><?php echo $p[3] ? esc_html( sp_fa( $p[1] ) ) . ' هزار' : 'حساب نشد'; ?></b></li>
+				<?php endforeach; ?>
+				<?php if ( ! empty( $d['extra'] ) ) : ?>
+					<li><i class="sp-cmp__dot sp-cmp__dot--guess"></i><span><?php echo esc_html( $d['extra'][0] ); ?></span><b><?php echo esc_html( $d['extra'][1] ); ?></b></li>
+				<?php else : ?>
+					<li><i class="sp-cmp__dot sp-cmp__dot--profit"></i><span>سود ۳۰٪</span><b><?php echo esc_html( sp_fa( $diff ) ); ?> هزار</b></li>
+				<?php endif; ?>
+				<li class="is-total"><span>قیمت فروش</span><b><?php echo esc_html( sp_fa( $d['sale'] ) ); ?> هزار</b></li>
+			</ul>
+			<p class="sp-compare__end"><?php echo sp_icon( $good ? 'up' : 'down', 18 ); ?> <?php echo esc_html( $d['end'] ); ?></p>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+}
+?>
+<section class="sp-section sp-cmp">
 	<div class="sp-wrap">
 		<p class="sp-script sp-center">یه محصول، دو حساب</p>
 		<h2 class="sp-display sp-display--md sp-center">حساب سرانگشتی کجا ضرر می‌ده؟</h2>
 
-		<div data-only="sweet">
-			<p class="sp-sub sp-center">کیک شکلاتی ۱ کیلویی (عددها نمونه‌ان).</p>
-			<div class="sp-compare">
-				<div class="sp-compare__card sp-compare__card--bad">
-					<h3><?php echo sp_icon( 'calc', 24 ); ?> حساب سرانگشتی</h3>
-					<div class="sp-compare__row"><span>مواد</span><b>۴۲۰ هزار</b></div>
-					<div class="sp-compare__row sp-compare__row--miss"><span>دستمزد ۲٫۵ ساعت</span><b>حساب نشد</b></div>
-					<div class="sp-compare__row sp-compare__row--miss"><span>گاز فر و جعبه</span><b>حساب نشد</b></div>
-					<div class="sp-compare__row"><span>«یه کم بذارم روش»</span><b>+ ۱۳۰ هزار</b></div>
-					<div class="sp-compare__row"><span>قیمت فروش</span><b>۵۵۰ هزار</b></div>
-					<p class="sp-compare__end"><?php echo sp_icon( 'down', 18 ); ?> هزینه‌ی واقعی ۶۴۲ هزاره؛ از هر کیک ۹۲ هزار تومان ضرر.</p>
-				</div>
-				<div class="sp-compare__card sp-compare__card--good">
-					<h3><?php echo sp_icon( 'check', 24 ); ?> با سودپز</h3>
-					<div class="sp-compare__row"><span>مواد با قیمت امروز</span><b>۴۲۰ هزار</b></div>
-					<div class="sp-compare__row"><span>دستمزد ۲٫۵ ساعت</span><b>۱۸۷ هزار</b></div>
-					<div class="sp-compare__row"><span>گاز فر و جعبه</span><b>۳۵ هزار</b></div>
-					<div class="sp-compare__row"><span>قیمت تمام‌شده</span><b>۶۴۲ هزار</b></div>
-					<div class="sp-compare__row"><span>قیمت فروش با ۳۰٪ سود</span><b>۹۲۰ هزار</b></div>
-					<p class="sp-compare__end"><?php echo sp_icon( 'up', 18 ); ?> هم دستمزدت رو گرفتی، هم ۲۷۸ هزار تومان سود.</p>
+		<?php foreach ( $sp_cmp as $sp_k => $sp_c ) : ?>
+			<div data-only="<?php echo esc_attr( $sp_k ); ?>">
+				<p class="sp-sub sp-center"><?php echo esc_html( $sp_c['note'] ); ?></p>
+				<div class="sp-compare">
+					<?php echo sp_cmp_card( $sp_c['bad'], $sp_c['scale'], false ); // phpcs:ignore ?>
+					<span class="sp-cmp__vs" aria-hidden="true">در برابر</span>
+					<?php echo sp_cmp_card( $sp_c['good'], $sp_c['scale'], true ); // phpcs:ignore ?>
 				</div>
 			</div>
-		</div>
+		<?php endforeach; ?>
 
-		<div data-only="food">
-			<p class="sp-sub sp-center">قورمه‌سبزی با برنج، هر پرس (از یه دیگ ۱۰ پرسی؛ عددها نمونه‌ان).</p>
-			<div class="sp-compare">
-				<div class="sp-compare__card sp-compare__card--bad">
-					<h3><?php echo sp_icon( 'calc', 24 ); ?> حساب سرانگشتی</h3>
-					<div class="sp-compare__row"><span>مواد هر پرس</span><b>۲۲۰ هزار</b></div>
-					<div class="sp-compare__row sp-compare__row--miss"><span>دستمزد (۳ ساعت برای ۱۰ پرس)</span><b>حساب نشد</b></div>
-					<div class="sp-compare__row sp-compare__row--miss"><span>گاز ۴ ساعته و ظرف</span><b>حساب نشد</b></div>
-					<div class="sp-compare__row"><span>«رستوران بغلی چند می‌ده؟»</span><b>۲۵۰ هزار</b></div>
-					<p class="sp-compare__end"><?php echo sp_icon( 'down', 18 ); ?> هزینه‌ی واقعی ۲۷۰ هزاره؛ هر پرس ۲۰ هزار ضرر. با ۵۰ پرس در هفته، یعنی ۱ میلیون تومان.</p>
-				</div>
-				<div class="sp-compare__card sp-compare__card--good">
-					<h3><?php echo sp_icon( 'check', 24 ); ?> با سودپز</h3>
-					<div class="sp-compare__row"><span>مواد با قیمت امروز</span><b>۲۲۰ هزار</b></div>
-					<div class="sp-compare__row"><span>سهم دستمزد</span><b>۳۰ هزار</b></div>
-					<div class="sp-compare__row"><span>سهم گاز و ظرف</span><b>۲۰ هزار</b></div>
-					<div class="sp-compare__row"><span>قیمت تمام‌شده‌ی هر پرس</span><b>۲۷۰ هزار</b></div>
-					<div class="sp-compare__row"><span>قیمت فروش با ۳۰٪ سود</span><b>۳۸۶ هزار</b></div>
-					<p class="sp-compare__end"><?php echo sp_icon( 'up', 18 ); ?> هم دستمزدت رو گرفتی، هم از هر پرس ۱۱۶ هزار تومان سود.</p>
-				</div>
-			</div>
-		</div>
+		<ul class="sp-cmp__legend" aria-hidden="true">
+			<li><i class="sp-cmp__dot sp-cmp__dot--mat"></i>مواد</li>
+			<li><i class="sp-cmp__dot sp-cmp__dot--lab"></i>دستمزد</li>
+			<li><i class="sp-cmp__dot sp-cmp__dot--gas"></i>گاز و بسته‌بندی</li>
+			<li><i class="sp-cmp__dot sp-cmp__dot--profit"></i>سود</li>
+			<li><i class="sp-cmp__dot sp-cmp__dot--loss"></i>ضرر</li>
+		</ul>
 
-		<div class="sp-actions" style="justify-content:center;margin-top:32px">
+		<div class="sp-actions" style="justify-content:center;margin-top:28px">
 			<a class="sp-btn sp-btn--coral" data-only="sweet" href="<?php echo esc_url( add_query_arg( 'k', 'sweet', sp_url( 'calculator' ) ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>کیک خودت رو حساب کن</a>
 			<a class="sp-btn sp-btn--coral" data-only="food" href="<?php echo esc_url( add_query_arg( 'k', 'food', sp_url( 'calculator' ) ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>غذای خودت رو حساب کن</a>
 		</div>
@@ -272,6 +310,25 @@ $sp_firsts  = array(
 		</div>
 	</div>
 </section>
+
+<!-- ۶٫۵. تازه‌ترین مطالب مجله -->
+<?php $sp_posts = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'posts_per_page' => 3, 'ignore_sticky_posts' => true, 'fields' => 'ids' ) ); ?>
+<?php if ( $sp_posts ) : ?>
+<section class="sp-section sp-hblog">
+	<div class="sp-wrap">
+		<div class="sp-hblog__head">
+			<div>
+				<p class="sp-script">مجله‌ی سودپز</p>
+				<h2 class="sp-display sp-display--md">تازه‌ترین مطالب</h2>
+			</div>
+			<a class="sp-hblog__all" href="<?php echo esc_url( sp_blog_url() ); ?>">همه‌ی مطالب <?php echo sp_icon( 'arrow', 18 ); ?></a>
+		</div>
+		<div class="sp-hblog__grid">
+			<?php foreach ( $sp_posts as $sp_pid ) { echo sp_blog_card( $sp_pid, 'md' ); } // phpcs:ignore ?>
+		</div>
+	</div>
+</section>
+<?php endif; ?>
 
 <!-- ۷. اعتماد: سه قول، به‌صورت اینفوگرافیک -->
 <section class="sp-section sp-trust">

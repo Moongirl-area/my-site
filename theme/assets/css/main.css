@@ -877,3 +877,79 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-final__price--hot { flex-basis: 100%; }
 	.sp-final__btn { width: 100%; }
 }
+
+/* ۳. مقایسه (نسخه‌ی ۴: اینفوگرافیک) */
+.sp-cmp .sp-compare { position: relative; gap: 34px; align-items: stretch; }
+.sp-cmp .sp-compare__card { border-radius: 28px; padding: 26px 26px 24px; border-top: 0; box-shadow: 0 1px 2px rgba(35, 35, 38, .04), 0 20px 50px rgba(35, 35, 38, .08); position: relative; overflow: hidden; }
+.sp-cmp .sp-compare__card::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; background: var(--red); }
+.sp-cmp .sp-compare__card--good::before { background: linear-gradient(90deg, #1E8E5A, #4CC38A); }
+.sp-cmp__head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.sp-cmp__head h3 { margin: 0; font-family: var(--display); font-size: 21px; }
+.sp-cmp__head small { color: var(--muted); font-size: 13px; }
+.sp-cmp__ico { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 15px; flex: none; color: var(--red); background: #FCE3E3; }
+.sp-compare__card--good .sp-cmp__ico { color: var(--good); background: #E1F2E9; }
+.sp-cmp__result { margin-inline-start: auto; display: flex; flex-direction: column; align-items: center; line-height: 1.1; font-family: var(--display); font-weight: 800; font-size: 28px; color: var(--red); padding: 8px 14px; border-radius: 16px; background: #FDEEEE; }
+.sp-cmp__result small { font-family: Vazirmatn, sans-serif; font-size: 11.5px; font-weight: 700; margin-top: 3px; }
+.sp-compare__card--good .sp-cmp__result { color: var(--good); background: #E8F6EE; }
+
+/* نوار هزینه */
+.sp-cmp__bar { position: relative; height: 26px; border-radius: 999px; background: #F3EFE9; margin: 30px 0 8px; }
+.sp-cmp__fill { display: flex; height: 100%; border-radius: 999px; overflow: hidden; }
+.sp-cmp__seg { height: 100%; }
+.sp-cmp__seg + .sp-cmp__seg { box-shadow: inset -2px 0 0 #fff; }
+.sp-cmp__seg--mat, .sp-cmp__dot--mat { background: #E8673C; }
+.sp-cmp__seg--lab, .sp-cmp__dot--lab { background: #149C98; }
+.sp-cmp__seg--gas, .sp-cmp__dot--gas { background: #E9A23B; }
+.sp-cmp__seg--profit, .sp-cmp__dot--profit { background: #1E8E5A; }
+.sp-cmp__dot--loss { background: repeating-linear-gradient(135deg, #E03A3E 0 3px, #F7B9BA 3px 6px); }
+.sp-cmp__dot--guess { background: #B9B3AA; }
+.sp-cmp__seg.is-miss { background: repeating-linear-gradient(135deg, #D9D3CA 0 5px, #EFEBE5 5px 10px); }
+.sp-cmp__loss { position: absolute; top: -4px; bottom: -4px; border-radius: 6px; background: repeating-linear-gradient(135deg, rgba(224, 58, 62, .85) 0 4px, rgba(224, 58, 62, .35) 4px 8px); outline: 2px solid #fff; }
+.sp-cmp__mark { position: absolute; top: -10px; bottom: -10px; width: 3px; margin-inline-start: -1.5px; border-radius: 3px; background: var(--ink); }
+.sp-cmp__mark em { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-style: normal; font-size: 12px; font-weight: 800; white-space: nowrap; color: #fff; background: var(--ink); padding: 2px 9px; border-radius: 999px; }
+.sp-compare__card--good .sp-cmp__mark em { transform: translateX(-12%); }
+.sp-cmp__axis { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.sp-motion .sp-rv .sp-cmp__fill { clip-path: inset(0 0 0 100%); transition: clip-path 1.6s cubic-bezier(.65, 0, .35, 1) calc(var(--rv-d, 0ms) + .35s); }
+.sp-motion .sp-rv.is-in .sp-cmp__fill { clip-path: inset(0 0 0 0); }
+.sp-motion .sp-rv .sp-cmp__mark, .sp-motion .sp-rv .sp-cmp__loss { opacity: 0; transition: opacity .6s ease calc(var(--rv-d, 0ms) + 1.7s); }
+.sp-motion .sp-rv.is-in .sp-cmp__mark, .sp-motion .sp-rv.is-in .sp-cmp__loss { opacity: 1; }
+
+/* ردیف‌ها */
+.sp-cmp__rows { list-style: none; margin: 0; padding: 0; }
+.sp-cmp__rows li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px dashed #EAE5DD; font-size: 15px; }
+.sp-cmp__rows li span { color: var(--muted); }
+.sp-cmp__rows li b { margin-inline-start: auto; }
+.sp-cmp__rows li.is-miss b { color: #B4ADA3; text-decoration: line-through; font-weight: 500; }
+.sp-cmp__rows li.is-total { border-bottom: 0; padding-top: 12px; }
+.sp-cmp__rows li.is-total span { color: var(--ink); font-weight: 800; }
+.sp-cmp__rows li.is-total b { font-family: var(--display); font-size: 20px; }
+.sp-cmp__dot { width: 11px; height: 11px; border-radius: 4px; flex: none; }
+.sp-cmp .sp-compare__end { display: flex; align-items: center; gap: 8px; margin-top: 14px; border-radius: 16px; }
+
+/* «در برابر» و راهنما */
+.sp-cmp__vs { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 800; box-shadow: 0 0 0 7px var(--paper), 0 12px 26px rgba(35, 35, 38, .25); }
+.sp-cmp__legend { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; margin: 26px 0 0; padding: 0; font-size: 13px; color: var(--muted); }
+.sp-cmp__legend li { display: inline-flex; align-items: center; gap: 7px; }
+@media (max-width: 1000px) {
+	.sp-cmp .sp-compare { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; gap: 44px; }
+	.sp-cmp__vs { position: relative; top: auto; left: auto; transform: none; margin: -30px auto; }
+}
+@media (max-width: 600px) {
+	.sp-cmp .sp-compare__card { padding: 22px 18px 20px; }
+	.sp-cmp__result { font-size: 23px; padding: 6px 10px; }
+	.sp-cmp__head h3 { font-size: 18px; }
+}
+
+/* ۶٫۵. تازه‌ترین مطالب */
+.sp-hblog { padding-top: 40px; }
+.sp-hblog__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 30px; }
+.sp-hblog__head .sp-display--md { margin: 0; }
+.sp-hblog__all { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 800; color: var(--coral-d); padding: 10px 18px; border-radius: 999px; background: #FBE7DE; transition: gap .5s cubic-bezier(.25, 1.35, .5, 1), background .3s ease; }
+.sp-hblog__all:hover { gap: 12px; background: #F8D7C8; color: var(--coral-d); }
+.sp-hblog__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.sp-hblog .sp-bcard { transition: transform .9s cubic-bezier(.25, 1.35, .5, 1), box-shadow .9s cubic-bezier(.22, 1, .36, 1); }
+.sp-hblog .sp-bcard:hover { transform: translateY(-6px); box-shadow: 0 26px 50px rgba(35, 35, 38, .12); }
+.sp-hblog .sp-bcard__img { transition: transform 1.2s cubic-bezier(.22, 1, .36, 1); }
+.sp-hblog .sp-bcard:hover .sp-bcard__img { transform: scale(1.06); }
+@media (max-width: 1000px) { .sp-hblog__grid { grid-template-columns: 1fr 1fr; } .sp-hblog__grid > :nth-child(3) { display: none; } }
+@media (max-width: 680px) { .sp-hblog__grid { grid-template-columns: 1fr; } .sp-hblog__grid > :nth-child(3) { display: flex; } }

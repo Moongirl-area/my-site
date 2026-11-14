@@ -386,7 +386,7 @@ function sp_is_blog_view() {
 }
 
 add_action( 'wp_enqueue_scripts', function () {
-	if ( ! sp_is_blog_view() ) {
+	if ( ! sp_is_blog_view() && ! is_front_page() ) {
 		return;
 	}
 	$css = SP_DIR . '/assets/css/blog.css';
