@@ -2,7 +2,7 @@
 @font-face { font-family: "Vazirmatn"; src: url("../fonts/Vazirmatn-var.woff2") format("woff2-variations"), url("../fonts/Vazirmatn-var.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "SP Naskh"; src: url("../fonts/NotoNaskh-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 @font-face { font-family: "SP Naskh"; src: url("../fonts/NotoNaskh-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "SP Ruqaa"; src: url("../fonts/ArefRuqaa-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "SP Accent"; src: url("../fonts/Estedad-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
 
 :root {
 	--ink: #232326;
@@ -40,7 +40,7 @@ p { margin: 0 0 1em; }
 /* تایپوگرافی */
 .sp-display { font-family: var(--display); font-weight: 700; font-size: clamp(40px, 6.4vw, 78px); line-height: 1.25; letter-spacing: -.5px; }
 .sp-display--md { font-size: clamp(30px, 4vw, 46px); }
-.sp-script { font-family: "SP Ruqaa", var(--display); color: var(--coral); font-size: 28px; margin: 0 0 4px; line-height: 1.4; }
+.sp-script { font-family: "SP Accent", "Vazirmatn", sans-serif; font-weight: 800; color: var(--coral-d); font-size: 20px; margin: 0 0 6px; line-height: 1.5; }
 .sp-script--light { color: var(--mustard); }
 .sp-lead { font-size: 18px; color: var(--muted); max-width: 34em; }
 .sp-sub { color: var(--muted); }
@@ -311,7 +311,7 @@ p { margin: 0 0 1em; }
 .sp-brand--light .sp-brand__name { color: #fff; }
 .sp-brand--light { --logo-body: #FFF4E6; }
 .sp-footer__inner { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-.sp-footer__tag { font-family: "SP Ruqaa", var(--display); color: var(--mustard); font-size: 22px; margin: 12px 0 2px; }
+.sp-footer__tag { font-family: "SP Accent", "Vazirmatn", sans-serif; font-weight: 800; color: var(--mustard); font-size: 19px; margin: 12px 0 2px; }
 .sp-footer__note { color: #9F9B94; font-size: 14px; }
 .sp-footer__links { display: flex; flex-wrap: wrap; gap: 10px 26px; align-content: start; }
 .sp-footer__links a { text-decoration: none; opacity: .85; }
