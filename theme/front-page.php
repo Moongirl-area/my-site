@@ -145,7 +145,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 			<div class="sp-cmp__head">
 				<span class="sp-cmp__ico"><?php echo sp_icon( $good ? 'check' : 'calc', 22 ); ?></span>
 				<div><h3><?php echo $good ? 'با سودپز' : 'حساب سرانگشتی'; ?></h3><small><?php echo $good ? 'همه‌ی هزینه‌ها، با قیمت امروز' : 'فقط مواد، بقیه حدسی'; ?></small></div>
-				<span class="sp-cmp__result"><?php echo $diff >= 0 ? '+' : '−'; ?><?php echo esc_html( sp_fa( abs( $diff ) ) ); ?><small>هزار <?php echo $diff >= 0 ? 'سود' : 'ضرر'; ?></small></span>
+				<span class="sp-cmp__result"><bdi dir="ltr"><?php echo $diff >= 0 ? '+' : '−'; ?><?php echo esc_html( sp_fa( abs( $diff ) ) ); ?></bdi><small>هزار <?php echo $diff >= 0 ? 'سود' : 'ضرر'; ?></small></span>
 			</div>
 
 			<div class="sp-cmp__bar" role="img" aria-label="<?php echo esc_attr( 'هزینه‌ی واقعی ' . sp_fa( $d['cost'] ) . ' هزار، قیمت فروش ' . sp_fa( $d['sale'] ) . ' هزار' ); ?>">
@@ -162,7 +162,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 				<?php endif; ?>
 				<span class="sp-cmp__mark" style="inset-inline-start:<?php echo esc_attr( $pct( $d['sale'] ) ); ?>%"><em>فروش <?php echo esc_html( sp_fa( $d['sale'] ) ); ?></em></span>
 			</div>
-			<div class="sp-cmp__axis"><span>۰</span><span>هزینه‌ی واقعی: <?php echo esc_html( sp_fa( $d['cost'] ) ); ?> هزار</span></div>
+			<div class="sp-cmp__axis"><span>۰</span><span>هزینه‌ی واقعی <?php echo esc_html( sp_fa( $d['cost'] ) ); ?> هزار</span><span><?php echo esc_html( sp_fa( $scale ) ); ?> هزار</span></div>
 
 			<ul class="sp-cmp__rows">
 				<?php foreach ( $d['parts'] as $p ) : ?>
