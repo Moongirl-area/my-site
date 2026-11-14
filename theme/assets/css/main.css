@@ -645,8 +645,8 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-footer { border-radius: 28px 28px 0 0; }
 	.sp-fhelp { padding: 20px; padding-top: 96px; text-align: center; justify-content: center; }
 	.sp-fhelp__soodi { inset-inline-start: 50%; transform: translateX(50%); top: -20px; bottom: auto; width: 100px; }
-	.sp-fhelp__btns { justify-content: center; }
-	.sp-fhelp__btns .sp-btn { flex: 1; }
+	.sp-fhelp__btns { flex-direction: column; }
+	.sp-fhelp__btns .sp-btn { width: 100%; white-space: nowrap; padding: 12px 18px; }
 	.sp-footer__cols { grid-template-columns: 1fr 1fr; }
 	.sp-footer__bar { justify-content: center; text-align: center; }
 }
