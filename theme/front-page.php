@@ -297,9 +297,9 @@ $sp_firsts  = array(
 			<article class="sp-trust__item" style="--c:#910825">
 				<div class="sp-tv sp-tv--lock" aria-hidden="true">
 					<div class="sp-tv__fan">
-						<span class="sp-tv__card" style="--r:-12deg"><?php echo sp_icon( 'cake', 18 ); ?>کیک شکلاتی</span>
-						<span class="sp-tv__card" style="--r:0deg"><?php echo sp_icon( 'pot', 18 ); ?>قورمه‌سبزی</span>
-						<span class="sp-tv__card" style="--r:12deg"><?php echo sp_icon( 'cheese', 18 ); ?>چیزکیک</span>
+						<span class="sp-tv__card" style="--r:-12deg;--x:-70px"><?php echo sp_icon( 'cake', 18 ); ?>کیک شکلاتی</span>
+						<span class="sp-tv__card" style="--r:0deg;--x:0px;z-index:1"><?php echo sp_icon( 'pot', 18 ); ?>قورمه‌سبزی</span>
+						<span class="sp-tv__card" style="--r:12deg;--x:70px"><?php echo sp_icon( 'cheese', 18 ); ?>چیزکیک</span>
 					</div>
 					<span class="sp-tv__lock"><?php echo sp_icon( 'lock', 22 ); ?></span>
 					<span class="sp-tv__toggle"><i></i>فقط خودت می‌بینی</span>
