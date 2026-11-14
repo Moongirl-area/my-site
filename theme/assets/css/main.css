@@ -765,7 +765,7 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 }
 
 /* ۴. چطور کار می‌کنه: سه کارت با سودی */
-.sp-how { padding-bottom: 120px; }
+.sp-how { padding-top: 30px; padding-bottom: 120px; }
 .sp-how__steps { list-style: none; margin: 46px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; position: relative; }
 .sp-how__steps::before { content: ""; position: absolute; top: 118px; left: 12%; right: 12%; border-top: 3px dashed rgba(233, 162, 59, .45); z-index: 0; }
 .sp-how__step { position: relative; z-index: 1; background: #fff; border-radius: 28px; padding: 26px 26px 28px; text-align: center; box-shadow: 0 1px 2px rgba(35, 35, 38, .04), 0 18px 44px rgba(35, 35, 38, .08); border-top: 5px solid var(--c); transition: transform .25s ease, box-shadow .25s ease; }
@@ -782,7 +782,7 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-how__steps::before { top: 30px; bottom: 30px; left: 50%; right: auto; border-top: 0; border-left: 3px dashed rgba(233, 162, 59, .45); }
 }
 @media (max-width: 680px) {
-	.sp-how { padding-bottom: 80px; }
+	.sp-how { padding-top: 10px; padding-bottom: 80px; }
 	.sp-how__art { width: 124px; height: 124px; }
 	.sp-how__soodi { width: 96px; }
 }
