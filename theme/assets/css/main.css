@@ -314,17 +314,8 @@ p { margin: 0 0 1em; }
 .sp-hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
 /* فوتر */
-.sp-footer { background: var(--ink); color: #EDEAE4; padding: 56px 0 24px; }
-.sp-footer a { color: #EDEAE4; }
 .sp-brand--light .sp-brand__name { color: #fff; }
 .sp-brand--light { --logo-body: #FFF4E6; }
-.sp-footer__inner { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-.sp-footer__tag { font-family: "SP Display", "Vazirmatn", sans-serif; font-weight: 800; color: var(--mustard); font-size: 19px; margin: 12px 0 2px; }
-.sp-footer__note { color: #9F9B94; font-size: 14px; }
-.sp-footer__links { display: flex; flex-wrap: wrap; gap: 10px 26px; align-content: start; }
-.sp-footer__links a { text-decoration: none; opacity: .85; }
-.sp-footer__links a:hover { opacity: 1; color: var(--coral); }
-.sp-footer__copy { font-size: 13px; color: #8a867f; margin-top: 28px; }
 
 @media (prefers-reduced-motion: reduce) { .sp-plate--scene { animation: none; } html { scroll-behavior: auto; } }
 
@@ -509,9 +500,6 @@ p { margin: 0 0 1em; }
 .sp-404 .sp-actions { justify-content: center; }
 
 /* فوتر چندستونه */
-.sp-footer__cols { display: grid; grid-template-columns: repeat(3, auto); gap: 16px 56px; }
-.sp-footer__cols h4 { margin: 0 0 8px; font-size: 14px; color: var(--mustard); font-weight: 700; }
-.sp-footer__cols nav { display: flex; flex-direction: column; gap: 4px; }
 
 @media (max-width: 1000px) {
 	.sp-posts { grid-template-columns: 1fr 1fr; }
@@ -519,7 +507,6 @@ p { margin: 0 0 1em; }
 }
 @media (max-width: 680px) {
 	.sp-compare, .sp-posts, .sp-values { grid-template-columns: 1fr; }
-	.sp-footer__cols { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
 	.sp-split__donut { --s: 96px; }
 	.sp-page-head { padding: 32px 0 8px; }
 }
@@ -617,4 +604,49 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 @media (max-width: 600px) {
 	.sp-soodi--head { position: static; width: 90px; margin-bottom: 6px; }
 	.sp-soodi--hero { width: 90px; bottom: 62px; }
+}
+
+/* فوتر (نسخه‌ی ۳) */
+.sp-footer { position: relative; overflow: hidden; margin-top: 40px; padding: 0 0 26px; color: #EDE6DC; background:
+	radial-gradient(600px 320px at 85% 0%, rgba(145, 8, 37, .45), transparent 70%),
+	radial-gradient(520px 300px at 8% 100%, rgba(238, 154, 44, .16), transparent 70%),
+	#1E1A1B; border-radius: 40px 40px 0 0; }
+.sp-footer a { color: #EDE6DC; }
+.sp-fhelp { position: relative; display: flex; align-items: center; gap: 22px; margin: 44px 0 54px; padding: 22px 28px; padding-inline-start: 150px; background: linear-gradient(120deg, #2C2426, #2A2022); border: 1px solid rgba(255, 255, 255, .07); border-radius: 28px; box-shadow: 0 20px 50px rgba(0, 0, 0, .25); }
+.sp-fhelp__soodi { position: absolute; inset-inline-start: 22px; bottom: 0; width: 112px; }
+.sp-fhelp__txt { flex: 1; }
+.sp-fhelp__h { font-family: var(--display); font-weight: 800; font-size: 22px; color: #fff; margin: 0 0 2px; }
+.sp-fhelp__p { margin: 0; color: #B9B1A7; font-size: 15px; }
+.sp-fhelp__btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.sp-fbtn--ghost { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); color: #fff !important; }
+.sp-fbtn--ghost:hover { background: rgba(255, 255, 255, .12); }
+.sp-footer__inner { display: grid; grid-template-columns: minmax(260px, 1.1fr) 2fr; gap: 40px 64px; }
+.sp-footer__tag { font-family: var(--display); font-weight: 800; color: var(--mustard); font-size: 20px; margin: 16px 0 4px; }
+.sp-footer__note { color: #A39B91; font-size: 14.5px; margin: 0 0 18px; max-width: 26em; }
+.sp-fbadges { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sp-fbadges li { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #D9D1C6; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .08); }
+.sp-fbadges .sp-ico { color: var(--mustard); }
+.sp-footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; }
+.sp-footer__cols h4 { display: flex; align-items: center; gap: 8px; margin: 4px 0 14px; font-size: 15px; color: #fff; font-weight: 800; }
+.sp-footer__cols h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--mustard); box-shadow: 0 0 0 4px rgba(233, 162, 59, .18); }
+.sp-footer__cols nav { display: flex; flex-direction: column; gap: 10px; }
+.sp-footer__links a { text-decoration: none; color: #BDB5AA; font-size: 15px; width: fit-content; transition: color .15s ease, transform .15s ease; }
+.sp-footer__links a:hover { color: #fff; transform: translateX(-4px); }
+.sp-footer__bar { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .08); font-size: 13px; color: #8E867C; }
+.sp-totop { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, .06); color: #EDE6DC; font-size: 13px; }
+.sp-totop:hover { background: rgba(255, 255, 255, .12); }
+.sp-footer__mark { position: absolute; left: 50%; bottom: -0.32em; transform: translateX(-50%); font-family: var(--display); font-weight: 800; font-size: clamp(120px, 22vw, 300px); line-height: 1; color: rgba(255, 255, 255, .035); white-space: nowrap; pointer-events: none; user-select: none; }
+@media (max-width: 900px) {
+	.sp-footer__inner { grid-template-columns: 1fr; }
+	.sp-fhelp { flex-wrap: wrap; padding-inline-start: 132px; }
+	.sp-fhelp__btns { width: 100%; }
+}
+@media (max-width: 600px) {
+	.sp-footer { border-radius: 28px 28px 0 0; }
+	.sp-fhelp { padding: 20px; padding-top: 96px; text-align: center; justify-content: center; }
+	.sp-fhelp__soodi { inset-inline-start: 50%; transform: translateX(50%); top: -20px; bottom: auto; width: 100px; }
+	.sp-fhelp__btns { justify-content: center; }
+	.sp-fhelp__btns .sp-btn { flex: 1; }
+	.sp-footer__cols { grid-template-columns: 1fr 1fr; }
+	.sp-footer__bar { justify-content: center; text-align: center; }
 }
