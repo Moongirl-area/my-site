@@ -1,8 +1,7 @@
 /* سودپز: استایل اصلی، نسخه‌ی ۲ (مجله‌ای + گرم) */
 @font-face { font-family: "Vazirmatn"; src: url("../fonts/Vazirmatn-var.woff2") format("woff2-variations"), url("../fonts/Vazirmatn-var.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: "SP Naskh"; src: url("../fonts/NotoNaskh-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "SP Naskh"; src: url("../fonts/NotoNaskh-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "SP Accent"; src: url("../fonts/Estedad-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "SP Display"; src: url("../fonts/Estedad-700.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+@font-face { font-family: "SP Display"; src: url("../fonts/Estedad-800.woff2") format("woff2"); font-weight: 800 900; font-display: swap; }
 
 :root {
 	--ink: #232326;
@@ -20,7 +19,7 @@
 	--good: #1E8E5A;
 	--r: 18px;
 	--shadow: 0 2px 4px rgba(35, 35, 38, .06), 0 18px 40px rgba(35, 35, 38, .12);
-	--display: "SP Naskh", "Vazirmatn", serif;
+	--display: "SP Display", "Vazirmatn", sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -38,9 +37,9 @@ p { margin: 0 0 1em; }
 .sp-skip:focus { top: 12px; z-index: 99; background: #fff; padding: 8px 12px; }
 
 /* تایپوگرافی */
-.sp-display { font-family: var(--display); font-weight: 700; font-size: clamp(40px, 6.4vw, 78px); line-height: 1.25; letter-spacing: -.5px; }
+.sp-display { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5.6vw, 66px); line-height: 1.4; }
 .sp-display--md { font-size: clamp(30px, 4vw, 46px); }
-.sp-script { font-family: "SP Accent", "Vazirmatn", sans-serif; font-weight: 800; color: var(--coral-d); font-size: 20px; margin: 0 0 6px; line-height: 1.5; }
+.sp-script { font-family: "SP Display", "Vazirmatn", sans-serif; font-weight: 800; color: var(--coral-d); font-size: 20px; margin: 0 0 6px; line-height: 1.5; }
 .sp-script--light { color: var(--mustard); }
 .sp-lead { font-size: 18px; color: var(--muted); max-width: 34em; }
 .sp-sub { color: var(--muted); }
@@ -53,7 +52,7 @@ p { margin: 0 0 1em; }
 .sp-header__inner { display: flex; align-items: center; gap: 28px; min-height: 76px; }
 .sp-brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
 .sp-logo-mark { flex: none; display: block; }
-.sp-brand__name { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1; }
+.sp-brand__name { font-family: var(--display); font-weight: 800; font-size: 26px; line-height: 1; }
 .sp-nav { display: flex; gap: 26px; margin-inline-start: auto; }
 .sp-nav a { text-decoration: none; font-weight: 500; color: var(--muted); padding: 6px 0; }
 .sp-nav a:hover, .sp-nav a[aria-current] { color: var(--ink); }
@@ -263,7 +262,7 @@ p { margin: 0 0 1em; }
 /* قیمت‌ها */
 .sp-banner { background: var(--ink); color: #fff; text-align: center; padding: 12px 0; font-weight: 700; }
 .sp-banner a { color: var(--mustard); margin-inline-start: 8px; }
-.sp-h1 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 4.6vw, 52px); line-height: 1.3; }
+.sp-h1 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.45; }
 .sp-h2 { font-size: clamp(24px, 3.2vw, 32px); }
 .sp-h3 { font-size: 20px; margin-top: 1.4em; }
 .sp-toggle { display: flex; justify-content: center; gap: 6px; margin: 24px auto 40px; background: var(--stone); padding: 6px; border-radius: 999px; width: max-content; }
@@ -311,7 +310,7 @@ p { margin: 0 0 1em; }
 .sp-brand--light .sp-brand__name { color: #fff; }
 .sp-brand--light { --logo-body: #FFF4E6; }
 .sp-footer__inner { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-.sp-footer__tag { font-family: "SP Accent", "Vazirmatn", sans-serif; font-weight: 800; color: var(--mustard); font-size: 19px; margin: 12px 0 2px; }
+.sp-footer__tag { font-family: "SP Display", "Vazirmatn", sans-serif; font-weight: 800; color: var(--mustard); font-size: 19px; margin: 12px 0 2px; }
 .sp-footer__note { color: #9F9B94; font-size: 14px; }
 .sp-footer__links { display: flex; flex-wrap: wrap; gap: 10px 26px; align-content: start; }
 .sp-footer__links a { text-decoration: none; opacity: .85; }

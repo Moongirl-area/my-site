@@ -135,7 +135,7 @@ a.sp-catchip:hover { background: var(--c); color: #fff; }
 
 .sp-post__head { padding: 26px 0 10px; }
 .sp-post__headwrap > * { max-width: 880px; }
-.sp-post__title { font-family: var(--display); font-weight: 700; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.45; margin: 16px 0 12px; letter-spacing: -.3px; }
+.sp-post__title { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.45; margin: 16px 0 12px; }
 .sp-post__dek { font-size: clamp(17px, 1.6vw, 20px); color: var(--muted); line-height: 1.9; max-width: 44em; margin: 0 0 22px; }
 .sp-post__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
 .sp-post__meta > span { display: inline-flex; align-items: center; gap: 6px; }

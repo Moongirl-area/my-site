@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#3B2418">
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Vazirmatn-var.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
-	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/NotoNaskh-700.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Estedad-800.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
 	<script>
 	/* آشپزخونه‌ی انتخابی (شیرینی/غذا) قبل از نمایش صفحه، تا چیزی جابه‌جا نپرد. */
 	(function () {
