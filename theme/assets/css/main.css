@@ -677,7 +677,7 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-float img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
 .sp-float--1 { top: -12px; left: 26%; }
 .sp-float--2 { top: 44%; left: -54px; width: 56px; height: 56px; }
-.sp-float--3 { bottom: 64px; left: 44%; width: 52px; height: 52px; }
+.sp-float--3 { top: -4px; right: 250px; width: 52px; height: 52px; }
 .sp-float--4 { top: 6px; left: -30px; width: 46px; height: 46px; }
 .sp-motion .sp-float { animation: sp-bob 5.5s ease-in-out infinite; }
 .sp-motion .sp-float--2 { animation-delay: -1.5s; animation-duration: 6.5s; }
@@ -727,10 +727,10 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-motion .sp-dark__img[data-parallax] { transform: translateY(var(--py, 0)) scale(1.14); will-change: transform; }
 
 /* نوار متحرک */
-.sp-marquee { position: relative; margin: 80px 0 10px; height: 150px; overflow: hidden; }
+.sp-marquee { position: relative; margin: 80px 0 10px; height: 170px; overflow: hidden; }
 .sp-marquee__band { position: absolute; left: -5%; width: 110%; padding: 14px 0; overflow: hidden; }
 .sp-marquee__band--a { top: 22px; background: var(--coral); color: #fff; rotate: -2.2deg; z-index: 2; box-shadow: 0 14px 30px rgba(232, 103, 60, .25); }
-.sp-marquee__band--b { top: 52px; background: var(--ink); color: #EDE6DC; rotate: 2deg; }
+.sp-marquee__band--b { top: 84px; background: var(--ink); color: #EDE6DC; rotate: 1.6deg; }
 .sp-marquee__track { display: flex; align-items: center; gap: 22px; width: max-content; direction: ltr; animation: sp-marquee 46s linear infinite; }
 .sp-marquee__track--rev { animation-direction: reverse; animation-duration: 54s; }
 .sp-marquee__item { display: inline-flex; align-items: center; gap: 10px; direction: rtl; font-family: var(--display); font-weight: 800; font-size: 21px; white-space: nowrap; }
@@ -751,9 +751,9 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-float--3, .sp-float--4 { display: none; }
 	.sp-blob--a { width: 220px; height: 220px; }
 	.sp-blob--b { width: 180px; height: 180px; }
-	.sp-marquee { margin-top: 56px; height: 120px; }
+	.sp-marquee { margin-top: 56px; height: 140px; }
 	.sp-marquee__band { padding: 10px 0; }
-	.sp-marquee__band--b { top: 46px; }
+	.sp-marquee__band--b { top: 70px; }
 	.sp-marquee__item { font-size: 17px; }
 	.sp-marquee__band--b .sp-marquee__item { font-size: 14px; }
 	.sp-squiggle { width: 120px; }
