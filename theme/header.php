@@ -31,7 +31,7 @@
 			<span class="sp-brand__txt"><span class="sp-brand__name">سودپز</span><span class="sp-brand__tag">رفیق حسابگر آشپزخونه</span></span>
 		</a>
 		<nav class="sp-nav" aria-label="منوی اصلی">
-			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>"><?php echo sp_icon( 'spark', 17 ); ?>امکانات</a>
+			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>"><?php echo sp_icon( 'list', 17 ); ?>امکانات</a>
 			<a href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"<?php echo is_page( 'calculator' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'calc', 17 ); ?>ماشین‌حساب<span class="sp-nav__free">رایگان</span></a>
 			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'tag', 17 ); ?>قیمت‌ها</a>
 			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'book', 17 ); ?>مجله</a>
