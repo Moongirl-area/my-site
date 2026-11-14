@@ -19,6 +19,9 @@ jobs:
       - name: بررسی خطای PHP
         run: find theme -name "*.php" -print0 | xargs -0 -n1 php -l
 
+      - name: نوشتن شناسه‌ی آپلود (برای پاک شدن خودکار کش)
+        run: echo "${{ github.sha }}" > theme/deploy.txt
+
       - name: ساختن فایل zip پوسته (راه جایگزین آپلود دستی)
         run: |
           mkdir -p dist
@@ -45,5 +48,7 @@ jobs:
       - name: باز کردن سایت تا مطالب جدید مجله وارد وردپرس شوند
         run: |
           sleep 5
+          curl -s -o /dev/null -w "flush %{http_code}\n" -m 60 "https://soodpaz.com/?sp_deploy=${{ github.sha }}" || true
+          sleep 3
           curl -s -o /dev/null -w "home %{http_code}\n" -m 60 https://soodpaz.com/ || true
           curl -s -o /dev/null -w "blog %{http_code}\n" -m 60 https://soodpaz.com/blog/ || true

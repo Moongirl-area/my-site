@@ -30,7 +30,9 @@ function sp_en_digits( $str ) {
  * (نسخه‌ی اصلی PNG هر حالت در brand/soodi ریپو است.)
  */
 function sp_soodi_url( $pose = 'hero' ) {
-	return SP_URI . '/assets/img/soodi/' . sanitize_key( $pose ) . '.webp';
+	$rel = '/assets/img/soodi/' . sanitize_key( $pose ) . '.webp';
+	$ver = file_exists( SP_DIR . $rel ) ? filemtime( SP_DIR . $rel ) : SP_VERSION;
+	return SP_URI . $rel . '?v=' . $ver; // نسخه در آدرس تا کش مرورگر/CDN عکس قدیمی یا ۴۰۴ نگه ندارد
 }
 
 function sp_soodi( $pose = 'hero', $class = '', $alt = 'سودی، شخصیت سودپز', $eager = false ) {

@@ -53,3 +53,32 @@ add_action( 'after_switch_theme', function () {
 	sp_create_pages();
 	sp_create_starter_posts();
 } );
+
+/**
+ * بعد از هر آپلود، کش صفحه‌ها پاک شود تا بازدیدکننده‌ها نسخه‌ی قدیمی (مثلاً بدون سودی) نبینند.
+ * گیت‌هاب شناسه‌ی آخرین کامیت را در deploy.txt می‌نویسد؛ اولین درخواستی که PHP را اجرا کند
+ * (درخواست ‎?sp_deploy=… در پایان آپلود، یا باز کردن پیشخوان) اگر شناسه عوض شده باشد همه‌ی کش‌ها را پاک می‌کند.
+ */
+function sp_flush_all_caches() {
+	do_action( 'litespeed_purge_all' );                                             // LiteSpeed Cache
+	if ( function_exists( 'rocket_clean_domain' ) ) { rocket_clean_domain(); }       // WP Rocket
+	if ( function_exists( 'w3tc_flush_all' ) ) { w3tc_flush_all(); }                 // W3 Total Cache
+	if ( function_exists( 'wp_cache_clear_cache' ) ) { wp_cache_clear_cache(); }     // WP Super Cache
+	if ( class_exists( 'WpFastestCache' ) ) { do_action( 'wpfc_clear_all_cache' ); } // WP Fastest Cache
+	if ( function_exists( 'sg_cachepress_purge_cache' ) ) { sg_cachepress_purge_cache(); }
+	do_action( 'breeze_clear_all_cache' );                                          // Breeze
+	do_action( 'cache_enabler_clear_complete_cache' );                              // Cache Enabler
+	wp_cache_flush();
+}
+add_action( 'init', function () {
+	$f = SP_DIR . '/deploy.txt';
+	if ( ! file_exists( $f ) ) {
+		return;
+	}
+	$stamp = trim( (string) file_get_contents( $f ) );
+	if ( '' === $stamp || get_option( 'sp_deploy_stamp' ) === $stamp ) {
+		return;
+	}
+	update_option( 'sp_deploy_stamp', $stamp, false );
+	sp_flush_all_caches();
+}, 1 );
