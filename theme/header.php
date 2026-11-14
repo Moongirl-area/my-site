@@ -27,16 +27,17 @@
 <header class="sp-header">
 	<div class="sp-wrap sp-header__inner">
 		<a class="sp-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="سودپز، صفحه‌ی اصلی">
-			<?php echo sp_logo_svg( 46 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-			<span class="sp-brand__name">سودپز</span>
+			<?php echo sp_logo_svg( 42 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+			<span class="sp-brand__txt"><span class="sp-brand__name">سودپز</span><span class="sp-brand__tag">رفیق حسابگر آشپزخونه</span></span>
 		</a>
 		<nav class="sp-nav" aria-label="منوی اصلی">
-			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>">امکانات</a>
-			<a href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"<?php echo is_page( 'calculator' ) ? ' aria-current="page"' : ''; ?>>ماشین‌حساب رایگان</a>
-			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>>قیمت‌ها</a>
-			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>>مجله</a>
+			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>"><?php echo sp_icon( 'spark', 17 ); ?>امکانات</a>
+			<a href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"<?php echo is_page( 'calculator' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'calc', 17 ); ?>ماشین‌حساب<span class="sp-nav__free">رایگان</span></a>
+			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'tag', 17 ); ?>قیمت‌ها</a>
+			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'book', 17 ); ?>مجله</a>
 		</nav>
-		<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">بنیان‌گذار شو</a>
+		<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"<?php echo is_page( 'founders' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'spark', 17 ); ?>بنیان‌گذار شو</a>
 	</div>
+	<script>(function(){var h=document.querySelector('.sp-header');if(!h)return;var f=function(){h.classList.toggle('is-scrolled',window.scrollY>8);};f();window.addEventListener('scroll',f,{passive:true});})();</script>
 </header>
 <main id="main">
