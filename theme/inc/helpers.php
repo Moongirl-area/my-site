@@ -62,7 +62,7 @@ function sp_img( $name, $alt = '', $class = '', $eager = false ) {
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
 		$rel = '/assets/img/' . $name . '.' . $ext;
 		if ( file_exists( SP_DIR . $rel ) ) {
-			return '<img class="' . esc_attr( $class ) . '" src="' . esc_url( SP_URI . $rel ) . '" alt="' . esc_attr( $alt ) . '"' . ( $eager ? ' fetchpriority="high"' : ' loading="lazy"' ) . ' decoding="async">';
+			return '<img class="' . esc_attr( $class ) . '" src="' . esc_url( SP_URI . $rel . '?v=' . filemtime( SP_DIR . $rel ) ) . '" alt="' . esc_attr( $alt ) . '"' . ( $eager ? ' fetchpriority="high"' : ' loading="lazy"' ) . ' decoding="async">';
 		}
 	}
 	return '<span class="sp-ph ' . esc_attr( $class ) . '" role="img" aria-label="' . esc_attr( $alt ) . '"><span>' . esc_html( $alt ) . '</span></span>';
