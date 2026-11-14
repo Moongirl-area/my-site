@@ -15,7 +15,7 @@
 	sel.forEach(function (s) { $$(s).forEach(function (e) { if (!e.classList.contains('sp-rv')) { e.classList.add('sp-rv'); els.push(e); } }); });
 	els.forEach(function (e) {
 		var sib = Array.prototype.filter.call(e.parentNode.children, function (c) { return c.classList.contains('sp-rv'); });
-		e.style.setProperty('--rv-d', Math.min(sib.indexOf(e), 6) * 90 + 'ms');
+		e.style.setProperty('--rv-d', Math.min(sib.indexOf(e), 6) * 140 + 'ms');
 	});
 	var io = new IntersectionObserver(function (es) {
 		es.forEach(function (en) {
