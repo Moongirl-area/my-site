@@ -87,3 +87,27 @@ add_action( 'init', function () {
 	update_option( 'sp_deploy_stamp', $stamp, false );
 	sp_flush_all_caches();
 }, 1 );
+
+/**
+ * عکس پروفایل مدیرهای سایت (نوار بالای وردپرس، پیشخوان، دیدگاه‌ها) = لوگوی سودپز،
+ * به‌جای عکس Gravatar ایمیل‌شان.
+ */
+add_filter( 'pre_get_avatar_data', function ( $args, $id_or_email ) {
+	$user = false;
+	if ( is_numeric( $id_or_email ) ) {
+		$user = get_user_by( 'id', (int) $id_or_email );
+	} elseif ( $id_or_email instanceof WP_User ) {
+		$user = $id_or_email;
+	} elseif ( $id_or_email instanceof WP_Post ) {
+		$user = get_user_by( 'id', (int) $id_or_email->post_author );
+	} elseif ( $id_or_email instanceof WP_Comment ) {
+		$user = $id_or_email->user_id ? get_user_by( 'id', (int) $id_or_email->user_id ) : false;
+	} elseif ( is_string( $id_or_email ) && is_email( $id_or_email ) ) {
+		$user = get_user_by( 'email', $id_or_email );
+	}
+	if ( $user && user_can( $user, 'manage_options' ) ) {
+		$args['url']          = SP_URI . '/assets/img/logo/apple-touch-icon.png';
+		$args['found_avatar'] = true;
+	}
+	return $args;
+}, 10, 2 );

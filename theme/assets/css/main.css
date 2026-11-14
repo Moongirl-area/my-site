@@ -777,15 +777,65 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-how__soodi { width: 96px; }
 }
 
-/* ۷. اعتماد (نسخه‌ی ۳) */
-.sp-trust { padding: 30px 0 70px; }
-.sp-trust__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.sp-trust__item { display: flex; align-items: center; gap: 16px; padding: 20px 22px; background: #fff; border-radius: 22px; border: 1px solid var(--line); transition: transform .9s cubic-bezier(.25, 1.35, .5, 1), box-shadow .9s cubic-bezier(.22, 1, .36, 1), border-color .6s ease; }
-.sp-trust__item:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--c) 35%, #fff); box-shadow: 0 22px 44px rgba(35, 35, 38, .08); }
-.sp-trust__ico { display: grid; place-items: center; width: 56px; height: 56px; flex: none; border-radius: 18px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, #fff); transition: rotate .8s cubic-bezier(.25, 1.35, .5, 1); }
-.sp-trust__item:hover .sp-trust__ico { rotate: -8deg; }
-.sp-trust__item strong { display: block; font-family: var(--display); font-size: 18px; line-height: 1.4; }
-.sp-trust__item span { color: var(--muted); font-size: 14.5px; }
+/* ۷. اعتماد (نسخه‌ی ۴: اینفوگرافیک) */
+.sp-trust { padding-top: 20px; padding-bottom: 90px; }
+.sp-trust__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
+.sp-trust__item { display: flex; flex-direction: column; background: #fff; border-radius: 28px; border: 1px solid var(--line); overflow: hidden; transition: transform .9s cubic-bezier(.25, 1.35, .5, 1), box-shadow .9s cubic-bezier(.22, 1, .36, 1), border-color .6s ease; }
+.sp-trust__item:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--c) 35%, #fff); box-shadow: 0 26px 50px rgba(35, 35, 38, .1); }
+.sp-trust__txt { padding: 20px 24px 24px; }
+.sp-trust__txt h3 { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 19px; margin: 0 0 6px; }
+.sp-trust__txt p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.sp-trust__ico { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; color: var(--c); background: color-mix(in srgb, var(--c) 13%, #fff); flex: none; }
+
+/* ناحیه‌ی تصویری هر کارت */
+.sp-tv { position: relative; height: 170px; display: flex; align-items: center; justify-content: center; gap: 18px; padding: 18px; background: radial-gradient(260px 160px at 50% 110%, color-mix(in srgb, var(--c) 22%, #fff), transparent 70%), color-mix(in srgb, var(--c) 6%, #FBF9F6); border-bottom: 1px dashed color-mix(in srgb, var(--c) 25%, #fff); }
+
+/* ۱. سرور: وضعیت آنلاین */
+.sp-tv__server { position: relative; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 20px; background: #fff; color: var(--c); box-shadow: 0 10px 24px color-mix(in srgb, var(--c) 25%, transparent); }
+.sp-tv__flag { position: absolute; bottom: -10px; font-size: 11px; font-weight: 800; color: #fff; background: var(--c); padding: 1px 8px; border-radius: 999px; }
+.sp-tv__rows { display: flex; flex-direction: column; gap: 8px; }
+.sp-tv__row { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 12px; background: #fff; font-size: 13px; box-shadow: 0 4px 12px rgba(35, 35, 38, .06); white-space: nowrap; }
+.sp-tv__row b { margin-inline-start: auto; padding-inline-start: 10px; font-size: 12.5px; }
+.sp-tv__row.is-off { color: #9A958E; }
+.sp-tv__row.is-off span:nth-child(2) { text-decoration: line-through; }
+.sp-tv__row.is-off b { color: #D04B4B; }
+.sp-tv__row.is-on b { color: var(--good); }
+.sp-tv__dot { width: 9px; height: 9px; border-radius: 50%; background: #D04B4B; flex: none; }
+.is-on .sp-tv__dot { background: var(--good); box-shadow: 0 0 0 0 rgba(30, 142, 90, .5); }
+.sp-motion .is-on .sp-tv__dot { animation: sp-ping 1.8s ease-out infinite; }
+@keyframes sp-ping { 0% { box-shadow: 0 0 0 0 rgba(30, 142, 90, .55); } 100% { box-shadow: 0 0 0 10px rgba(30, 142, 90, 0); } }
+
+/* ۲. دستورها: بادبزن کارت‌ها با قفل */
+.sp-tv--lock { flex-direction: column; gap: 10px; }
+.sp-tv__fan { position: relative; width: 210px; height: 74px; }
+.sp-tv__card { position: absolute; left: 50%; top: 6px; display: inline-flex; align-items: center; gap: 6px; width: 120px; margin-left: -60px; padding: 10px; border-radius: 14px; background: #fff; font-size: 12.5px; font-weight: 700; box-shadow: 0 8px 18px rgba(35, 35, 38, .1); transform: rotate(var(--r)) translateX(calc(var(--r) * -3.4)); transform-origin: 50% 160%; transition: transform .9s cubic-bezier(.25, 1.35, .5, 1); }
+.sp-tv__card .sp-ico { color: var(--c); }
+.sp-trust__item:hover .sp-tv__card { transform: rotate(calc(var(--r) * 1.5)) translateX(calc(var(--r) * -5)); }
+.sp-tv__lock { position: absolute; top: 58px; left: 50%; margin-left: -22px; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--c); color: #fff; box-shadow: 0 0 0 5px #fff, 0 10px 22px color-mix(in srgb, var(--c) 40%, transparent); z-index: 2; }
+.sp-tv__toggle { position: relative; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 12.5px; font-weight: 700; color: var(--c); }
+.sp-tv__toggle i { position: relative; width: 32px; height: 18px; border-radius: 999px; background: var(--c); }
+.sp-tv__toggle i::after { content: ""; position: absolute; top: 3px; right: 3px; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+
+/* ۳. هفت روز: پر شدن روزها */
+.sp-tv--days { flex-direction: column; gap: 16px; }
+.sp-tv__days { list-style: none; margin: 0; padding: 0; display: flex; gap: 7px; position: relative; }
+.sp-tv__days::before { content: ""; position: absolute; top: 50%; left: 12px; right: 12px; height: 2px; background: color-mix(in srgb, var(--c) 30%, #fff); z-index: 0; }
+.sp-tv__days li { position: relative; z-index: 1; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: 13px; font-weight: 800; background: var(--c); color: #fff; box-shadow: 0 0 0 3px #fff; }
+.sp-tv__days li:last-child { width: 36px; height: 36px; margin-top: -3px; box-shadow: 0 0 0 3px #fff, 0 6px 16px color-mix(in srgb, var(--c) 45%, transparent); }
+.sp-motion .sp-rv .sp-tv__days li { background: #fff; color: #B9B3AA; box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 30%, #fff); transition: background .4s ease, color .4s ease, box-shadow .4s ease; transition-delay: calc(var(--rv-d, 0ms) + 300ms + var(--i) * 140ms); }
+.sp-motion .sp-rv.is-in .sp-tv__days li { background: var(--c); color: #fff; box-shadow: 0 0 0 3px #fff; }
+.sp-tv__refund { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 14px; background: #fff; box-shadow: 0 6px 16px rgba(35, 35, 38, .07); font-size: 13px; color: var(--muted); }
+.sp-tv__refund .sp-ico { color: var(--c); }
+.sp-tv__refund b { font-family: var(--display); font-size: 18px; color: var(--ink); }
+
+@media (max-width: 1000px) and (min-width: 901px) { .sp-tv__row { font-size: 12px; } .sp-tv { gap: 12px; } }
+@media (max-width: 900px) {
+	.sp-trust__grid { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
+}
+@media (max-width: 380px) {
+	.sp-tv__days li { width: 26px; height: 26px; font-size: 12px; }
+	.sp-tv__days { gap: 5px; }
+}
 
 /* ۸. کارت بنیان‌گذار (نسخه‌ی ۳) */
 .sp-final { padding: 10px 0 90px; }
@@ -814,7 +864,6 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-final__soodi { position: relative; width: 210px; filter: drop-shadow(0 18px 24px rgba(80, 0, 20, .3)); }
 .sp-motion .sp-final__soodi { animation: sp-bob 5s ease-in-out infinite; }
 @media (max-width: 900px) {
-	.sp-trust__grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
 	.sp-final__card { grid-template-columns: 1fr; padding: 40px 28px 34px; text-align: center; }
 	.sp-final__art { order: -1; }
 	.sp-final__soodi { width: 140px; }

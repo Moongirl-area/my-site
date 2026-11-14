@@ -273,20 +273,58 @@ $sp_firsts  = array(
 	</div>
 </section>
 
-<!-- ۷. اعتماد -->
-<section class="sp-trust">
-	<div class="sp-wrap sp-trust__grid">
-		<div class="sp-trust__item" style="--c:#149C98">
-			<span class="sp-trust__ico"><?php echo sp_icon( 'server', 26 ); ?></span>
-			<div><strong>روی سرور ایرانی</strong><span>موقع قطعی اینترنت هم بازه.</span></div>
-		</div>
-		<div class="sp-trust__item" style="--c:#910825">
-			<span class="sp-trust__ico"><?php echo sp_icon( 'lock', 26 ); ?></span>
-			<div><strong>دستورهات مال خودته</strong><span>بدون اجازه‌ی تو هیچ‌جا نمی‌ره.</span></div>
-		</div>
-		<div class="sp-trust__item" style="--c:#E9A23B">
-			<span class="sp-trust__ico"><?php echo sp_icon( 'refund', 26 ); ?></span>
-			<div><strong>۷ روز بازگشت پول</strong><span>بدون سؤال، پولت برمی‌گرده.</span></div>
+<!-- ۷. اعتماد: سه قول، به‌صورت اینفوگرافیک -->
+<section class="sp-section sp-trust">
+	<div class="sp-wrap">
+		<p class="sp-script sp-center">خیالت راحت</p>
+		<h2 class="sp-display sp-display--md sp-center">سه تا قول سودپز</h2>
+		<div class="sp-trust__grid">
+
+			<article class="sp-trust__item" style="--c:#149C98">
+				<div class="sp-tv sp-tv--net" aria-hidden="true">
+					<div class="sp-tv__server"><?php echo sp_icon( 'server', 30 ); ?><span class="sp-tv__flag">ایران</span></div>
+					<div class="sp-tv__rows">
+						<div class="sp-tv__row is-off"><span class="sp-tv__dot"></span><span>اینترنت بین‌الملل</span><b>قطع</b></div>
+						<div class="sp-tv__row is-on"><span class="sp-tv__dot"></span><span>سودپز</span><b>در دسترس</b></div>
+					</div>
+				</div>
+				<div class="sp-trust__txt">
+					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'server', 20 ); ?></span>روی سرور ایرانی</h3>
+					<p>موقع قطعی اینترنت هم بازه؛ قیمت‌هات همیشه دم دستته.</p>
+				</div>
+			</article>
+
+			<article class="sp-trust__item" style="--c:#910825">
+				<div class="sp-tv sp-tv--lock" aria-hidden="true">
+					<div class="sp-tv__fan">
+						<span class="sp-tv__card" style="--r:-12deg"><?php echo sp_icon( 'cake', 18 ); ?>کیک شکلاتی</span>
+						<span class="sp-tv__card" style="--r:0deg"><?php echo sp_icon( 'pot', 18 ); ?>قورمه‌سبزی</span>
+						<span class="sp-tv__card" style="--r:12deg"><?php echo sp_icon( 'cheese', 18 ); ?>چیزکیک</span>
+					</div>
+					<span class="sp-tv__lock"><?php echo sp_icon( 'lock', 22 ); ?></span>
+					<span class="sp-tv__toggle"><i></i>فقط خودت می‌بینی</span>
+				</div>
+				<div class="sp-trust__txt">
+					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'lock', 20 ); ?></span>دستورهات مال خودته</h3>
+					<p>دستور و قیمتت بدون اجازه‌ی تو هیچ‌جا نمی‌ره و به کسی نشون داده نمی‌شه.</p>
+				</div>
+			</article>
+
+			<article class="sp-trust__item" style="--c:#E9A23B">
+				<div class="sp-tv sp-tv--days" aria-hidden="true">
+					<ol class="sp-tv__days">
+						<?php for ( $sp_d = 1; $sp_d <= 7; $sp_d++ ) : ?>
+							<li style="--i:<?php echo (int) $sp_d; ?>"><?php echo esc_html( sp_fa( $sp_d ) ); ?></li>
+						<?php endfor; ?>
+					</ol>
+					<div class="sp-tv__refund"><?php echo sp_icon( 'refund', 20 ); ?><b>۱۰۰٪</b><span>پولت برمی‌گرده</span></div>
+				</div>
+				<div class="sp-trust__txt">
+					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'refund', 20 ); ?></span>۷ روز بازگشت پول</h3>
+					<p>تا روز هفتم پشیمون شدی؟ بدون سؤال، کل پولت برمی‌گرده.</p>
+				</div>
+			</article>
+
 		</div>
 	</div>
 </section>
