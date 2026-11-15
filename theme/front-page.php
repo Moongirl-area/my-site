@@ -13,9 +13,9 @@ $sp_firsts  = array(
 <section class="sp-hero">
 	<div class="sp-wrap sp-hero__grid">
 		<div class="sp-hero__text">
-			<p class="sp-script">رفیق حسابگر آشپزخونه</p>
+			<p class="sp-script">حسابدار خوش‌اخلاق آشپزخونه</p>
 			<h1 class="sp-display">قورمه‌سبزی و کیکت چند تموم می‌شه؟</h1>
-			<p class="sp-lead">دقیق بدون، با سود بفروش. سودپز قیمت تمام‌شده و قیمت فروش هر کیک و هر پرس غذای خانگیت رو حساب می‌کنه؛ گوشت یا خامه هم که گرون شد، همه‌ی قیمت‌ها با یه کلیک درست می‌شن.</p>
+			<p class="sp-lead">خیلی‌ها فقط پول مواد رو حساب می‌کنن. دستمزد خودشون، گاز و جعبه از قلم می‌افته و آخر ماه سودی نمی‌مونه. سودپز همه‌ش رو با قیمت امروز حساب می‌کنه و می‌گه هر کیلو کیک یا هر پرس غذا رو چند بفروشی. خامه یا گوشت گرون شد؟ همه‌ی قیمت‌هات با یه کلیک درست می‌شه.</p>
 
 			<div class="sp-doors">
 				<a class="sp-door" href="<?php echo esc_url( add_query_arg( 'k', 'sweet', sp_url( 'calculator' ) ) ); ?>" style="--c:#E8673C">
@@ -31,9 +31,9 @@ $sp_firsts  = array(
 			</div>
 
 			<ul class="sp-meta">
-				<li><?php echo sp_icon( 'clock', 20 ); ?><span><small>زمان</small>۲ دقیقه</span></li>
-				<li><?php echo sp_icon( 'user', 20 ); ?><span><small>ثبت‌نام</small>لازم نیست</span></li>
-				<li><?php echo sp_icon( 'phone', 20 ); ?><span><small>روی</small>گوشی</span></li>
+				<li><?php echo sp_icon( 'clock', 20 ); ?><span><small>فقط</small>۲ دقیقه</span></li>
+				<li><?php echo sp_icon( 'user', 20 ); ?><span><small>بدون</small>ثبت‌نام</span></li>
+				<li><?php echo sp_icon( 'phone', 20 ); ?><span><small>با</small>همین گوشی</span></li>
 			</ul>
 		</div>
 
@@ -63,11 +63,11 @@ $sp_firsts  = array(
 				<div class="sp-widget__good"><?php echo sp_icon( 'up', 16 ); ?> ۳۰٪ سود</div>
 			</div>
 
-			<?php echo sp_soodi( 'hero', 'sp-soodi--hero', 'سودی، رفیق حسابگر آشپزخونه', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+			<?php echo sp_soodi( 'hero', 'sp-soodi--hero', 'سودی، حسابدار خوش‌اخلاق آشپزخونه', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 
 			<div class="sp-widget sp-widget--alert">
 				<span class="sp-widget__ico"><?php echo sp_icon( 'bell', 18 ); ?></span>
-				<p><b>گوشت گرون شد.</b> قیمت ۳ غذات عوض شد؛ ببین.</p>
+				<p><b>گوشت گرون شد.</b> قیمت جدید ۳ تا از غذاهات آماده‌ست.</p>
 			</div>
 		</div>
 	</div>
@@ -78,14 +78,14 @@ $sp_firsts  = array(
 	<div class="sp-wrap">
 		<?php sp_kitchen_switch(); ?>
 		<div class="sp-pains__grid" data-only="sweet">
-			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E03A3E"><?php echo sp_icon( 'tag', 22 ); ?></span><p>دو ماه پیش قیمت بستی، الان خامه و شکلات گرون‌ترن.</p></div>
-			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E9A23B"><?php echo sp_icon( 'flame', 22 ); ?></span><p>دستمزد خودت و گاز فر رو حساب کردی؟</p></div>
-			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#149C98"><?php echo sp_icon( 'calc', 22 ); ?></span><p>مطمئنی روی همه‌ی کیک‌هات سود می‌کنی؟</p></div>
+			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E03A3E"><?php echo sp_icon( 'tag', 22 ); ?></span><p>قیمت‌هات مال دو ماه پیشه؛ خامه و شکلات از اون موقع چند بار گرون شدن.</p></div>
+			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E9A23B"><?php echo sp_icon( 'flame', 22 ); ?></span><p>سه ساعت پای کیک وایسادی. دستمزدش کجای قیمته؟</p></div>
+			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#149C98"><?php echo sp_icon( 'calc', 22 ); ?></span><p>کیکی که از همه بیشتر سفارش داره، شاید همونیه که باهاش ضرر می‌کنی.</p></div>
 		</div>
 		<div class="sp-pains__grid" data-only="food">
 			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E03A3E"><?php echo sp_icon( 'tag', 22 ); ?></span><p>منوی این هفته رو با قیمت گوشت ماه پیش بستی؟</p></div>
-			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E9A23B"><?php echo sp_icon( 'box', 22 ); ?></span><p>ظرف، گاز چهارساعته‌ی اجاق و دستمزدت رو حساب کردی؟</p></div>
-			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#149C98"><?php echo sp_icon( 'calc', 22 ); ?></span><p>قیمت رستوران بغلی رو کپی کردی؟ هزینه‌ی اون با تو فرق داره.</p></div>
+			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#E9A23B"><?php echo sp_icon( 'box', 22 ); ?></span><p>خورش چهار ساعت روی گاز بوده. پول گاز و ظرف و دستمزدت کجای قیمته؟</p></div>
+			<div class="sp-pain"><span class="sp-pain__ico" style="--c:#149C98"><?php echo sp_icon( 'calc', 22 ); ?></span><p>قیمت رستوران بغلی رو برداشتی؟ اون گوشت رو عمده می‌خره، تو نه.</p></div>
 		</div>
 	</div>
 </section>
@@ -123,16 +123,16 @@ $sp_firsts  = array(
  */
 $sp_cmp = array(
 	'sweet' => array(
-		'note'  => 'کیک شکلاتی ۱ کیلویی (عددها نمونه‌ان).',
+		'note'  => 'یه کیک شکلاتی یک کیلویی، دو جور حساب (عددها نمونه‌ان).',
 		'scale' => 920,
-		'bad'   => array( 'parts' => array( array( 'مواد', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 0 ), array( 'گاز فر و جعبه', 35, 'gas', 0 ) ), 'extra' => array( '«یه کم بذارم روش»', '+ ۱۳۰ هزار' ), 'sale' => 550, 'cost' => 642, 'end' => 'هزینه‌ی واقعی ۶۴۲ هزاره؛ از هر کیک ۹۲ هزار تومان ضرر.' ),
-		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 1 ), array( 'گاز فر و جعبه', 35, 'gas', 1 ) ), 'sale' => 920, 'cost' => 642, 'end' => 'هم دستمزدت رو گرفتی، هم ۲۷۸ هزار تومان سود.' ),
+		'bad'   => array( 'parts' => array( array( 'مواد', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 0 ), array( 'گاز فر و جعبه', 35, 'gas', 0 ) ), 'extra' => array( '«یه کم بذارم روش»', '+ ۱۳۰ هزار' ), 'sale' => 550, 'cost' => 642, 'end' => 'هزینه‌ی واقعی ۶۴۲ هزاره. یعنی سر هر کیک ۹۲ هزار تومان از جیبت رفته.' ),
+		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 420, 'mat', 1 ), array( 'دستمزد ۲٫۵ ساعت', 187, 'lab', 1 ), array( 'گاز فر و جعبه', 35, 'gas', 1 ) ), 'sale' => 920, 'cost' => 642, 'end' => 'دستمزدت رو گرفتی، تازه ۲۷۸ هزار تومان هم سود بردی.' ),
 	),
 	'food'  => array(
-		'note'  => 'قورمه‌سبزی با برنج، هر پرس (از یه دیگ ۱۰ پرسی؛ عددها نمونه‌ان).',
+		'note'  => 'قورمه‌سبزی با برنج، هر پرس از یه دیگ ۱۰ پرسی (عددها نمونه‌ان).',
 		'scale' => 386,
-		'bad'   => array( 'parts' => array( array( 'مواد هر پرس', 220, 'mat', 1 ), array( 'دستمزد (۳ ساعت برای ۱۰ پرس)', 30, 'lab', 0 ), array( 'گاز ۴ ساعته و ظرف', 20, 'gas', 0 ) ), 'extra' => array( '«رستوران بغلی چند می‌ده؟»', '۲۵۰ هزار' ), 'sale' => 250, 'cost' => 270, 'end' => 'هر پرس ۲۰ هزار ضرر؛ با ۵۰ پرس در هفته، یعنی ۱ میلیون تومان.' ),
-		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 220, 'mat', 1 ), array( 'سهم دستمزد', 30, 'lab', 1 ), array( 'سهم گاز و ظرف', 20, 'gas', 1 ) ), 'sale' => 386, 'cost' => 270, 'end' => 'هم دستمزدت رو گرفتی، هم از هر پرس ۱۱۶ هزار تومان سود.' ),
+		'bad'   => array( 'parts' => array( array( 'مواد هر پرس', 220, 'mat', 1 ), array( 'دستمزد (۳ ساعت برای ۱۰ پرس)', 30, 'lab', 0 ), array( 'گاز ۴ ساعته و ظرف', 20, 'gas', 0 ) ), 'extra' => array( '«رستوران بغلی چند می‌ده؟»', '۲۵۰ هزار' ), 'sale' => 250, 'cost' => 270, 'end' => 'هر پرس ۲۰ هزار ضرر. با ۵۰ پرس در هفته، هر هفته ۱ میلیون تومان از جیبت می‌ره.' ),
+		'good'  => array( 'parts' => array( array( 'مواد با قیمت امروز', 220, 'mat', 1 ), array( 'سهم دستمزد', 30, 'lab', 1 ), array( 'سهم گاز و ظرف', 20, 'gas', 1 ) ), 'sale' => 386, 'cost' => 270, 'end' => 'دستمزدت رو گرفتی، تازه از هر پرس ۱۱۶ هزار تومان هم سود بردی.' ),
 	),
 );
 if ( ! function_exists( 'sp_cmp_card' ) ) {
@@ -185,7 +185,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 <section class="sp-section sp-cmp">
 	<div class="sp-wrap">
 		<p class="sp-script sp-center">یه محصول، دو حساب</p>
-		<h2 class="sp-display sp-display--md sp-center">حساب سرانگشتی کجا ضرر می‌ده؟</h2>
+		<h2 class="sp-display sp-display--md sp-center">حساب سرانگشتی دقیقاً کجا ضرر می‌ده؟</h2>
 
 		<?php foreach ( $sp_cmp as $sp_k => $sp_c ) : ?>
 			<div data-only="<?php echo esc_attr( $sp_k ); ?>">
@@ -216,26 +216,26 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 <!-- ۴. چطور کار می‌کنه (سه کارت با سودی) -->
 <section class="sp-section sp-how">
 	<div class="sp-wrap">
-		<p class="sp-script sp-center">سه قدم تا قیمت درست</p>
-		<h2 class="sp-display sp-display--md sp-center">چطور کار می‌کنه</h2>
+		<p class="sp-script sp-center">چطور کار می‌کنه؟</p>
+		<h2 class="sp-display sp-display--md sp-center">سه قدم، دو دقیقه</h2>
 		<ol class="sp-how__steps">
 			<li class="sp-how__step" style="--c:#E8673C">
 				<span class="sp-how__n">۱</span>
 				<div class="sp-how__art"><?php echo sp_soodi( 'thinking', 'sp-how__soodi', 'سودی در حال فکر کردن' ); // phpcs:ignore ?></div>
 				<h3><?php echo sp_icon( 'book', 20 ); ?>دستورت رو انتخاب کن</h3>
-				<p>از کتابخونه‌ی کیک‌ها و غذاهای آماده بردار، یا دستور خودت رو با مواد و مقدارش بنویس.</p>
+				<p>از دستورهای آماده یکی رو بردار، یا دستور خودت رو با مقدار مواد بنویس.</p>
 			</li>
 			<li class="sp-how__step" style="--c:#149C98">
 				<span class="sp-how__n">۲</span>
 				<div class="sp-how__art"><?php echo sp_soodi( 'shocked', 'sp-how__soodi', 'سودی تعجب کرده' ); // phpcs:ignore ?></div>
 				<h3><?php echo sp_icon( 'calc', 20 ); ?>قیمت واقعی رو ببین</h3>
-				<p>با قیمت به‌روز مواد، دستمزد خودت، گاز فر یا اجاق و بسته‌بندی؛ برای کیک کیلویی، برای غذا هر پرس.</p>
+				<p>مواد با قیمت امروز، دستمزدت، گاز فر یا اجاق، بسته‌بندی. همه با هم حساب می‌شن: کیک کیلویی، غذا پرسی.</p>
 			</li>
 			<li class="sp-how__step" style="--c:#E9A23B">
 				<span class="sp-how__n">۳</span>
 				<div class="sp-how__art"><?php echo sp_soodi( 'celebrating', 'sp-how__soodi', 'سودی جشن گرفته' ); // phpcs:ignore ?></div>
-				<h3><?php echo sp_icon( 'send', 20 ); ?>لیست قیمت یا منوت رو بفرست</h3>
-				<p>لیست قیمت یا منوی هفتگیت رو برای استوری بگیر. گوشت یا خامه گرون شد؟ همه‌چی خودش به‌روز می‌شه.</p>
+				<h3><?php echo sp_icon( 'send', 20 ); ?>با خیال راحت قیمت بده</h3>
+				<p>قیمت رو برای دایرکت کپی کن یا لیست قیمتت رو برای استوری بگیر. گوشت یا خامه گرون شد؟ قیمت‌ها خودشون به‌روز می‌شن.</p>
 			</li>
 		</ol>
 	</div>
@@ -287,23 +287,23 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 	<div class="sp-wrap sp-features">
 		<div>
 			<p class="sp-script">سودپز پرو</p>
-			<h2 class="sp-display sp-display--md">هر چی برای ضرر نکردن لازم داری</h2>
-			<p class="sp-sub">برای کیک و شیرینی، و برای غذای خانگی. نسخه‌ی کامل اول برای عضوهای بنیان‌گذار باز می‌شه.</p>
+			<h2 class="sp-display sp-display--md">دیگه هر هفته از اول حساب نکن</h2>
+			<p class="sp-sub">یه بار دستورهات رو وارد کن، بقیه‌ش با سودپز. برای کیک و شیرینی، و برای غذای خانگی. نسخه‌ی کامل اول برای عضوهای بنیان‌گذار باز می‌شه.</p>
 			<div class="sp-feature-grid">
-				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'refresh', 24 ); ?></span><h3>بازقیمت‌گذاری یه‌کلیکی</h3><p>قیمت یه ماده رو عوض کن، قیمت همه‌ی کیک‌ها و غذاهات خودش درست می‌شه.</p></div>
-				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'tag', 24 ); ?></span><h3>قیمت مرجع هفتگی</h3><p>قیمت حدود ۴۰ ماده‌ی پرمصرف، از خامه تا گوشت و برنج، هر هفته به‌روز می‌شه.</p></div>
-				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E9A23B"><?php echo sp_icon( 'book', 24 ); ?></span><h3>دستورهای آماده</h3><p>کیک‌های پرفروش و غذاهای خونگی رایج با مقدار مواد؛ فقط وزن یا تعداد پرس رو عوض کن.</p></div>
-				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E03A3E"><?php echo sp_icon( 'bell', 24 ); ?></span><h3>هشدار ضرر</h3><p>هر کیک یا غذایی که زیر قیمت تمام‌شده می‌فروشی، قرمز می‌شه و می‌گه چقدر.</p></div>
+				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'refresh', 24 ); ?></span><h3>بازقیمت‌گذاری یه‌کلیکی</h3><p>خامه گرون شد؟ فقط قیمت خامه رو عوض کن. قیمت همه‌ی کیک‌ها و غذاهایی که خامه دارن، خودش درست می‌شه.</p></div>
+				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'tag', 24 ); ?></span><h3>قیمت مرجع هفتگی</h3><p>قیمت حدود ۴۰ ماده‌ی پرمصرف، از خامه تا گوشت و برنج، هر هفته به‌روز می‌شه. لازم نیست خودت دنبالش بگردی.</p></div>
+				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E9A23B"><?php echo sp_icon( 'book', 24 ); ?></span><h3>دستورهای آماده</h3><p>کیک‌های پرفروش و غذاهای خونگی، با مقدار مواد. فقط وزن یا تعداد پرس رو عوض کن.</p></div>
+				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E03A3E"><?php echo sp_icon( 'bell', 24 ); ?></span><h3>هشدار ضرر</h3><p>اگه چیزی رو زیر قیمت تمام‌شده بفروشی، قرمز می‌شه و دقیق می‌گه سر هر سفارش چقدر ضرر می‌کنی.</p></div>
 			</div>
 		</div>
 
 		<div class="sp-phone" aria-label="نمونه‌ی صفحه‌ی اپ سودپز">
 			<div class="sp-phone__screen">
 				<div class="sp-phone__bar"><b>محصولات من</b><span class="sp-chip">نمونه</span></div>
-				<div class="sp-app-alert"><?php echo sp_icon( 'bell', 18 ); ?><span>گوشت ۸٪ گرون شد. ۳ غذات تغییر کردن.</span></div>
+				<div class="sp-app-alert"><?php echo sp_icon( 'bell', 18 ); ?><span>گوشت ۸٪ گرون شد. قیمت ۳ غذات عوض شد.</span></div>
 				<div class="sp-app-row"><span class="sp-app-row__dot" style="--c:#3F8A4E"><?php echo sp_icon( 'pot', 18 ); ?></span><div><b>قورمه‌سبزی</b><small>هر پرس، تمام‌شده ۲۷۰ هزار</small></div><em class="is-good">۳۸۶ هزار</em></div>
 				<div class="sp-app-row"><span class="sp-app-row__dot" style="--c:#D9822B"><?php echo sp_icon( 'bowl', 18 ); ?></span><div><b>قیمه</b><small>هر پرس، تمام‌شده ۲۴۵ هزار</small></div><em class="is-bad">۲۳۰ هزار</em></div>
-				<p class="sp-app-loss"><?php echo sp_icon( 'down', 16 ); ?> قیمه رو هر پرس ۱۵ هزار تومان زیر قیمت تمام‌شده می‌فروشی.</p>
+				<p class="sp-app-loss"><?php echo sp_icon( 'down', 16 ); ?> سر هر پرس قیمه ۱۵ هزار تومان ضرر می‌کنی.</p>
 				<div class="sp-app-row"><span class="sp-app-row__dot" style="--c:#E8673C"><?php echo sp_icon( 'cake', 18 ); ?></span><div><b>کیک شکلاتی</b><small>کیلویی، تمام‌شده ۶۴۲ هزار</small></div><em class="is-good">۹۲۰ هزار</em></div>
 				<div class="sp-phone__nav"><span class="is-on"><?php echo sp_icon( 'pot', 20 ); ?>محصولات</span><span><?php echo sp_icon( 'tag', 20 ); ?>مواد</span><span><?php echo sp_icon( 'story', 20 ); ?>لیست قیمت</span></div>
 			</div>
@@ -319,7 +319,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 		<div class="sp-hblog__head">
 			<div>
 				<p class="sp-script">مجله‌ی سودپز</p>
-				<h2 class="sp-display sp-display--md">تازه‌ترین مطالب</h2>
+				<h2 class="sp-display sp-display--md">تازه از مجله</h2>
 			</div>
 			<a class="sp-hblog__all" href="<?php echo esc_url( sp_blog_url() ); ?>">همه‌ی مطالب <?php echo sp_icon( 'arrow', 18 ); ?></a>
 		</div>
@@ -334,7 +334,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 <section class="sp-section sp-trust">
 	<div class="sp-wrap">
 		<p class="sp-script sp-center">خیالت راحت</p>
-		<h2 class="sp-display sp-display--md sp-center">سه تا قول سودپز</h2>
+		<h2 class="sp-display sp-display--md sp-center">سه تا قولی که بهت می‌دیم</h2>
 		<div class="sp-trust__grid">
 
 			<article class="sp-trust__item" style="--c:#149C98">
@@ -347,7 +347,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 				</div>
 				<div class="sp-trust__txt">
 					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'server', 20 ); ?></span>روی سرور ایرانی</h3>
-					<p>موقع قطعی اینترنت هم بازه؛ قیمت‌هات همیشه دم دستته.</p>
+					<p>اینترنت بین‌الملل قطع بشه هم سودپز بازه و قیمت‌هات دم دستته.</p>
 				</div>
 			</article>
 
@@ -363,7 +363,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 				</div>
 				<div class="sp-trust__txt">
 					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'lock', 20 ); ?></span>دستورهات مال خودته</h3>
-					<p>دستور و قیمتت بدون اجازه‌ی تو هیچ‌جا نمی‌ره و به کسی نشون داده نمی‌شه.</p>
+					<p>دستور و قیمتت رو فقط خودت می‌بینی. بدون اجازه‌ت به هیچ‌کس نشون داده نمی‌شه.</p>
 				</div>
 			</article>
 
@@ -378,7 +378,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 				</div>
 				<div class="sp-trust__txt">
 					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'refund', 20 ); ?></span>۷ روز بازگشت پول</h3>
-					<p>تا روز هفتم پشیمون شدی؟ بدون سؤال، کل پولت برمی‌گرده.</p>
+					<p>تا روز هفتم به دلت ننشست؟ بدون هیچ سؤالی، کل پولت برمی‌گرده.</p>
 				</div>
 			</article>
 
@@ -395,14 +395,14 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 			<span class="sp-final__ring sp-final__ring--b" aria-hidden="true"></span>
 			<div class="sp-final__text">
 				<span class="sp-final__badge"><?php echo sp_icon( 'spark', 16 ); ?><?php echo '' !== $sp_set['founders_left'] ? esc_html( sp_fa( $sp_set['founders_left'] ) ) . ' جا از ۵۰ تا مونده' : 'فقط برای ۵۰ نفر'; ?></span>
-				<h2 class="sp-final__h">یه کیک یا یه دیگ غذای کم‌فروخته، گرون‌تر از اشتراک سودپزه.</h2>
+				<h2 class="sp-final__h">ضرر یه کیک یا یه دیگ غذای ارزون‌فروخته، از اشتراک سودپز بیشتره.</h2>
 				<div class="sp-final__prices">
 					<div class="sp-final__price"><small>پرو ماهانه</small><b>۹۹ هزار</b></div>
 					<div class="sp-final__price"><small>پرو سالانه</small><b>۶۹۰ هزار</b></div>
 					<div class="sp-final__price sp-final__price--hot"><small>بنیان‌گذار، سالانه برای همیشه</small><b><s>۶۹۰</s> ۳۹۰ هزار</b></div>
 				</div>
 				<div class="sp-final__cta">
-					<a class="sp-btn sp-final__btn" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"><?php echo sp_icon( 'spark', 18 ); ?>جامو نگه دار</a>
+					<a class="sp-btn sp-final__btn" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"><?php echo sp_icon( 'spark', 18 ); ?>جام رو نگه دار</a>
 					<a class="sp-final__link" href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>">مقایسه‌ی پلن‌ها <?php echo sp_icon( 'arrow', 16 ); ?></a>
 				</div>
 			</div>

@@ -58,7 +58,7 @@ global $wp_query;
 		<?php else : ?>
 			<div class="sp-empty">
 				<span class="sp-cat-hero__ico" style="--c:<?php echo esc_attr( $sp_c['color'] ); ?>"><?php echo sp_icon( $sp_c['icon'], 30 ); ?></span>
-				<p>اولین مطلب این سرفصل به‌زودی منتشر می‌شه.</p>
+				<p>اولین مطلب این سرفصل تو راهه.</p>
 				<a class="sp-btn sp-btn--line sp-btn--sm" href="<?php echo esc_url( sp_blog_url() ); ?>">برگرد به مجله</a>
 			</div>
 		<?php endif; ?>

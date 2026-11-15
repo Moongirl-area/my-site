@@ -4,8 +4,8 @@
 		<div class="sp-fhelp">
 			<?php echo sp_soodi( 'waving', 'sp-fhelp__soodi', 'سودی دست تکان می‌دهد' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<div class="sp-fhelp__txt">
-				<p class="sp-fhelp__h">سؤالی داری؟ سودی جواب می‌ده.</p>
-				<p class="sp-fhelp__p">از قیمت مواد تا درصد سود؛ هر جا گیر کردی بپرس.</p>
+				<p class="sp-fhelp__h">یه جای حسابت گیر کرده؟</p>
+				<p class="sp-fhelp__p">از قیمت مواد تا درصد سود، بپرس. سودی و تیمش جواب می‌دن.</p>
 			</div>
 			<div class="sp-fhelp__btns">
 				<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 18 ); ?>ماشین‌حساب رایگان</a>
@@ -20,10 +20,10 @@
 					<span class="sp-brand__name">سودپز</span>
 				</a>
 				<p class="sp-footer__tag">بپز، بفروش، ضرر نکن.</p>
-				<p class="sp-footer__note">قیمت‌گذاری کیک و غذای خانگی، با قیمت روز مواد و دستمزد خودت.</p>
+				<p class="sp-footer__note">قیمت درست برای کیک و غذای خانگی؛ با قیمت امروز مواد و دستمزد خودت.</p>
 				<ul class="sp-fbadges">
-					<li><?php echo sp_icon( 'server', 16 ); ?>روی سرور ایرانی</li>
-					<li><?php echo sp_icon( 'lock', 16 ); ?>موقع قطعی اینترنت هم بازه</li>
+					<li><?php echo sp_icon( 'server', 16 ); ?>سرور ایرانی</li>
+					<li><?php echo sp_icon( 'lock', 16 ); ?>قطعی اینترنت هم بازه</li>
 					<li><?php echo sp_icon( 'check', 16 ); ?>ماشین‌حساب رایگان</li>
 				</ul>
 			</div>
@@ -62,7 +62,7 @@
 		$sp_jy = ( (int) gmdate( 'n' ) > 3 || ( 3 === (int) gmdate( 'n' ) && (int) gmdate( 'j' ) >= 21 ) ) ? $sp_gy - 621 : $sp_gy - 622;
 		?>
 		<div class="sp-footer__bar">
-			<span>© <?php echo esc_html( sp_fa( $sp_jy, false ) ); ?> سودپز · ساخته‌شده برای آشپزها و قنادهای خانگی ایران</span>
+			<span>© <?php echo esc_html( sp_fa( $sp_jy, false ) ); ?> سودپز · ساخته‌شده برای آشپزها و قنادهای خونگی ایران</span>
 			<a class="sp-totop" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">بالای صفحه <?php echo sp_icon( 'up', 16 ); ?></a>
 		</div>
 	</div>

@@ -18,7 +18,7 @@ wp_reset_postdata();
 			<?php echo sp_breadcrumb( array( array( 'سودپز', home_url( '/' ) ), array( 'مجله', sp_blog_url() ) ) ); // phpcs:ignore ?>
 			<p class="sp-script">مجله‌ی سودپز</p>
 			<h1 class="sp-display sp-display--md">بپز، حساب کن،<br><span class="sp-hl">با سود</span> بفروش.</h1>
-			<p class="sp-lead">آموزش قیمت‌گذاری کیک و غذای خانگی با عددهای واقعی ۱۴۰۵؛ برای آشپزهایی که از آشپزخونه‌شون درآمد دارن.</p>
+			<p class="sp-lead">هر مطلب یه حساب کامل، با عددهای واقعی ۱۴۰۵. برای آشپزها و قنادهایی که می‌خوان از آشپزخونه‌شون واقعاً پول دربیارن، نه فقط خسته بشن.</p>
 			<form class="sp-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<label class="screen-reader-text" for="sp-s">جست‌وجو در مجله</label>
 				<?php echo sp_icon( 'search', 20 ); ?>
@@ -48,7 +48,7 @@ wp_reset_postdata();
 	<div class="sp-wrap">
 		<div class="sp-sechead">
 			<h2 id="sp-dir-h" class="sp-sechead__h">سرفصل‌ها</h2>
-			<p class="sp-sub">هر چی درباره‌ی قیمت و فروش لازم داری، مرتب و دسته‌بندی‌شده.</p>
+			<p class="sp-sub">از فرمول قیمت تا حرف زدن با مشتری؛ از هر جا که گیر داری شروع کن.</p>
 		</div>
 		<div class="sp-dir__grid">
 			<?php foreach ( $sp_cats as $slug => $c ) : ?>
@@ -115,7 +115,7 @@ if ( $sp_pillars ) :
 		<div>
 			<p class="sp-script sp-script--light">از اینجا شروع کن</p>
 			<h2 class="sp-display sp-display--md">راهنماهای پایه</h2>
-			<p class="sp-start__sub">اگه تازه می‌خوای قیمت‌هات رو درست کنی، این‌ها رو به ترتیب بخون.</p>
+			<p class="sp-start__sub">تازه می‌خوای قیمت‌هات رو درست کنی؟ این‌ها رو به همین ترتیب بخون.</p>
 		</div>
 		<ol class="sp-start__list">
 			<?php foreach ( $sp_pillars as $i => $p ) : ?>
@@ -154,7 +154,7 @@ $sp_all = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publish'
 			wp_reset_postdata();
 			?>
 		<?php else : ?>
-			<p class="sp-sub">مطالب به‌زودی اینجا میان.</p>
+			<p class="sp-sub">اولین مطلب‌ها به‌زودی همین‌جا منتشر می‌شن.</p>
 		<?php endif; ?>
 		<?php sp_cta_box(); ?>
 	</div>

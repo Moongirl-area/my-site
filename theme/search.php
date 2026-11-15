@@ -24,7 +24,7 @@ global $wp_query;
 			<?php the_posts_pagination( array( 'prev_text' => 'قبلی', 'next_text' => 'بعدی' ) ); ?>
 		<?php else : ?>
 			<div class="sp-empty">
-				<p>چیزی پیدا نشد. یه کلمه‌ی ساده‌تر امتحان کن، یا سرفصل‌ها رو ببین.</p>
+				<p>چیزی پیدا نشد. یه کلمه‌ی کوتاه‌تر امتحان کن (مثلاً «کیک» یا «پرس»)، یا سرفصل‌ها رو ببین.</p>
 				<a class="sp-btn sp-btn--line sp-btn--sm" href="<?php echo esc_url( sp_blog_url() ); ?>">مجله‌ی سودپز</a>
 			</div>
 		<?php endif; ?>

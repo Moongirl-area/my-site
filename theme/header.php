@@ -28,7 +28,7 @@
 	<div class="sp-wrap sp-header__inner">
 		<a class="sp-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="سودپز، صفحه‌ی اصلی">
 			<?php echo sp_logo_svg( 42 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-			<span class="sp-brand__txt"><span class="sp-brand__name">سودپز</span><span class="sp-brand__tag">رفیق حسابگر آشپزخونه</span></span>
+			<span class="sp-brand__txt"><span class="sp-brand__name">سودپز</span><span class="sp-brand__tag">حسابدار خوش‌اخلاق آشپزخونه</span></span>
 		</a>
 		<nav class="sp-nav" aria-label="منوی اصلی">
 			<a href="<?php echo esc_url( home_url( '/#features' ) ); ?>"><?php echo sp_icon( 'list', 17 ); ?>امکانات</a>
