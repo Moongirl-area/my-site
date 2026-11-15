@@ -8,7 +8,7 @@ $sp_q     = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publis
 	<div class="sp-wrap">
 		<p class="sp-script">آموزش</p>
 		<h1 class="sp-h1">قیمت‌گذاری کیک و غذای خانگی، ساده و بدون ضرر</h1>
-		<p class="sp-sub">آموزش‌های کوتاه درباره‌ی حساب قیمت تمام‌شده‌ی هر کیک و هر پرس، سود، و حرف زدن با مشتری درباره‌ی قیمت.</p>
+		<p class="sp-sub">آموزش‌های کوتاه: هر کیک و هر پرس واقعاً چند تموم می‌شه، چقدر سود بذاری، و قیمت رو چطور به مشتری بگی.</p>
 	</div>
 </section>
 <section class="sp-section sp-section--tight">
@@ -35,7 +35,7 @@ $sp_q     = new WP_Query( array( 'post_type' => 'post', 'post_status' => 'publis
 			wp_reset_postdata();
 			?>
 		<?php else : ?>
-			<p class="sp-sub">آموزش‌ها به‌زودی اینجا میان.</p>
+			<p class="sp-sub">اولین آموزش‌ها به‌زودی همین‌جا منتشر می‌شن.</p>
 		<?php endif; ?>
 		<?php sp_cta_box(); ?>
 	</div>

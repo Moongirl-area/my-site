@@ -165,8 +165,8 @@ function sp_cta_box() {
 	?>
 	<div class="sp-cta-box">
 		<div>
-			<h3>قیمت کیک یا هر پرس غذات رو حساب کن</h3>
-			<p>رایگان، بدون ثبت‌نام، دو دقیقه.</p>
+			<h3>کیک یا غذات واقعاً چند تموم می‌شه؟</h3>
+			<p>دو دقیقه، رایگان، بدون ثبت‌نام.</p>
 		</div>
 		<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>ماشین‌حساب رایگان</a>
 	</div>

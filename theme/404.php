@@ -4,7 +4,7 @@
 		<?php echo sp_soodi( 'shocked', 'sp-soodi--404', 'سودی تعجب کرده', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<p class="sp-404__num">۴۰۴</p>
 		<h1 class="sp-h1">این صفحه سوخت!</h1>
-		<p class="sp-sub">صفحه‌ای که دنبالش بودی پیدا نشد. شاید آدرسش عوض شده.</p>
+		<p class="sp-sub">این صفحه نیست؛ شاید آدرسش عوض شده. ولی ماشین‌حساب هنوز سر جاشه.</p>
 		<div class="sp-actions">
 			<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 20 ); ?>ماشین‌حساب رایگان</a>
 			<a class="sp-btn sp-btn--line" href="<?php echo esc_url( home_url( '/' ) ); ?>">صفحه‌ی اصلی</a>

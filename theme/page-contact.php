@@ -7,30 +7,30 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 	<div class="sp-wrap">
 		<?php echo sp_soodi( 'waving', 'sp-soodi--head', 'سودی دست تکان می‌دهد', true ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<p class="sp-script">تماس</p>
-		<h1 class="sp-h1">بهمون بگو</h1>
-		<p class="sp-sub">سؤال، پیشنهاد یا همکاری؛ معمولاً تا ۲۴ ساعت جواب می‌دیم.</p>
+		<h1 class="sp-h1">بنویس، می‌خونیم</h1>
+		<p class="sp-sub">سؤال داری، پیشنهاد یا همکاری؟ معمولاً تا ۲۴ ساعت جواب می‌دیم.</p>
 	</div>
 </section>
 <section class="sp-section sp-section--tight">
 	<div class="sp-wrap sp-contact">
 		<div class="sp-prose">
-			<h2 style="margin-top:0">قبل از نوشتن</h2>
+			<h2 style="margin-top:0">شاید جوابت همین‌جا باشه</h2>
 			<ul class="sp-contact__list">
-				<li><?php echo sp_icon( 'book', 22 ); ?><div><b>جواب سؤال‌های رایج</b><br><a href="<?php echo esc_url( sp_url( 'faq' ) ); ?>">صفحه‌ی سؤال‌های رایج</a> رو ببین؛ شاید جوابت اونجا باشه.</div></li>
-				<li><?php echo sp_icon( 'users', 22 ); ?><div><b>عضویت بنیان‌گذار</b><br>برای پیش‌خرید، <a href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">فرم بنیان‌گذار</a> رو پر کن.</div></li>
-				<li><?php echo sp_icon( 'spark', 22 ); ?><div><b>آموزشگاه یا مربی قنادی هستی؟</b><br>برای همکاری و بسته‌ی هنرجوها، موضوع «همکاری» رو انتخاب کن.</div></li>
+				<li><?php echo sp_icon( 'book', 22 ); ?><div><b>جواب سؤال‌های رایج</b><br><a href="<?php echo esc_url( sp_url( 'faq' ) ); ?>">سؤال‌های رایج</a> رو یه نگاه بنداز؛ بیشتر سؤال‌ها اون‌جا جواب دارن.</div></li>
+				<li><?php echo sp_icon( 'users', 22 ); ?><div><b>عضویت بنیان‌گذار</b><br>برای پیش‌خرید، مستقیم <a href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">فرم بنیان‌گذار</a> رو پر کن.</div></li>
+				<li><?php echo sp_icon( 'spark', 22 ); ?><div><b>آموزشگاه یا مربی قنادی هستی؟</b><br>برای همکاری و بسته‌ی هنرجوها، موضوع پیام رو «همکاری» بذار.</div></li>
 			</ul>
 			<?php while ( have_posts() ) : the_post(); the_content(); endwhile; // اطلاعات تماس اضافه (اینستاگرام، تلفن) را در پیشخوان به این صفحه اضافه کن ?>
 		</div>
 
 		<div class="sp-contact__card" id="form">
 			<?php if ( 'sent' === $sp_state ) : ?>
-				<div class="sp-verdict sp-verdict--good" role="status"><b>پیامت رسید، مرسی!</b><br>به‌زودی جواب می‌دیم.</div>
+				<div class="sp-verdict sp-verdict--good" role="status"><b>پیامت رسید، مرسی!</b><br>معمولاً تا ۲۴ ساعت جواب می‌دیم.</div>
 			<?php else : ?>
 				<?php if ( 'invalid' === $sp_state ) : ?>
-					<div class="sp-verdict sp-verdict--bad" role="alert">اسم، راه ارتباط و پیامت رو کامل بنویس.</div>
+					<div class="sp-verdict sp-verdict--bad" role="alert">اسمت، شماره یا ایمیلت و پیامت رو کامل بنویس.</div>
 				<?php elseif ( 'expired' === $sp_state ) : ?>
-					<div class="sp-verdict sp-verdict--warn" role="alert">صفحه خیلی وقت باز مونده بود؛ یه بار دیگه بفرست.</div>
+					<div class="sp-verdict sp-verdict--warn" role="alert">صفحه خیلی وقت باز مونده بود. یه بار دیگه بفرست.</div>
 				<?php endif; ?>
 				<form class="sp-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<input type="hidden" name="action" value="sp_contact">

@@ -179,16 +179,16 @@
 		var current = num($('sp-current').value);
 		var what = food ? 'هر پرس' : 'هر کیک';
 		if (missing) {
-			verdict(v, 'info', 'thinking', 'قیمت ' + faNum(missing) + ' ماده رو هنوز ننوشتی؛ تا ننویسی، عددها کامل نیست.');
+			verdict(v, 'info', 'thinking', 'قیمت ' + faNum(missing) + ' تا از مواد رو هنوز ننوشتی. تا ننویسی، حساب کامل نیست.');
 		} else if (current > 0 && unitCost > 0) {
 			var profit = current - unitCost;
 			var pct = Math.round(profit / current * 100);
 			if (profit < 0) {
-				verdict(v, 'bad', 'sad', '▼ با این قیمت، از ' + what + ' ' + toman(-profit) + ' ضرر می‌کنی' + (food ? '؛ یعنی کل این دیگ ' + toman(-profit * n) + '.' : '.'));
+				verdict(v, 'bad', 'sad', '▼ با این قیمت، سر ' + what + ' ' + toman(-profit) + ' ضرر می‌کنی' + (food ? '. یعنی سر کل این دیگ ' + toman(-profit * n) + '.' : '.'));
 			} else if (pct < marginPct) {
-				verdict(v, 'warn', 'worried', '! سودت از ' + what + ' ' + toman(profit) + ' است، یعنی ' + faNum(pct) + '٪؛ کمتر از ' + faNum(marginPct) + '٪ که می‌خواستی.');
+				verdict(v, 'warn', 'worried', '! سودت از ' + what + ' ' + toman(profit) + 'ه، یعنی ' + faNum(pct) + '٪. از ' + faNum(marginPct) + '٪ که می‌خواستی کمتره.');
 			} else {
-				verdict(v, 'good', 'celebrating', '▲ از ' + what + ' ' + toman(profit) + ' سود می‌بری، یعنی ' + faNum(pct) + '٪. آفرین.');
+				verdict(v, 'good', 'celebrating', '▲ از ' + what + ' ' + toman(profit) + ' سود می‌بری، یعنی ' + faNum(pct) + '٪. دمت گرم!');
 			}
 		} else {
 			v.hidden = true;

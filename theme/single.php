@@ -28,7 +28,7 @@ while ( have_posts() ) :
 					<p class="sp-post__dek"><?php echo esc_html( get_the_excerpt() ); ?></p>
 				<?php endif; ?>
 				<div class="sp-post__meta">
-					<span class="sp-post__by"><?php echo sp_logo_svg( 34 ); // phpcs:ignore ?><span><b>تیم سودپز</b><small>رفیق حسابگر آشپزخونه</small></span></span>
+					<span class="sp-post__by"><?php echo sp_logo_svg( 34 ); // phpcs:ignore ?><span><b>تیم سودپز</b><small>حسابدار خوش‌اخلاق آشپزخونه</small></span></span>
 					<span><?php echo sp_icon( 'clock', 16 ); ?><?php echo esc_html( sp_fa( sp_read_minutes( $sp_id ) ) ); ?> دقیقه مطالعه</span>
 					<span><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( sp_post_jdate( $sp_id ) ); ?></time></span>
 					<?php if ( $sp_updated ) : ?>
@@ -103,7 +103,7 @@ while ( have_posts() ) :
 				<?php endif; ?>
 
 				<div class="sp-share">
-					<span>این مطلب رو بفرست برای یه آشپز دیگه:</span>
+					<span>یه دوست آشپز یا قناد داری؟ اینو براش بفرست:</span>
 					<?php
 					$sp_enc = rawurlencode( $sp_url );
 					$sp_tt  = rawurlencode( get_the_title() );
@@ -130,7 +130,7 @@ while ( have_posts() ) :
 				<?php $sp_food = 'food' === get_post_meta( $sp_id, '_sp_cta', true ); ?>
 				<div class="sp-side-cta">
 					<?php echo sp_icon( 'calc', 26 ); ?>
-					<p><b><?php echo $sp_food ? 'قیمت هر پرس غذات رو حساب کن' : 'قیمت کیکت رو حساب کن'; ?></b><br>رایگان، بدون ثبت‌نام</p>
+					<p><b><?php echo $sp_food ? 'هر پرس غذات چند تموم می‌شه؟' : 'کیکت کیلویی چند تموم می‌شه؟'; ?></b><br>دو دقیقه، رایگان، بدون ثبت‌نام</p>
 					<a class="sp-btn sp-btn--coral sp-btn--sm sp-btn--block" href="<?php echo esc_url( add_query_arg( 'k', $sp_food ? 'food' : 'sweet', sp_url( 'calculator' ) ) ); ?>">ماشین‌حساب</a>
 				</div>
 			</aside>
@@ -153,7 +153,7 @@ while ( have_posts() ) :
 		<section class="sp-related">
 			<div class="sp-wrap">
 				<div class="sp-sechead sp-sechead--row">
-					<h2 class="sp-sechead__h">اینا رو هم بخون</h2>
+					<h2 class="sp-sechead__h">این‌ها رو هم بخون</h2>
 					<a class="sp-more" href="<?php echo esc_url( sp_blog_url( $sp_slug ) ); ?>"><?php echo esc_html( $sp_c['short'] ); ?> <?php echo sp_icon( 'arrow', 16 ); ?></a>
 				</div>
 				<div class="sp-bgrid">
