@@ -31,12 +31,12 @@
   {
    "n": 3,
    "day": 2,
-   "date": "2026-11-14",
-   "publish_at": "2026-11-14T10:00:00+03:30",
+   "date": "2026-11-16",
+   "publish_at": "2026-11-16T10:00:00+03:30",
    "category": "cost-breakdown",
    "slug": "chocolate-wet-cake-cost",
    "focus_keyword": "قیمت کیک شکلاتی خیس",
-   "working_title": "کیک شکلاتی خیس کیلویی چند تموم می‌شه؟ حساب کامل",
+   "working_title": "قیمت کیک شکلاتی خیس: کیلویی چند تموم می‌شه؟ حساب کامل با سه نوع سس",
    "pillar": false,
    "intent": "قیمت تمام‌شده",
    "status": "planned"
@@ -44,12 +44,12 @@
   {
    "n": 4,
    "day": 2,
-   "date": "2026-11-14",
-   "publish_at": "2026-11-14T18:30:00+03:30",
+   "date": "2026-11-16",
+   "publish_at": "2026-11-16T18:30:00+03:30",
    "category": "cost-breakdown",
    "slug": "ghormeh-sabzi-cost-per-serving",
    "focus_keyword": "قیمت قرمه سبزی خانگی",
-   "working_title": "قرمه‌سبزی خانگی هر پرس چند تموم می‌شه؟",
+   "working_title": "قیمت قرمه سبزی خانگی: هر پرس چند تموم می‌شه؟ حساب با قیمت‌های آبان ۱۴۰۵",
    "pillar": false,
    "intent": "قیمت تمام‌شده",
    "status": "planned"
