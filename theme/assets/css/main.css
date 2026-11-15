@@ -714,18 +714,29 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-motion .sp-dark__img[data-parallax] { transform: translateY(var(--py, 0)) scale(1.14); will-change: transform; }
 
 /* نوار متحرک */
-.sp-marquee { position: relative; margin: 70px 0 10px; height: 200px; overflow: hidden; }
-.sp-marquee__band { position: absolute; left: -5%; width: 110%; padding: 14px 0; overflow: hidden; direction: ltr; }
-.sp-marquee__band--a { top: 36px; background: var(--coral); color: #fff; rotate: -2deg; z-index: 2; box-shadow: 0 14px 30px rgba(232, 103, 60, .25); }
-.sp-marquee__band--b { top: 108px; background: var(--ink); color: #EDE6DC; rotate: -2deg; }
-.sp-marquee__track { display: flex; align-items: center; gap: 22px; width: max-content; direction: ltr; animation: sp-marquee 46s linear infinite; }
-.sp-marquee__track--rev { animation-direction: reverse; animation-duration: 54s; }
-.sp-marquee__item { display: inline-flex; align-items: center; gap: 10px; direction: rtl; font-family: var(--display); font-weight: 800; font-size: 21px; white-space: nowrap; }
-.sp-marquee__band--b .sp-marquee__item { font-size: 17px; font-weight: 700; }
-.sp-marquee__sep { color: #FFD9A8; font-size: 14px; }
-.sp-marquee__band--b .sp-marquee__sep { color: var(--mustard); font-size: 9px; }
+.sp-marquee { position: relative; margin: 60px 0 10px; padding: 22px 0 24px; display: grid; gap: 16px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #EFE9E0 50%, rgba(255,255,255,0) 100%); }
+.sp-marquee__row { position: relative; overflow: hidden; direction: ltr; padding: 6px 0 12px;
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
+.sp-marquee__track { display: flex; align-items: center; gap: 16px; width: max-content; padding-left: 16px; animation: sp-marquee 60s linear infinite; }
+.sp-marquee__track--rev { animation-direction: reverse; animation-duration: 48s; gap: 10px; padding-left: 10px; }
 @keyframes sp-marquee { to { transform: translateX(-50%); } }
 .sp-marquee:hover .sp-marquee__track { animation-play-state: paused; }
+/* کارت دستور */
+.sp-mq-card { display: inline-flex; align-items: center; gap: 12px; direction: rtl; padding: 7px 7px 7px 20px; background: #fff; border-radius: 999px; box-shadow: 0 1px 2px rgba(35,35,38,.06), 0 8px 22px rgba(35,35,38,.08); white-space: nowrap; transition: transform .25s ease; }
+.sp-mq-card:hover { transform: translateY(-3px); }
+.sp-mq-card img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #fff, 0 0 0 5px color-mix(in srgb, var(--c) 45%, transparent); flex: none; }
+.sp-mq-card__txt { display: grid; line-height: 1.45; }
+.sp-mq-card__txt b { font-family: var(--display); font-weight: 800; font-size: 17px; color: var(--ink); }
+.sp-mq-card__txt small { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 700; color: var(--c); }
+/* نوار قیمت روز */
+.sp-marquee__prices { position: relative; min-width: 0; overflow: hidden; }
+.sp-marquee__row--prices { padding: 4px 0 8px; }
+.sp-mq-live { position: absolute; right: 4%; top: 50%; translate: 0 -55%; z-index: 2; direction: rtl; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--ink); color: #fff; font-family: var(--display); font-weight: 800; font-size: 14px; white-space: nowrap; box-shadow: 0 0 0 6px #EFE9E0, 0 10px 24px rgba(35,35,38,.2); }
+.sp-mq-live i { width: 8px; height: 8px; border-radius: 50%; background: #3DDC84; box-shadow: 0 0 0 0 rgba(61,220,132,.6); animation: sp-pulse 1.8s ease-out infinite; }
+@keyframes sp-pulse { 70% { box-shadow: 0 0 0 9px rgba(61,220,132,0); } 100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); } }
+.sp-marquee__row--prices { -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 72%, transparent 86%); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 72%, transparent 86%); }
+.sp-mq-chip { display: inline-flex; align-items: center; gap: 7px; direction: rtl; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 14.5px; white-space: nowrap; color: color-mix(in srgb, var(--c) 78%, #000); background: color-mix(in srgb, var(--c) 13%, #fff); border: 1px solid color-mix(in srgb, var(--c) 25%, transparent); }
+.sp-mq-chip svg { opacity: .7; }
 
 @media (max-width: 1000px) {
 	.sp-float--2 { left: 2%; }
@@ -738,17 +749,16 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-float--3, .sp-float--4 { display: none; }
 	.sp-blob--a { width: 220px; height: 220px; }
 	.sp-blob--b { width: 180px; height: 180px; }
-	.sp-marquee { margin-top: 50px; height: 150px; }
-	.sp-marquee__band { padding: 10px 0; }
-	.sp-marquee__band { padding: 10px 0; }
-	.sp-marquee__band--a { top: 26px; }
-	.sp-marquee__band--b { top: 84px; }
-	.sp-marquee__item { font-size: 17px; }
-	.sp-marquee__band--b .sp-marquee__item { font-size: 14px; }
+	.sp-marquee { margin-top: 40px; gap: 10px; }
+	.sp-mq-card { padding-left: 14px; gap: 9px; }
+	.sp-mq-card img { width: 42px; height: 42px; }
+	.sp-mq-card__txt b { font-size: 15px; }
+	.sp-mq-live { right: auto; translate: none; top: auto; position: relative; display: flex; width: max-content; margin: 0 auto 10px; box-shadow: none; }
+	.sp-marquee__row--prices { -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
 	.sp-squiggle { width: 120px; }
 }
 @media (prefers-reduced-motion: reduce) {
-	.sp-marquee__track { animation: none; }
+	.sp-marquee__track, .sp-mq-live i { animation: none; }
 }
 
 /* ۴. چطور کار می‌کنه: سه کارت با سودی */

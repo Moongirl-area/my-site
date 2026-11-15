@@ -91,29 +91,39 @@ $sp_firsts  = array(
 </section>
 
 <!-- نوار متحرک دستورها و مواد -->
-<div class="sp-marquee" aria-hidden="true">
-	<div class="sp-marquee__band sp-marquee__band--a">
-		<div class="sp-marquee__track">
+<section class="sp-marquee" aria-label="دستورها و مواد سودپز">
+	<div class="sp-marquee__row">
+		<div class="sp-marquee__track" aria-hidden="true">
 			<?php for ( $sp_i = 0; $sp_i < 2; $sp_i++ ) : foreach ( $sp_recipes as $sp_r ) : ?>
-				<span class="sp-marquee__item"><?php echo sp_icon( $sp_r['icon'], 22 ); ?><?php echo esc_html( $sp_r['name'] ); ?></span><span class="sp-marquee__sep">✦</span>
+				<span class="sp-mq-card" style="--c:<?php echo esc_attr( $sp_r['color'] ); ?>">
+					<img src="<?php echo esc_url( sp_img_url( $sp_r['img'] ) ); ?>" alt="" width="52" height="52" loading="lazy" decoding="async">
+					<span class="sp-mq-card__txt">
+						<b><?php echo esc_html( $sp_r['name'] ); ?></b>
+						<small><?php echo sp_icon( $sp_r['icon'], 14 ); ?><?php echo 'food' === $sp_r['kitchen'] ? 'غذای خانگی' : 'شیرینی خانگی'; ?></small>
+					</span>
+				</span>
 			<?php endforeach; endfor; ?>
 		</div>
 	</div>
-	<div class="sp-marquee__band sp-marquee__band--b">
-		<div class="sp-marquee__track sp-marquee__track--rev">
+	<div class="sp-marquee__prices">
+		<span class="sp-mq-live"><i></i>قیمت روز مواد</span>
+	<div class="sp-marquee__row sp-marquee__row--prices">
+		<div class="sp-marquee__track sp-marquee__track--rev" aria-hidden="true">
 			<?php
-			$sp_words = array( 'خامه', 'شکلات', 'گوشت', 'برنج', 'زعفران', 'کره', 'تخم‌مرغ', 'آرد', 'سبزی', 'لپه', 'مرغ', 'گردو' );
+			$sp_words  = array( 'خامه', 'شکلات', 'گوشت', 'برنج', 'زعفران', 'کره', 'تخم‌مرغ', 'آرد', 'سبزی', 'لپه', 'مرغ', 'گردو' );
+			$sp_colors = array( '#E8673C', '#149C98', '#E9A23B', '#8A4FBF', '#E03A3E', '#3F8A4E' );
 			for ( $sp_i = 0; $sp_i < 2; $sp_i++ ) :
-				foreach ( $sp_words as $sp_w ) :
+				foreach ( $sp_words as $sp_k => $sp_w ) :
 					?>
-				<span class="sp-marquee__item">قیمت روز <?php echo esc_html( $sp_w ); ?></span><span class="sp-marquee__sep">●</span>
+				<span class="sp-mq-chip" style="--c:<?php echo esc_attr( $sp_colors[ $sp_k % count( $sp_colors ) ] ); ?>"><?php echo esc_html( $sp_w ); ?><?php echo sp_icon( 'refresh', 13 ); ?></span>
 					<?php
 				endforeach;
 			endfor;
 			?>
 		</div>
 	</div>
-</div>
+	</div>
+</section>
 
 <!-- ۳. حساب سرانگشتی در برابر سودپز (اینفوگرافیک با نوار هزینه) -->
 <?php
