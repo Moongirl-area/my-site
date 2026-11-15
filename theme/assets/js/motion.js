@@ -79,4 +79,67 @@
 	window.addEventListener('resize', update);
 	document.addEventListener('sp:kitchen', function () { setTimeout(update, 50); });
 	update();
+
+	/* ۵. سه‌بعدی (فقط ماوس؛ روی لمسی و «کاهش حرکت» اجرا نمی‌شود) */
+	var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+	// ۵-الف. بالای صفحه: لایه‌ها با عمق‌های مختلف دنبال ماوس می‌روند
+	var heroSec = document.querySelector('.sp-hero'), art = document.querySelector('.sp-hero__art');
+	if (fine && heroSec && art) {
+		var hx = 0, hy = 0, hraf = 0;
+		heroSec.addEventListener('pointermove', function (ev) {
+			var r = heroSec.getBoundingClientRect();
+			hx = ((ev.clientX - r.left) / r.width - 0.5) * 2;
+			hy = ((ev.clientY - r.top) / r.height - 0.5) * 2;
+			if (!hraf) hraf = requestAnimationFrame(function () {
+				hraf = 0;
+				art.style.setProperty('--mx', hx.toFixed(3));
+				art.style.setProperty('--my', hy.toFixed(3));
+			});
+		});
+		heroSec.addEventListener('pointerleave', function () { art.style.setProperty('--mx', 0); art.style.setProperty('--my', 0); });
+	}
+
+	// ۵-ب. کارت‌ها: کج شدن سه‌بعدی به سمت ماوس با یک برق ملایم
+	if (fine) {
+		$$('.sp-how__step, .sp-trust__item, .sp-cmp .sp-compare__card, .sp-feature, .sp-pain, .sp-hblog .sp-bcard, .sp-final__card, .sp-door').forEach(function (c) {
+			var max = c.classList.contains('sp-final__card') ? 4 : (c.classList.contains('sp-compare__card') ? 3 : 7);
+			var lift = c.classList.contains('sp-final__card') || c.classList.contains('sp-compare__card') ? 0 : -6;
+			var g = document.createElement('span'); g.className = 'sp-glare'; g.setAttribute('aria-hidden', 'true'); c.appendChild(g);
+			c.classList.add('sp-tilt');
+			var raf = 0, px = 0, py = 0;
+			c.addEventListener('pointerenter', function () { c.style.transition = 'transform .45s cubic-bezier(.22, 1, .36, 1), box-shadow .6s ease'; });
+			c.addEventListener('pointermove', function (ev) {
+				var r = c.getBoundingClientRect();
+				px = (ev.clientX - r.left) / r.width; py = (ev.clientY - r.top) / r.height;
+				if (!raf) raf = requestAnimationFrame(function () {
+					raf = 0;
+					c.style.transform = 'perspective(1000px) rotateX(' + ((0.5 - py) * max).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * max).toFixed(2) + 'deg) translateY(' + lift + 'px)';
+					c.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+					c.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+					c.style.setProperty('--px', (px - 0.5).toFixed(3));
+					c.style.setProperty('--py', (py - 0.5).toFixed(3));
+				});
+			});
+			c.addEventListener('pointerleave', function () {
+				c.style.transform = ''; c.style.transition = '';
+				c.style.setProperty('--px', 0); c.style.setProperty('--py', 0);
+			});
+		});
+	}
+
+	// ۵-ج. گوشی نمونه: با اسکرول از زاویه به روبه‌رو می‌چرخد
+	var phone = document.querySelector('.sp-phone');
+	if (phone) {
+		var pr = false;
+		var phoneUpd = function () {
+			pr = false;
+			var r = phone.getBoundingClientRect(), vh = window.innerHeight;
+			if (r.bottom < -100 || r.top > vh + 100) return;
+			var p = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - vh / 2) / (vh / 2)));
+			phone.style.setProperty('--pp', p.toFixed(3));
+		};
+		window.addEventListener('scroll', function () { if (!pr) { pr = true; requestAnimationFrame(phoneUpd); } }, { passive: true });
+		phoneUpd();
+	}
 })();

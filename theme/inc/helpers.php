@@ -35,8 +35,19 @@ function sp_soodi_url( $pose = 'hero' ) {
 	return SP_URI . $rel . '?v=' . $ver; // نسخه در آدرس تا کش مرورگر/CDN عکس قدیمی یا ۴۰۴ نگه ندارد
 }
 
+/** عرض و ارتفاع واقعی عکس برای جلوگیری از پرش صفحه (CLS). */
+function sp_img_dims( $path ) {
+	static $cache = array();
+	if ( ! isset( $cache[ $path ] ) ) {
+		$size           = @getimagesize( $path ); // phpcs:ignore
+		$cache[ $path ] = $size ? ' width="' . (int) $size[0] . '" height="' . (int) $size[1] . '"' : '';
+	}
+	return $cache[ $path ];
+}
+
 function sp_soodi( $pose = 'hero', $class = '', $alt = 'سودی، شخصیت سودپز', $eager = false ) {
-	return '<img class="sp-soodi ' . esc_attr( $class ) . '" src="' . esc_url( sp_soodi_url( $pose ) ) . '" alt="' . esc_attr( $alt ) . '"' . ( $eager ? '' : ' loading="lazy"' ) . ' decoding="async">';
+	$dim = sp_img_dims( SP_DIR . '/assets/img/soodi/' . sanitize_key( $pose ) . '.webp' );
+	return '<img class="sp-soodi ' . esc_attr( $class ) . '" src="' . esc_url( sp_soodi_url( $pose ) ) . '" alt="' . esc_attr( $alt ) . '"' . $dim . ( $eager ? ' data-no-lazy="1"' : ' loading="lazy"' ) . ' decoding="async">';
 }
 
 /**
@@ -62,7 +73,9 @@ function sp_img( $name, $alt = '', $class = '', $eager = false ) {
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
 		$rel = '/assets/img/' . $name . '.' . $ext;
 		if ( file_exists( SP_DIR . $rel ) ) {
-			return '<img class="' . esc_attr( $class ) . '" src="' . esc_url( SP_URI . $rel . '?v=' . filemtime( SP_DIR . $rel ) ) . '" alt="' . esc_attr( $alt ) . '"' . ( $eager ? ' fetchpriority="high"' : ' loading="lazy"' ) . ' decoding="async">';
+			$dim  = sp_img_dims( SP_DIR . $rel );
+			$load = $eager ? ' fetchpriority="high" data-no-lazy="1"' : ' loading="lazy"';
+			return '<img class="' . esc_attr( $class ) . '" src="' . esc_url( SP_URI . $rel . '?v=' . filemtime( SP_DIR . $rel ) ) . '" alt="' . esc_attr( $alt ) . '"' . $dim . $load . ' decoding="async">';
 		}
 	}
 	return '<span class="sp-ph ' . esc_attr( $class ) . '" role="img" aria-label="' . esc_attr( $alt ) . '"><span>' . esc_html( $alt ) . '</span></span>';

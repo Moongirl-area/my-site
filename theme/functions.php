@@ -111,3 +111,75 @@ add_filter( 'pre_get_avatar_data', function ( $args, $id_or_email ) {
 	}
 	return $args;
 }, 10, 2 );
+
+/* ---------- صفحه‌ی اول: زبان، سئو، آیکون ---------- */
+
+// زبان صفحه فارسی است (وردپرس هنوز روی انگلیسی تنظیم است).
+add_filter( 'language_attributes', function () {
+	return 'lang="fa-IR"';
+} );
+
+// آیکون سایت همیشه لوگوی سودپز (آیکون قدیمی «کافه‌چی» در تنظیمات وردپرس جایگزین می‌شود).
+add_filter( 'get_site_icon_url', function ( $url, $size ) {
+	if ( $size && $size <= 32 ) {
+		return SP_URI . '/assets/img/logo/favicon-32.png';
+	}
+	if ( $size && $size <= 192 ) {
+		return SP_URI . '/assets/img/logo/apple-touch-icon.png';
+	}
+	return SP_URI . '/assets/img/logo/icon-512.png';
+}, 10, 2 );
+
+// توضیح، پیش‌نمایش اشتراک (OG) و داده‌ی ساختاریافته‌ی صفحه‌ی اول.
+add_action( 'wp_head', function () {
+	if ( ! is_front_page() || sp_seo_plugin_active() ) {
+		return;
+	}
+	$desc = 'ماشین‌حساب قیمت کیک و غذای خانگی: قیمت تمام‌شده و قیمت فروش هر کیک و هر پرس غذا رو با قیمت روز مواد، دستمزد و گاز حساب کن؛ رایگان و بدون ثبت‌نام.';
+	$img  = SP_URI . '/assets/img/og-home.jpg';
+	echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
+	$og = array(
+		'og:locale'      => 'fa_IR',
+		'og:site_name'   => 'سودپز',
+		'og:type'        => 'website',
+		'og:title'       => 'سودپز | قیمت کیک و غذای خانگیت رو درست حساب کن',
+		'og:description' => $desc,
+		'og:url'         => home_url( '/' ),
+		'og:image'       => $img,
+		'og:image:width' => '1200',
+		'og:image:height' => '630',
+	);
+	foreach ( $og as $k => $v ) {
+		echo '<meta property="' . esc_attr( $k ) . '" content="' . esc_attr( $v ) . '">' . "\n";
+	}
+	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+	$ld = array(
+		'@context' => 'https://schema.org',
+		'@graph'   => array(
+			array(
+				'@type' => 'Organization',
+				'@id'   => home_url( '/#org' ),
+				'name'  => 'سودپز',
+				'url'   => home_url( '/' ),
+				'logo'  => SP_URI . '/assets/img/logo/icon-512.png',
+			),
+			array(
+				'@type'      => 'WebSite',
+				'@id'        => home_url( '/#site' ),
+				'name'       => 'سودپز',
+				'url'        => home_url( '/' ),
+				'inLanguage' => 'fa-IR',
+				'publisher'  => array( '@id' => home_url( '/#org' ) ),
+			),
+			array(
+				'@type'               => 'SoftwareApplication',
+				'name'                => 'ماشین‌حساب قیمت کیک و غذای خانگی سودپز',
+				'applicationCategory' => 'BusinessApplication',
+				'operatingSystem'     => 'Web',
+				'url'                 => sp_url( 'calculator' ),
+				'offers'              => array( '@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'IRR' ),
+			),
+		),
+	);
+	echo '<script type="application/ld+json">' . wp_json_encode( $ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
+}, 2 );

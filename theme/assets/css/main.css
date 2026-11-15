@@ -953,3 +953,47 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-hblog .sp-bcard:hover .sp-bcard__img { transform: scale(1.06); }
 @media (max-width: 1000px) { .sp-hblog__grid { grid-template-columns: 1fr 1fr; } .sp-hblog__grid > :nth-child(3) { display: none; } }
 @media (max-width: 680px) { .sp-hblog__grid { grid-template-columns: 1fr; } .sp-hblog__grid > :nth-child(3) { display: flex; } }
+
+/* ===== سه‌بعدی (نسخه‌ی ۱) ===== */
+/* بالای صفحه: عمق لایه‌ها با ماوس (فقط دسکتاپ) */
+@media (min-width: 1001px) {
+	.sp-hero__art { --mx: 0; --my: 0; }
+	.sp-hero__art > .sp-plate--hero { transform: perspective(1200px) translate3d(calc(var(--mx) * -10px), calc(var(--my) * -8px), 0) rotateX(calc(var(--my) * -7deg)) rotateY(calc(var(--mx) * 9deg)); transition: transform .9s cubic-bezier(.22, 1, .36, 1); }
+	.sp-hero__art > .sp-plate--hero2 { transform: perspective(1000px) translate3d(calc(var(--mx) * -20px), calc(var(--my) * -16px), 0) rotateX(calc(var(--my) * -8deg)) rotateY(calc(var(--mx) * 10deg)); transition: transform .9s cubic-bezier(.22, 1, .36, 1); }
+	.sp-hero__art > .sp-widget { transform: translate3d(calc(var(--mx) * -30px), calc(var(--my) * -24px), 0); transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+	.sp-hero__art > .sp-float { transform: translate3d(calc(var(--mx) * -44px), calc(var(--my) * -36px), 0); transition: transform .7s cubic-bezier(.22, 1, .36, 1); }
+	.sp-hero__art > .sp-soodi--hero { transform: translate3d(calc(var(--mx) * -36px), calc(var(--my) * -26px), 0); transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+	.sp-hero__art > .sp-blob { transform: translate3d(calc(var(--mx) * 26px), calc(var(--my) * 22px), 0); transition: transform 1.2s cubic-bezier(.22, 1, .36, 1); }
+}
+/* بشقاب‌ها: نور لبه برای حجم */
+.sp-plate--hero, .sp-plate--hero2 { background: radial-gradient(circle at 35% 25%, #3a3a3e, #141416 70%); }
+.sp-plate--hero .sp-plate__img, .sp-plate--hero2 .sp-plate__img { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06); }
+
+/* کارت‌ها: برق ملایم روی کج شدن */
+.sp-tilt { position: relative; }
+.sp-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .5s ease; background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) 45%); mix-blend-mode: soft-light; }
+.sp-tilt:hover .sp-glare { opacity: 1; }
+.sp-trust__item .sp-glare, .sp-how__step .sp-glare, .sp-pain .sp-glare, .sp-feature .sp-glare, .sp-hblog .sp-bcard .sp-glare, .sp-door .sp-glare, .sp-compare__card .sp-glare { mix-blend-mode: normal; background: radial-gradient(360px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 50%), linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, .18) 50%, transparent 60%); }
+/* کارت بنیان‌گذار: عمق داخل کارت */
+.sp-final__soodi { transform: translate3d(calc(var(--px, 0) * -34px), calc(var(--py, 0) * -26px), 0); transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.sp-final__prices { transform: translate3d(calc(var(--px, 0) * 12px), calc(var(--py, 0) * 10px), 0); transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.sp-final__ring { transform: translate3d(calc(var(--px, 0) * 24px), calc(var(--py, 0) * 20px), 0); }
+
+/* گوشی نمونه‌ی سه‌بعدی: لبه‌ی ضخیم و چرخش با اسکرول */
+.sp-phone { --pp: .6; transform: perspective(1600px) rotateY(calc(-14deg + var(--pp) * -10deg)) rotateX(calc(6deg + var(--pp) * 4deg)) rotateZ(-2deg); transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+	box-shadow: 1px 1px 0 #3b3b40, 2px 2px 0 #36363b, 3px 3px 0 #313136, 4px 4px 0 #2c2c31, 5px 5px 0 #28282c, 6px 6px 0 #232327, 7px 7px 0 #1f1f22, 30px 50px 70px rgba(35, 35, 38, .28), 60px 90px 100px rgba(35, 35, 38, .12); }
+.sp-phone__screen { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05); }
+@media (max-width: 680px) { .sp-phone { transform: perspective(1400px) rotateY(calc(-8deg + var(--pp) * -6deg)) rotateX(4deg) rotateZ(-2deg); } }
+
+/* آیکون‌های برجسته (سبک خمیری) */
+.sp-pain__ico, .sp-feature__ico, .sp-trust__ico, .sp-cmp__ico, .sp-app-row__dot { background: linear-gradient(160deg, #fff -20%, color-mix(in srgb, var(--c, #E8673C) 16%, #fff) 60%); box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--c, #E8673C) 18%, transparent), inset 0 2px 0 rgba(255, 255, 255, .9), 0 6px 14px color-mix(in srgb, var(--c, #E8673C) 20%, transparent); }
+.sp-cmp__ico { --c: #D04B4B; }
+.sp-compare__card--good .sp-cmp__ico { --c: #1E8E5A; }
+.sp-door__ico, .sp-how__n, .sp-tv__lock { background: linear-gradient(150deg, color-mix(in srgb, var(--c) 72%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 85%, #000)); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14), inset 0 2px 0 rgba(255, 255, 255, .35), 0 8px 18px color-mix(in srgb, var(--c) 35%, transparent); }
+.sp-how__n { box-shadow: 0 0 0 6px var(--paper), inset 0 -3px 0 rgba(0, 0, 0, .14), inset 0 2px 0 rgba(255, 255, 255, .35), 0 10px 20px color-mix(in srgb, var(--c) 35%, transparent); }
+.sp-tv__lock { box-shadow: 0 0 0 5px #fff, inset 0 -3px 0 rgba(0, 0, 0, .18), inset 0 2px 0 rgba(255, 255, 255, .3), 0 10px 22px color-mix(in srgb, var(--c) 40%, transparent); }
+
+/* دکمه‌های برجسته */
+.sp-btn--coral, .sp-btn--primary { background: linear-gradient(180deg, #F07A4E, var(--coral) 60%); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .14), inset 0 1px 0 rgba(255, 255, 255, .35), 0 10px 24px rgba(232, 103, 60, .32); }
+.sp-btn--coral:hover, .sp-btn--primary:hover { background: linear-gradient(180deg, #EC6E40, var(--coral-d) 60%); }
+.sp-btn--coral:active, .sp-btn--primary:active, .sp-final__btn:active { transform: translateY(1px); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .14), 0 4px 10px rgba(232, 103, 60, .3); }

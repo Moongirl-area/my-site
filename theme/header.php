@@ -3,7 +3,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#3B2418">
+	<meta name="theme-color" content="#F6F3EE">
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Vazirmatn-var.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="<?php echo esc_url( SP_URI . '/assets/fonts/Estedad-800.woff2' ); ?>" as="font" type="font/woff2" crossorigin>
 	<script>
