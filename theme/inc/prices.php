@@ -8,140 +8,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * فهرست مواد. cat = sweet (شیرینی)، food (غذا) یا both (هر دو).
- * price = قیمت نمونه برای هر واحد خرید (تومان)؛ تا وقتی از پیشخوان ذخیره نشده، صفر است.
- */
-function sp_ingredients() {
+/** منبع‌های قیمت مرجع. */
+function sp_price_sources() {
 	return array(
-		// مشترک
-		'flour'       => array( 'name' => 'آرد سفید',            'unit' => 'کیلو', 'cat' => 'both',  'price' => 0 ),
-		'egg'         => array( 'name' => 'تخم‌مرغ',              'unit' => 'عدد',  'cat' => 'both',  'price' => 0 ),
-		'oil'         => array( 'name' => 'روغن مایع',            'unit' => 'لیتر', 'cat' => 'both',  'price' => 0 ),
-		// شیرینی
-		'sugar'       => array( 'name' => 'شکر',                  'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'butter'      => array( 'name' => 'کره',                  'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'milk'        => array( 'name' => 'شیر',                  'unit' => 'لیتر', 'cat' => 'sweet', 'price' => 0 ),
-		'cream'       => array( 'name' => 'خامه‌ی قنادی',          'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'cocoa'       => array( 'name' => 'پودر کاکائو',          'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'chocolate'   => array( 'name' => 'شکلات تخته‌ای',         'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'creamcheese' => array( 'name' => 'پنیر خامه‌ای',          'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'biscuit'     => array( 'name' => 'بیسکویت ساقه‌طلایی',    'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'gelatin'     => array( 'name' => 'پودر ژلاتین',          'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'bakingpowder'=> array( 'name' => 'بیکینگ پودر',          'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'vanilla'     => array( 'name' => 'وانیل',                'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'carrot'      => array( 'name' => 'هویج',                 'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'walnut'      => array( 'name' => 'مغز گردو',             'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		'cinnamon'    => array( 'name' => 'دارچین',               'unit' => 'کیلو', 'cat' => 'sweet', 'price' => 0 ),
-		// غذا
-		'rice'        => array( 'name' => 'برنج ایرانی',          'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'meat'        => array( 'name' => 'گوشت گوسفندی یا گوساله', 'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'mince'       => array( 'name' => 'گوشت چرخ‌کرده',         'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'chicken'     => array( 'name' => 'مرغ',                  'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'onion'       => array( 'name' => 'پیاز',                 'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'potato'      => array( 'name' => 'سیب‌زمینی',            'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'tomatopaste' => array( 'name' => 'رب گوجه‌فرنگی',        'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'splitpea'    => array( 'name' => 'لپه',                  'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'kidneybean'  => array( 'name' => 'لوبیا قرمز',           'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'herbs'       => array( 'name' => 'سبزی قورمه (تازه)',     'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'driedlime'   => array( 'name' => 'لیمو عمانی',           'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'barberry'    => array( 'name' => 'زرشک',                 'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'pasta'       => array( 'name' => 'ماکارونی',             'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-		'saffron'     => array( 'name' => 'زعفران',               'unit' => 'گرم',  'cat' => 'food',  'price' => 0 ),
-		'spice'       => array( 'name' => 'ادویه و نمک',          'unit' => 'کیلو', 'cat' => 'food',  'price' => 0 ),
-	);
-}
-
-/** دو آشپزخونه‌ی سودپز. */
-function sp_kitchens() {
-	return array(
-		'sweet' => array( 'name' => 'شیرینی و کیک', 'short' => 'شیرینی', 'icon' => 'cake' ),
-		'food'  => array( 'name' => 'غذای خانگی',   'short' => 'غذا',    'icon' => 'pot' ),
+		'mayadin' => 'میادین میوه و تره‌بار تهران',
+		'emalls'  => 'میانگین فروشگاه‌های آنلاین',
+		'sci'     => 'مرکز آمار ایران',
+		'manual'  => 'بررسی سودپز',
 	);
 }
 
 /**
- * دستورهای ماشین‌حساب رایگان (مقادیر به واحد خرید هر ماده).
- * kitchen = sweet: برای یک کیک ۱ کیلویی. kitchen = food: برای ۱۰ پرس.
- * hours = ساعت کار دستی، oven = ساعت روشن بودن فر یا اجاق گاز.
- * مقدارها تخمین‌اند و باید با آشپز و قناد واقعی چک شوند.
+ * قیمت مرجع تأییدشده‌ی هر ماده: array( p => تومان برای هر واحد خرید، src => منبع، date => Y-m-d ).
+ * نسخه‌ی قدیمی فقط عدد ذخیره می‌کرد؛ آن هم خوانده می‌شود.
  */
-function sp_recipes() {
-	return array(
-		'chocolate' => array(
-			'kitchen' => 'sweet', 'img' => 'cake-chocolate', 'icon' => 'cake', 'color' => '#E8673C',
-			'name'  => 'کیک شکلاتی خامه‌ای', 'hours' => 2.5, 'oven' => 0.75,
-			'items' => array( 'flour' => 0.15, 'sugar' => 0.18, 'egg' => 3, 'cocoa' => 0.04, 'oil' => 0.1, 'milk' => 0.15, 'bakingpowder' => 0.008, 'cream' => 0.3, 'chocolate' => 0.1 ),
-		),
-		'vanilla' => array(
-			'kitchen' => 'sweet', 'img' => 'cake-vanilla', 'icon' => 'cupcake', 'color' => '#E9A23B',
-			'name'  => 'کیک وانیلی خامه‌ای', 'hours' => 2.5, 'oven' => 0.7,
-			'items' => array( 'flour' => 0.16, 'sugar' => 0.18, 'egg' => 4, 'oil' => 0.06, 'milk' => 0.1, 'bakingpowder' => 0.006, 'vanilla' => 0.002, 'cream' => 0.35 ),
-		),
-		'cheesecake' => array(
-			'kitchen' => 'sweet', 'img' => 'cake-cheesecake', 'icon' => 'cheese', 'color' => '#149C98',
-			'name'  => 'چیزکیک سرد', 'hours' => 1.5, 'oven' => 0,
-			'items' => array( 'biscuit' => 0.2, 'butter' => 0.08, 'creamcheese' => 0.35, 'cream' => 0.25, 'sugar' => 0.1, 'gelatin' => 0.01 ),
-		),
-		'carrot' => array(
-			'kitchen' => 'sweet', 'img' => 'cake-carrot', 'icon' => 'carrot', 'color' => '#E03A3E',
-			'name'  => 'کیک هویج و گردو', 'hours' => 1.5, 'oven' => 1,
-			'items' => array( 'flour' => 0.2, 'sugar' => 0.17, 'egg' => 3, 'oil' => 0.15, 'carrot' => 0.25, 'walnut' => 0.08, 'cinnamon' => 0.005, 'bakingpowder' => 0.008 ),
-		),
-		'wetchoc' => array(
-			'kitchen' => 'sweet', 'img' => 'cake-brownie', 'icon' => 'choc', 'color' => '#8A4FBF',
-			'name'  => 'کیک خیس شکلاتی', 'hours' => 1.5, 'oven' => 0.75,
-			'items' => array( 'flour' => 0.15, 'sugar' => 0.2, 'egg' => 3, 'cocoa' => 0.05, 'oil' => 0.12, 'milk' => 0.2, 'chocolate' => 0.12, 'cream' => 0.1, 'bakingpowder' => 0.006 ),
-		),
-		'ghormeh' => array(
-			'kitchen' => 'food', 'img' => 'food-ghormeh', 'icon' => 'pot', 'color' => '#3F8A4E',
-			'name'  => 'قورمه‌سبزی با برنج', 'hours' => 3, 'oven' => 4,
-			'items' => array( 'meat' => 1.0, 'herbs' => 1.0, 'kidneybean' => 0.25, 'onion' => 0.3, 'driedlime' => 0.06, 'oil' => 0.2, 'rice' => 1.2, 'saffron' => 1, 'spice' => 0.03 ),
-		),
-		'gheymeh' => array(
-			'kitchen' => 'food', 'img' => 'food-gheymeh', 'icon' => 'bowl', 'color' => '#D9822B',
-			'name'  => 'قیمه با برنج', 'hours' => 2.5, 'oven' => 3,
-			'items' => array( 'meat' => 0.9, 'splitpea' => 0.3, 'onion' => 0.3, 'tomatopaste' => 0.15, 'driedlime' => 0.05, 'potato' => 0.8, 'oil' => 0.35, 'rice' => 1.2, 'saffron' => 1, 'spice' => 0.03 ),
-		),
-		'zereshk' => array(
-			'kitchen' => 'food', 'img' => 'food-zereshk', 'icon' => 'drumstick', 'color' => '#C2364A',
-			'name'  => 'زرشک‌پلو با مرغ', 'hours' => 2, 'oven' => 2,
-			'items' => array( 'chicken' => 3.0, 'onion' => 0.4, 'tomatopaste' => 0.1, 'barberry' => 0.12, 'saffron' => 2, 'oil' => 0.2, 'rice' => 1.2, 'spice' => 0.03 ),
-		),
-		'kotlet' => array(
-			'kitchen' => 'food', 'img' => 'food-kotlet', 'icon' => 'patty', 'color' => '#8A5A3B',
-			'name'  => 'کتلت', 'hours' => 2.5, 'oven' => 1.5,
-			'items' => array( 'mince' => 1.0, 'potato' => 1.2, 'egg' => 4, 'onion' => 0.3, 'flour' => 0.1, 'oil' => 0.4, 'spice' => 0.03 ),
-		),
-		'macaroni' => array(
-			'kitchen' => 'food', 'img' => 'food-macaroni', 'icon' => 'pasta', 'color' => '#E0A21B',
-			'name'  => 'ماکارونی', 'hours' => 1.5, 'oven' => 1.5,
-			'items' => array( 'pasta' => 1.4, 'mince' => 0.8, 'onion' => 0.3, 'tomatopaste' => 0.2, 'potato' => 0.5, 'oil' => 0.25, 'spice' => 0.03 ),
-		),
-	);
-}
-
-/** دستورهای یک آشپزخونه. */
-function sp_recipes_of( $kitchen ) {
-	return array_filter( sp_recipes(), function ( $r ) use ( $kitchen ) {
-		return $r['kitchen'] === $kitchen;
-	} );
-}
-
-/** قیمت‌های ذخیره‌شده در پیشخوان (یا نمونه). */
-function sp_current_prices() {
+function sp_price_info() {
 	$saved = get_option( 'sp_prices', array() );
+	$s     = get_option( 'sp_settings', array() );
 	$out   = array();
 	foreach ( sp_ingredients() as $key => $ing ) {
-		$out[ $key ] = isset( $saved[ $key ] ) ? (float) $saved[ $key ] : (float) $ing['price'];
+		$v = isset( $saved[ $key ] ) ? $saved[ $key ] : 0;
+		if ( is_array( $v ) ) {
+			$out[ $key ] = wp_parse_args( $v, array( 'p' => 0, 'src' => 'manual', 'date' => '' ) );
+			$out[ $key ]['p'] = (float) $out[ $key ]['p'];
+		} else {
+			$out[ $key ] = array( 'p' => (float) $v, 'src' => 'manual', 'date' => '' );
+		}
 	}
 	return $out;
 }
 
-/**
- * آیا قیمت همه‌ی مواد دستورهای یک آشپزخونه وارد شده؟
- * بدون آرگومان: هر دو آشپزخونه.
- */
+/** فقط عدد قیمت‌ها (برای کدهای قدیمی‌تر). */
+function sp_current_prices() {
+	return array_map( function ( $i ) { return $i['p']; }, sp_price_info() );
+}
+
+/** آیا قیمت همه‌ی مواد دستورهای آماده‌ی یک آشپزخونه وارد شده؟ بدون آرگومان: هر دو. */
 function sp_prices_ready( $kitchen = '' ) {
 	$prices = sp_current_prices();
 	foreach ( sp_recipes() as $r ) {
@@ -157,6 +59,17 @@ function sp_prices_ready( $kitchen = '' ) {
 	return true;
 }
 
+/** تازه‌ترین تاریخ قیمت مرجع (شمسی، برای نمایش)؛ خالی اگر هیچ. */
+function sp_prices_latest_date() {
+	$max = '';
+	foreach ( sp_price_info() as $i ) {
+		if ( $i['p'] && $i['date'] > $max ) {
+			$max = $i['date'];
+		}
+	}
+	return $max ? sp_jdate( strtotime( $max . ' 12:00:00' ) ) : '';
+}
+
 function sp_settings() {
 	return wp_parse_args( get_option( 'sp_settings', array() ), array(
 		'wage'          => 0,   // دستمزد ساعتی پیش‌فرض
@@ -165,19 +78,43 @@ function sp_settings() {
 		'stove'         => 0,   // هزینه‌ی گاز هر ساعت اجاق (غذا)
 		'container'     => 0,   // ظرف و بسته‌بندی هر پرس غذا
 		'margin'        => 30,  // درصد سود هدف روی قیمت فروش
-		'prices_date'   => '',  // تاریخ به‌روزرسانی قیمت‌ها، مثل ۲۰ آبان ۱۴۰۵
+		'prices_date'   => '',  // (قدیمی) تاریخ دستی قیمت‌ها
 		'founders_left' => '',  // تعداد واقعی جای خالی بنیان‌گذار؛ خالی = نمایش داده نشود
 	) );
 }
 
 /** داده‌ای که به ماشین‌حساب (جاوااسکریپت) داده می‌شود. */
 function sp_calculator_data() {
-	$s = sp_settings();
+	$s     = sp_settings();
+	$info  = sp_price_info();
+	$srcs  = sp_price_sources();
+	$ings  = array();
+	foreach ( sp_ingredients() as $key => $ing ) {
+		$pi            = $info[ $key ];
+		$ing['p']      = $pi['p'];
+		$ing['src']    = $pi['p'] ? ( $srcs[ $pi['src'] ] ?? $pi['src'] ) : '';
+		$ing['date']   = $pi['p'] && $pi['date'] ? sp_jdate( strtotime( $pi['date'] . ' 12:00:00' ) ) : '';
+		$ings[ $key ]  = $ing;
+	}
+	$recipes = array();
+	foreach ( sp_recipes() as $key => $r ) {
+		$r['imgUrl']     = ! empty( $r['img'] ) ? sp_img_url( $r['img'] ) : '';
+		$r['iconSvg']    = sp_icon( $r['icon'], 20 );
+		$recipes[ $key ] = $r;
+	}
+	$icons = array();
+	foreach ( array( 'plus', 'x', 'trash', 'search', 'check', 'refresh', 'calc', 'cake', 'pot', 'tag', 'info', 'arrow', 'clock', 'flame', 'box', 'list', 'copy', 'save', 'edit', 'user' ) as $ic ) {
+		$icons[ $ic ] = sp_icon( $ic, 18 );
+	}
 	return array(
 		'soodi'       => SP_URI . '/assets/img/soodi/',
-		'ingredients' => sp_ingredients(),
-		'prices'      => sp_current_prices(),
-		'recipes'     => sp_recipes(),
+		'units'       => sp_units(),
+		'groups'      => sp_ing_groups(),
+		'ingredients' => $ings,
+		'recipes'     => $recipes,
+		'kitchens'    => sp_kitchens(),
+		'yieldUnits'  => sp_yield_units(),
+		'icons'       => $icons,
 		'defaults'    => array(
 			'wage'      => (float) $s['wage'],
 			'oven'      => (float) $s['oven'],
@@ -186,8 +123,7 @@ function sp_calculator_data() {
 			'container' => (float) $s['container'],
 			'margin'    => (float) $s['margin'],
 		),
-		'ready'       => array( 'sweet' => sp_prices_ready( 'sweet' ), 'food' => sp_prices_ready( 'food' ) ),
-		'pricesDate'  => $s['prices_date'],
+		'pricesDate'  => sp_prices_latest_date(),
 		'foundersUrl' => sp_url( 'founders' ),
 	);
 }
@@ -198,32 +134,63 @@ add_action( 'admin_menu', function () {
 	add_menu_page( 'سودپز', 'سودپز', 'manage_options', 'soodpaz', 'sp_admin_page', 'dashicons-chart-line', 3 );
 } );
 
+/** پیشنهادهای قیمت این هفته (از منبع‌ها) که هنوز تأیید نشده‌اند. */
+function sp_price_proposals() {
+	$p = get_option( 'sp_price_proposals', array() );
+	return is_array( $p ) ? $p : array();
+}
+
 add_action( 'admin_post_sp_save_settings', function () {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'دسترسی ندارید.' );
 	}
 	check_admin_referer( 'sp_save_settings' );
 
-	$prices = array();
-	foreach ( sp_ingredients() as $key => $ing ) {
-		$raw            = isset( $_POST['price'][ $key ] ) ? sp_en_digits( wp_unslash( $_POST['price'][ $key ] ) ) : '0';
-		$prices[ $key ] = max( 0, (float) preg_replace( '/[^0-9.]/', '', $raw ) );
-	}
-	update_option( 'sp_prices', $prices );
-
-	$num = function ( $field ) {
-		$raw = isset( $_POST[ $field ] ) ? sp_en_digits( wp_unslash( $_POST[ $field ] ) ) : '';
-		return max( 0, (float) preg_replace( '/[^0-9.]/', '', $raw ) );
+	$num = function ( $raw ) {
+		return max( 0, (float) preg_replace( '/[^0-9.]/', '', sp_en_digits( (string) $raw ) ) );
 	};
+
+	// قیمت‌ها: تأیید پیشنهاد، یا قیمت دستی تازه، یا همان قبلی.
+	$info    = sp_price_info();
+	$props   = sp_price_proposals();
+	$approve = isset( $_POST['approve'] ) ? array_map( 'sanitize_key', array_keys( (array) wp_unslash( $_POST['approve'] ) ) ) : array();
+	if ( ! empty( $_POST['approve_all'] ) ) {
+		$approve = array_keys( $props );
+	}
+	$today = current_time( 'Y-m-d' );
+	$out   = array();
+	foreach ( sp_ingredients() as $key => $ing ) {
+		$cur = $info[ $key ];
+		if ( in_array( $key, $approve, true ) && isset( $props[ $key ] ) ) {
+			$out[ $key ] = array( 'p' => (float) $props[ $key ]['p'], 'src' => $props[ $key ]['src'], 'date' => $props[ $key ]['date'] );
+			unset( $props[ $key ] );
+			continue;
+		}
+		$typed = isset( $_POST['price'][ $key ] ) ? $num( wp_unslash( $_POST['price'][ $key ] ) ) : $cur['p'];
+		if ( abs( $typed - $cur['p'] ) > 0.001 ) {
+			$out[ $key ] = array( 'p' => $typed, 'src' => 'manual', 'date' => $today );
+		} else {
+			$out[ $key ] = $cur;
+		}
+	}
+	update_option( 'sp_prices', $out );
+	if ( ! empty( $_POST['reject'] ) ) {
+		foreach ( array_map( 'sanitize_key', array_keys( (array) wp_unslash( $_POST['reject'] ) ) ) as $k ) {
+			unset( $props[ $k ] );
+		}
+	}
+	update_option( 'sp_price_proposals', $props, false );
+
 	$left_raw = isset( $_POST['founders_left'] ) ? trim( sp_en_digits( wp_unslash( $_POST['founders_left'] ) ) ) : '';
+	$old      = sp_settings();
 	update_option( 'sp_settings', array(
-		'wage'          => $num( 'wage' ),
-		'oven'          => $num( 'oven' ),
-		'packaging'     => $num( 'packaging' ),
-		'stove'         => $num( 'stove' ),
-		'container'     => $num( 'container' ),
-		'margin'        => min( 90, $num( 'margin' ) ),
-		'prices_date'   => isset( $_POST['prices_date'] ) ? sanitize_text_field( wp_unslash( $_POST['prices_date'] ) ) : '',
+		'wage'          => $num( wp_unslash( $_POST['wage'] ?? '' ) ),
+		'oven'          => $num( wp_unslash( $_POST['oven'] ?? '' ) ),
+		'packaging'     => $num( wp_unslash( $_POST['packaging'] ?? '' ) ),
+		'stove'         => $num( wp_unslash( $_POST['stove'] ?? '' ) ),
+		'container'     => $num( wp_unslash( $_POST['container'] ?? '' ) ),
+		'margin'        => min( 90, $num( wp_unslash( $_POST['margin'] ?? '' ) ) ),
+		'prices_date'   => $old['prices_date'],
 		'founders_left' => '' === $left_raw ? '' : (int) $left_raw,
 	) );
 
@@ -232,41 +199,76 @@ add_action( 'admin_post_sp_save_settings', function () {
 } );
 
 function sp_admin_page() {
-	$prices = sp_current_prices();
-	$s      = sp_settings();
+	$info  = sp_price_info();
+	$props = sp_price_proposals();
+	$srcs  = sp_price_sources();
+	$s     = sp_settings();
+	$fmt   = function ( $n ) { return $n ? number_format( $n ) : '—'; };
+	$jd    = function ( $d ) { return $d ? sp_jdate( strtotime( $d . ' 12:00:00' ) ) : ''; };
+	$last  = get_option( 'sp_price_fetch_log', array() );
 	?>
-	<div class="wrap">
+	<div class="wrap" dir="rtl">
 		<h1>سودپز: قیمت مواد و تنظیمات</h1>
 		<?php if ( isset( $_GET['saved'] ) ) : ?>
 			<div class="notice notice-success"><p>ذخیره شد.</p></div>
 		<?php endif; ?>
-		<?php if ( ! sp_prices_ready() ) : ?>
-			<div class="notice notice-warning"><p>تا وقتی قیمت مواد یک آشپزخونه (شیرینی یا غذا) کامل وارد نشده، ماشین‌حساب در همان تب پیام «قیمت‌ها هنوز وارد نشده» نشان می‌دهد.</p></div>
+		<?php if ( isset( $_GET['fetched'] ) ) : ?>
+			<div class="notice notice-info"><p>قیمت‌ها از منبع‌ها گرفته شد. پیشنهادها پایین همین صفحه است.</p></div>
 		<?php endif; ?>
+
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="sp_save_settings">
 			<?php wp_nonce_field( 'sp_save_settings' ); ?>
 
+			<h2>پیشنهادهای قیمت این هفته (<?php echo (int) count( $props ); ?>)</h2>
+			<p>
+				سایت هر هفته قیمت‌ها را از منبع‌ها می‌گیرد. هر کدام را که درست است تیک بزن و ذخیره کن؛ تا تأیید نکنی، روی سایت نمی‌رود.
+				<?php if ( ! empty( $last['time'] ) ) : ?>
+					<br><small>آخرین گرفتن قیمت: <?php echo esc_html( $jd( substr( $last['time'], 0, 10 ) ) . ' ' . substr( $last['time'], 11, 5 ) ); ?> · <?php echo esc_html( $last['summary'] ?? '' ); ?></small>
+				<?php endif; ?>
+			</p>
+			<p><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=sp_fetch_prices' ), 'sp_fetch_prices' ) ); ?>">همین الان قیمت‌ها را از منبع‌ها بگیر</a></p>
+			<?php if ( $props ) : ?>
+				<table class="widefat striped" style="max-width:980px">
+					<thead><tr><th style="width:30px"><input type="checkbox" onclick="document.querySelectorAll('.sp-ap').forEach(function(c){c.checked=this.checked}.bind(this))"></th><th>ماده</th><th>قیمت فعلی</th><th>پیشنهاد</th><th>تغییر</th><th>منبع</th><th>رد کن</th></tr></thead>
+					<tbody>
+					<?php foreach ( $props as $key => $pr ) : if ( ! isset( $info[ $key ] ) ) { continue; } $ing = sp_ingredients()[ $key ]; $cur = $info[ $key ]['p']; $chg = $cur ? ( $pr['p'] - $cur ) / $cur * 100 : null; ?>
+						<tr<?php echo null !== $chg && abs( $chg ) > 30 ? ' style="background:#fff4e5"' : ''; ?>>
+							<td><input class="sp-ap" type="checkbox" name="approve[<?php echo esc_attr( $key ); ?>]" value="1"></td>
+							<td><b><?php echo esc_html( $ing['name'] ); ?></b> <small>(هر <?php echo esc_html( $ing['unit'] ); ?>)</small></td>
+							<td><?php echo esc_html( $fmt( $cur ) ); ?></td>
+							<td><b><?php echo esc_html( $fmt( $pr['p'] ) ); ?></b></td>
+							<td><?php echo null === $chg ? 'جدید' : esc_html( ( $chg > 0 ? '+' : '' ) . round( $chg ) . '٪' ); ?><?php echo null !== $chg && abs( $chg ) > 30 ? ' ⚠️' : ''; ?></td>
+							<td><?php echo esc_html( $srcs[ $pr['src'] ] ?? $pr['src'] ); ?> · <?php echo esc_html( $jd( $pr['date'] ) ); ?><?php if ( ! empty( $pr['note'] ) ) : ?><br><small><?php echo esc_html( $pr['note'] ); ?></small><?php endif; ?><?php if ( ! empty( $pr['url'] ) ) : ?> <a href="<?php echo esc_url( $pr['url'] ); ?>" target="_blank" rel="noopener">دیدن</a><?php endif; ?></td>
+							<td><input type="checkbox" name="reject[<?php echo esc_attr( $key ); ?>]" value="1"></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+				<p><small>ردیف‌های نارنجی بیش از ۳۰٪ با قیمت فعلی فرق دارند؛ قبل از تأیید یک نگاه بینداز.</small></p>
+				<p><button class="button button-primary" name="approve_all" value="1">تأیید همه‌ی پیشنهادها</button> <button class="button">ذخیره‌ی تیک‌خورده‌ها</button></p>
+			<?php else : ?>
+				<p><i>پیشنهاد تازه‌ای نیست.</i></p>
+			<?php endif; ?>
+
 			<h2>قیمت مرجع مواد (تومان، برای هر واحد خرید)</h2>
-			<table class="widefat striped" style="max-width:640px">
-				<thead><tr><th>ماده</th><th>واحد</th><th>قیمت (تومان)</th></tr></thead>
+			<p><small>اگر عددی را دستی عوض کنی، منبعش «بررسی سودپز» و تاریخش امروز ثبت می‌شود.</small></p>
+			<table class="widefat striped" style="max-width:820px">
+				<thead><tr><th>ماده</th><th>واحد</th><th>قیمت (تومان)</th><th>منبع و تاریخ</th></tr></thead>
 				<tbody>
-				<?php
-				$sp_groups = array( 'both' => 'مشترک', 'sweet' => 'شیرینی و کیک', 'food' => 'غذای خانگی' );
-				foreach ( $sp_groups as $sp_cat => $sp_label ) :
-					?>
-					<tr><th colspan="3" style="background:#f0f0f1"><?php echo esc_html( $sp_label ); ?></th></tr>
-					<?php foreach ( sp_ingredients() as $key => $ing ) : if ( $ing['cat'] !== $sp_cat ) { continue; } ?>
+				<?php foreach ( sp_ing_groups() as $sp_g => $sp_label ) : ?>
+					<tr><th colspan="4" style="background:#f0f0f1"><?php echo esc_html( $sp_label ); ?></th></tr>
+					<?php foreach ( sp_ingredients() as $key => $ing ) : if ( $ing['group'] !== $sp_g ) { continue; } $pi = $info[ $key ]; ?>
 					<tr>
 						<td><?php echo esc_html( $ing['name'] ); ?></td>
 						<td>هر <?php echo esc_html( $ing['unit'] ); ?></td>
-						<td><input type="text" inputmode="numeric" name="price[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $prices[ $key ] ? $prices[ $key ] : '' ); ?>" style="width:160px;direction:ltr"></td>
+						<td><input type="text" inputmode="numeric" name="price[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $pi['p'] ? $pi['p'] : '' ); ?>" style="width:150px;direction:ltr"></td>
+						<td><small><?php echo $pi['p'] ? esc_html( ( $srcs[ $pi['src'] ] ?? $pi['src'] ) . ( $pi['date'] ? ' · ' . $jd( $pi['date'] ) : '' ) ) : '<span style="color:#b32d2e">قیمت ندارد</span>'; ?></small></td>
 					</tr>
 					<?php endforeach; ?>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
-			<p><label>تاریخ این قیمت‌ها (روی سایت نمایش داده می‌شود): <input type="text" name="prices_date" value="<?php echo esc_attr( $s['prices_date'] ); ?>" placeholder="مثلاً ۲۰ آبان ۱۴۰۵"></label></p>
 
 			<h2>پیش‌فرض‌های ماشین‌حساب</h2>
 			<table class="form-table" role="presentation">

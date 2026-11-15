@@ -12,6 +12,7 @@ define( 'SP_DIR', get_template_directory() );
 define( 'SP_URI', get_template_directory_uri() );
 
 require_once SP_DIR . '/inc/helpers.php';
+require_once SP_DIR . '/inc/recipe-data.php';
 require_once SP_DIR . '/inc/prices.php';
 require_once SP_DIR . '/inc/leads.php';
 require_once SP_DIR . '/inc/contact.php';
