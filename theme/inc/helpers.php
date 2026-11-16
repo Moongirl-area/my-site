@@ -118,6 +118,12 @@ function sp_icon( $name, $size = 24 ) {
 		'link'      => '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
 		'send'      => '<path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M10 13l4.5-4.5"/>',
 		'search'    => '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+		'plus'      => '<path d="M12 5v14M5 12h14"/>',
+		'x'         => '<path d="M6 6l12 12M18 6 6 18"/>',
+		'trash'     => '<path d="M4 7h16M9 7V4.5h6V7M6 7l1 13h10l1-13"/><path d="M10 11v5M14 11v5"/>',
+		'copy'      => '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+		'save'      => '<path d="M5 3h11l3 3v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M8 3v5h7V3M7 21v-7h10v7"/>',
+		'edit'      => '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
 		'info'      => '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/>',
 		'warn'      => '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
 	);

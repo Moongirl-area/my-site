@@ -1,6 +1,6 @@
 <?php
 get_header();
-$sp_recipes = sp_recipes();
+$sp_recipes = sp_recipes_featured();
 $sp_ings    = sp_ingredients();
 $sp_wood    = sp_img_url( 'wood' );
 $sp_firsts  = array(
