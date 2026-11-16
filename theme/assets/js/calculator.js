@@ -330,12 +330,12 @@
 			if (units.indexOf(it.u) < 0) units.unshift(it.u);
 			var p = priceOf(it.k);
 			row.innerHTML =
-				'<div class="sp-irow__name">' + (ing.custom ? '<input class="sp-irow__nm" type="text" value="' + esc(ing.name) + '" aria-label="اسم ماده">' : '<b>' + esc(ing.name) + '</b>') +
-					'<div class="sp-irow__src">' + srcNote(it) + '</div></div>' +
+				'<div class="sp-irow__name">' + (ing.custom ? '<input class="sp-irow__nm" type="text" value="' + esc(ing.name) + '" aria-label="اسم ماده">' : '<b>' + esc(ing.name) + '</b>') + '</div>' +
 				'<div class="sp-irow__qty"><label>مقدار</label><div class="sp-qty"><input class="sp-irow__q" type="text" inputmode="decimal" value="' + (it.q !== '' ? qtyStr(it.q, it.u) : '') + '" aria-label="مقدار ' + esc(ing.name) + '"><select class="sp-irow__u" aria-label="واحد مقدار"></select></div></div>' +
 				'<div class="sp-irow__price"><label>قیمت هر ' + (ing.custom ? '' : esc(ing.unit)) + '</label><div class="sp-qty' + (ing.custom ? '' : ' sp-qty--solo') + '"><input class="sp-irow__p" type="text" inputmode="numeric" value="' + (p ? faNum(p) : '') + '" placeholder="تومان" aria-label="قیمت هر ' + esc(ing.unit) + ' ' + esc(ing.name) + '">' + (ing.custom ? '<select class="sp-irow__bu" aria-label="واحد خرید"></select>' : '') + '</div></div>' +
 				'<div class="sp-irow__cost"><label>هزینه</label><b>—</b></div>' +
-				'<button type="button" class="sp-iconbtn sp-irow__del" aria-label="حذف ' + esc(ing.name) + '">' + icon('x') + '</button>';
+				'<button type="button" class="sp-iconbtn sp-irow__del" aria-label="حذف ' + esc(ing.name) + '">' + icon('x') + '</button>' +
+				'<div class="sp-irow__src">' + srcNote(it) + '</div>';
 			fillSelect(row.querySelector('.sp-irow__u'), units.map(function (u) { return [u, u]; }), it.u);
 			if (ing.custom) fillSelect(row.querySelector('.sp-irow__bu'), ['کیلو', 'گرم', 'لیتر', 'میلی‌لیتر', 'عدد'].map(function (u) { return [u, u]; }), ing.unit);
 			list.appendChild(row);

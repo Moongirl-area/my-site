@@ -1055,16 +1055,20 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 
 .sp-ilist { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
 .sp-ilist__empty { display: flex; align-items: center; gap: 8px; color: var(--muted); padding: 18px; border: 1.5px dashed var(--line); border-radius: 16px; margin: 0; }
-.sp-irow { display: grid; grid-template-columns: minmax(150px, 1.3fr) minmax(150px, 1fr) minmax(130px, 1fr) 82px 38px; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 16px; background: var(--paper); border: 1.5px solid transparent; transition: border-color .3s, background .3s; }
+.sp-irow { display: grid; grid-template-columns: minmax(100px, 1.1fr) minmax(128px, 1fr) minmax(150px, 1.25fr) minmax(64px, auto) 34px; gap: 6px 8px; align-items: center; padding: 10px 12px; border-radius: 16px; background: var(--paper); border: 1.5px solid transparent; transition: border-color .3s, background .3s; }
 .sp-irow.is-missing { border-color: #F3D3A4; background: #FFF8EC; }
 .sp-irow.is-flash { border-color: var(--coral); background: #FFF1EA; }
 .sp-irow label { display: none; font-size: 12px; color: var(--muted); }
 .sp-irow__name b { font-size: 15px; }
 .sp-irow__nm { width: 100%; font: inherit; font-weight: 700; font-size: 15px; border: 0; border-bottom: 1.5px dashed var(--line); background: transparent; padding: 2px 0; color: var(--ink); }
 .sp-irow__nm:focus { outline: 0; border-bottom-color: var(--coral); }
-.sp-irow__src { margin-top: 3px; font-size: 12px; line-height: 1.6; color: var(--muted); }
-.sp-src { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-.sp-src svg { width: 13px; height: 13px; flex: none; }
+.sp-irow__src { grid-column: 1 / -1; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.sp-irow__src:empty { display: none; }
+.sp-irow__price .sp-qty input { flex: 1 1 auto; min-width: 0; }
+.sp-irow__price .sp-qty select { flex: 0 0 auto; width: auto; max-width: 92px; }
+.sp-src { display: inline; }
+.sp-src svg { vertical-align: -2px; margin-inline-end: 4px; }
+.sp-src svg { width: 13px; height: 13px; }
 .sp-src.is-mine { color: #0F7C77; }
 .sp-src.is-warn { color: #B26A00; font-weight: 700; }
 .sp-src__reset { font: inherit; font-size: 12px; color: var(--coral-d); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
@@ -1097,7 +1101,8 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-linkbtn:hover { text-decoration: underline; }
 
 @media (max-width: 1100px) {
-	.sp-irow { grid-template-columns: 1fr 1fr 34px; grid-template-areas: "name name del" "qty price price" "cost cost cost"; }
+	.sp-irow { grid-template-columns: 1fr 1fr 34px; grid-template-areas: "name name del" "qty price price" "cost cost cost" "src src src"; }
+	.sp-irow__src { grid-area: src; }
 	.sp-irow__name { grid-area: name; } .sp-irow__qty { grid-area: qty; } .sp-irow__price { grid-area: price; } .sp-irow__cost { grid-area: cost; display: flex; justify-content: space-between; align-items: center; } .sp-irow__del { grid-area: del; }
 	.sp-irow label { display: block; margin-bottom: 3px; }
 	.sp-irow__cost label { margin: 0; }

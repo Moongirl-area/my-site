@@ -225,6 +225,13 @@ function sp_admin_page() {
 				سایت هر هفته قیمت‌ها را از منبع‌ها می‌گیرد. هر کدام را که درست است تیک بزن و ذخیره کن؛ تا تأیید نکنی، روی سایت نمی‌رود.
 				<?php if ( ! empty( $last['time'] ) ) : ?>
 					<br><small>آخرین گرفتن قیمت: <?php echo esc_html( $jd( substr( $last['time'], 0, 10 ) ) . ' ' . substr( $last['time'], 11, 5 ) ); ?> · <?php echo esc_html( $last['summary'] ?? '' ); ?></small>
+					<?php
+					if ( ! empty( $last['missing'] ) ) {
+						$ings = sp_ingredients();
+						$miss = array_map( function ( $k ) use ( $ings ) { return isset( $ings[ $k ] ) ? $ings[ $k ]['name'] : $k; }, $last['missing'] );
+						echo '<br><small style="color:#777">در منبع‌ها پیدا نشد (قیمتش را خودت در جدول پایین بنویس): ' . esc_html( implode( '، ', $miss ) ) . '</small>';
+					}
+					?>
 				<?php endif; ?>
 			</p>
 			<p><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=sp_fetch_prices' ), 'sp_fetch_prices' ) ); ?>">همین الان قیمت‌ها را از منبع‌ها بگیر</a></p>
