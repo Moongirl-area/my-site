@@ -424,7 +424,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 			<span class="sp-final__ring sp-final__ring--b" aria-hidden="true"></span>
 			<div class="sp-final__text">
 				<span class="sp-final__badge"><?php echo sp_icon( 'spark', 16 ); ?><?php echo '' !== $sp_set['founders_left'] ? esc_html( sp_fa( $sp_set['founders_left'] ) ) . ' جا از ۵۰ تا مونده' : 'فقط برای ۵۰ نفر'; ?></span>
-				<h2 class="sp-final__h">ضرر یه کیک یا یه دیگ غذای ارزون‌فروخته، از اشتراک سودپز بیشتره.</h2>
+				<h2 class="sp-final__h">یه بار ضرر نکنی، پول اشتراکت دراومده.</h2>
 				<div class="sp-final__prices">
 					<div class="sp-final__price"><small>پرو ماهانه</small><b>۹۹ هزار</b></div>
 					<div class="sp-final__price"><small>پرو سالانه</small><b>۶۹۰ هزار</b></div>
