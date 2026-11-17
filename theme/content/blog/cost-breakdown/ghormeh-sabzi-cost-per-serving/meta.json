@@ -58,14 +58,19 @@
     }
   ],
   "image": {
-    "alt": "یک کاسه قرمه‌سبزی خانگی با تکه‌های گوشت و لوبیا قرمز کنار پلوی سفید با زعفران، در بشقاب سفید روی میز چوبی",
+    "alt": "یک کاسه قرمه‌سبزی خانگی با تکه‌های گوشت، لوبیا قرمز و لیموعمانی کنار بشقاب پلوی زعفرانی با زرشک، روی میز چوبی کنار سبزی تازه",
     "title": "قیمت قرمه سبزی خانگی",
     "caption": "گوشت و برنج حدود ۹۰٪ هزینه‌ی مواد هر پرس قرمه‌سبزی‌ان.",
     "prompt": "Realistic editorial food photograph for a Persian home-cooking business blog. A bowl of homemade Persian ghormeh sabzi stew (dark green herb stew with lamb chunks, red kidney beans and dried limes) next to a plate of fluffy white rice with a saffron rice layer on top, served in simple home ceramic dishes on a warm wooden table, a few fresh herbs and two dried limes beside them. Natural soft daylight from a window, 45-degree camera angle. Honest homemade look, slightly imperfect, not glossy or artificial. Palette: cocoa brown, saffron orange, cream, warm wood, soft coral accents. Wide 16:9 composition. No readable text, no logos, no brand names, no human faces, no hands.",
     "file": "ghormeh-sabzi-cost-per-serving.webp",
-    "width": 640,
-    "height": 360,
+    "width": 1365,
+    "height": 768,
     "sizes": [
+      {
+        "file": "ghormeh-sabzi-cost-per-serving-960.webp",
+        "width": 960,
+        "height": 540
+      },
       {
         "file": "ghormeh-sabzi-cost-per-serving-640.webp",
         "width": 640,

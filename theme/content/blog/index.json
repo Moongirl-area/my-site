@@ -1,9 +1,11 @@
 {
- "version": "b29e2c0a80e25cb39e2bb4352a427756",
+ "version": "0a7822c8131abc0f7bdf79944f786696",
  "posts": [
   "cake-pricing/homemade-cake-price-guide",
   "home-food/home-food-price-guide",
   "cost-breakdown/chocolate-wet-cake-cost",
-  "cost-breakdown/ghormeh-sabzi-cost-per-serving"
+  "cost-breakdown/ghormeh-sabzi-cost-per-serving",
+  "cake-pricing/home-baker-hourly-wage",
+  "home-food/rice-cost-per-serving"
  ]
 }
