@@ -296,3 +296,7 @@ function sp_admin_page() {
 	</div>
 	<?php
 }
+
+/* هر وقت قیمت‌ها تأیید یا عوض شد، کش صفحه‌ها پاک شود تا صفحه‌ی اول و ماشین‌حساب همان لحظه قیمت تازه را نشان دهند. */
+add_action( 'update_option_sp_prices', 'sp_flush_all_caches' );
+add_action( 'add_option_sp_prices', 'sp_flush_all_caches' );
