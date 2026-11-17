@@ -23,7 +23,7 @@
 				<p class="sp-footer__note">قیمت درست برای کیک و غذای خانگی؛ با قیمت امروز مواد و دستمزد خودت.</p>
 				<ul class="sp-fbadges">
 					<li><?php echo sp_icon( 'server', 16 ); ?>سرور ایرانی</li>
-					<li><?php echo sp_icon( 'lock', 16 ); ?>قطعی اینترنت هم بازه</li>
+					<li><?php echo sp_icon( 'lock', 16 ); ?>همیشه در دسترس</li>
 					<li><?php echo sp_icon( 'check', 16 ); ?>ماشین‌حساب رایگان</li>
 				</ul>
 			</div>
