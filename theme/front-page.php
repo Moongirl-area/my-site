@@ -106,16 +106,35 @@ $sp_firsts  = array(
 		</div>
 	</div>
 	<div class="sp-marquee__prices">
-		<span class="sp-mq-live"><i></i>قیمت روز مواد</span>
+		<?php
+		// قیمت تأییدشده‌ی مواد پرمصرف، از جدول قیمت مرجع سودپز.
+		$sp_chip_keys = array( 'cream' => 'خامه', 'chocolate' => 'شکلات', 'meat' => 'گوشت', 'rice' => 'برنج', 'saffron' => 'زعفران', 'butter' => 'کره', 'egg' => 'تخم‌مرغ', 'flour' => 'آرد', 'herbs' => 'سبزی', 'splitpea' => 'لپه', 'chicken' => 'مرغ', 'walnut' => 'گردو', 'sugar' => 'شکر', 'oil' => 'روغن' );
+		$sp_pinfo     = sp_price_info();
+		$sp_ings      = sp_ingredients();
+		$sp_chips     = array();
+		foreach ( $sp_chip_keys as $sp_ck => $sp_cn ) {
+			$sp_cp = isset( $sp_pinfo[ $sp_ck ] ) ? (float) $sp_pinfo[ $sp_ck ]['p'] : 0;
+			if ( $sp_cp > 0 ) {
+				$sp_chips[] = array( $sp_cn, $sp_cp >= 1e6 ? str_replace( '.', '٫', sp_fa( round( $sp_cp / 1e6, 2 ), false ) ) . ' میلیون' : sp_fa( round( $sp_cp / 1000 ) ) . ' هزار', $sp_ings[ $sp_ck ]['unit'] );
+			}
+		}
+		$sp_live = count( $sp_chips ) >= 4;
+		if ( ! $sp_live ) { // تا وقتی قیمت‌ها تأیید نشده، فقط اسم مواد
+			$sp_chips = array();
+			foreach ( $sp_chip_keys as $sp_cn ) {
+				$sp_chips[] = array( $sp_cn, '', '' );
+			}
+		}
+		?>
+		<span class="sp-mq-live<?php echo $sp_live ? '' : ' is-off'; ?>"><i></i><?php echo $sp_live ? 'قیمت روز مواد' : 'مواد پرمصرف'; ?></span>
 	<div class="sp-marquee__row sp-marquee__row--prices">
 		<div class="sp-marquee__track sp-marquee__track--rev" aria-hidden="true">
 			<?php
-			$sp_words  = array( 'خامه', 'شکلات', 'گوشت', 'برنج', 'زعفران', 'کره', 'تخم‌مرغ', 'آرد', 'سبزی', 'لپه', 'مرغ', 'گردو' );
 			$sp_colors = array( '#E8673C', '#149C98', '#E9A23B', '#8A4FBF', '#E03A3E', '#3F8A4E' );
 			for ( $sp_i = 0; $sp_i < 2; $sp_i++ ) :
-				foreach ( $sp_words as $sp_k => $sp_w ) :
+				foreach ( $sp_chips as $sp_k => $sp_c ) :
 					?>
-				<span class="sp-mq-chip" style="--c:<?php echo esc_attr( $sp_colors[ $sp_k % count( $sp_colors ) ] ); ?>"><?php echo esc_html( $sp_w ); ?><?php echo sp_icon( 'refresh', 13 ); ?></span>
+				<span class="sp-mq-chip" style="--c:<?php echo esc_attr( $sp_colors[ $sp_k % count( $sp_colors ) ] ); ?>"><?php echo esc_html( $sp_c[0] ); ?><?php if ( $sp_c[1] ) : ?><span class="sp-mq-chip__p"><?php echo esc_html( $sp_c[1] ); ?><small> تومان / <?php echo esc_html( $sp_c[2] ); ?></small></span><?php endif; ?></span>
 					<?php
 				endforeach;
 			endfor;
