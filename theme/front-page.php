@@ -263,8 +263,8 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 			<li class="sp-how__step" style="--c:#E9A23B">
 				<span class="sp-how__n">۳</span>
 				<div class="sp-how__art"><?php echo sp_soodi( 'celebrating', 'sp-how__soodi', 'سودی جشن گرفته' ); // phpcs:ignore ?></div>
-				<h3><?php echo sp_icon( 'send', 20 ); ?>با خیال راحت قیمت بده</h3>
-				<p>قیمت رو برای دایرکت کپی کن یا لیست قیمتت رو برای استوری بگیر. گوشت یا خامه گرون شد؟ قیمت‌ها خودشون به‌روز می‌شن.</p>
+				<h3><?php echo sp_icon( 'send', 20 ); ?>جواب «چنده؟» آماده‌س </h3>
+				<p>قیمت هر کیلو، هر عدد یا هر پرس رو کپی کن و برای مشتری بفرست. قیمت مواد هر هفته از میادین و فروشگاه‌ها به‌روز می‌شه.</p>
 			</li>
 		</ol>
 	</div>
