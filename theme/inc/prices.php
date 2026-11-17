@@ -130,9 +130,12 @@ function sp_calculator_data() {
 
 /* ---------- صفحه‌ی تنظیمات در پیشخوان ---------- */
 
+/* منوی «سودپز». زیرمنوی اول خودِ صفحه‌ی قیمت‌هاست تا کلیک روی «سودپز» همیشه همین‌جا بیاید،
+   نه به «درخواست‌ها»/«پیام‌ها» که وردپرس زیر همین منو اضافه می‌کند. اولویت ۹ = قبل از آن‌ها. */
 add_action( 'admin_menu', function () {
 	add_menu_page( 'سودپز', 'سودپز', 'manage_options', 'soodpaz', 'sp_admin_page', 'dashicons-chart-line', 3 );
-} );
+	add_submenu_page( 'soodpaz', 'قیمت مواد و تنظیمات', 'قیمت مواد و تنظیمات', 'manage_options', 'soodpaz', 'sp_admin_page', 0 );
+}, 9 );
 
 /** پیشنهادهای قیمت این هفته (از منبع‌ها) که هنوز تأیید نشده‌اند. */
 function sp_price_proposals() {
