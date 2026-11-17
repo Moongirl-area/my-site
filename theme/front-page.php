@@ -392,7 +392,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 				</div>
 				<div class="sp-trust__txt">
 					<h3><span class="sp-trust__ico"><?php echo sp_icon( 'lock', 20 ); ?></span>دستورهات مال خودته</h3>
-					<p>دستور و قیمتت رو فقط خودت می‌بینی. بدون اجازه‌ت به هیچ‌کس نشون داده نمی‌شه.</p>
+					<p>دستور و قیمتت رو فقط خودت می‌بینی. بدون اجازه خودت به هیچ‌کس نشون داده نمی‌شه.</p>
 				</div>
 			</article>
 
