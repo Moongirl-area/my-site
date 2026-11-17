@@ -4,8 +4,8 @@
 		<div class="sp-fhelp">
 			<?php echo sp_soodi( 'waving', 'sp-fhelp__soodi', 'سودی دست تکان می‌دهد' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<div class="sp-fhelp__txt">
-				<p class="sp-fhelp__h">یه جای حسابت گیر کرده؟</p>
-				<p class="sp-fhelp__p">از قیمت مواد تا درصد سود، بپرس. سودی و تیمش جواب می‌دن.</p>
+				<p class="sp-fhelp__h">سؤال داری؟</p>
+				<p class="sp-fhelp__p">هر چی درباره‌ی قیمت‌گذاری می‌خوای بدونی، بپرس.</p>
 			</div>
 			<div class="sp-fhelp__btns">
 				<a class="sp-btn sp-btn--coral" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>"><?php echo sp_icon( 'calc', 18 ); ?>ماشین‌حساب رایگان</a>
