@@ -319,7 +319,7 @@ if ( ! function_exists( 'sp_cmp_card' ) ) {
 			<h2 class="sp-display sp-display--md">دیگه هر هفته از اول حساب نکن</h2>
 			<p class="sp-sub">یه بار دستورهات رو وارد کن، بقیه‌ش با سودپز. برای کیک و شیرینی و برای غذای خانگی. نسخه‌ی کامل اول برای عضوهای بنیان‌گذار باز می‌شه.</p>
 			<div class="sp-feature-grid">
-				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'refresh', 24 ); ?></span><h3>بازقیمت‌گذاری یه‌کلیکی</h3><p>خامه گرون شد؟ فقط قیمت خامه رو عوض کن. قیمت همه‌ی کیک‌ها و غذاهایی که خامه دارن، خودش درست می‌شه.</p></div>
+				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E8673C"><?php echo sp_icon( 'refresh', 24 ); ?></span><h3>یه بار عوض کن، همه‌جا درست میشه</h3><p>قیمت یه ماده رو که عوض کنی، قیمت هر کیک و غذایی که اون ماده رو داره هم خودش عوض می‌شه.</p></div>
 				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#149C98"><?php echo sp_icon( 'tag', 24 ); ?></span><h3>قیمت مرجع هفتگی</h3><p>قیمت حدود ۴۰ ماده‌ی پرمصرف، از خامه تا گوشت و برنج، هر هفته به‌روز می‌شه. لازم نیست خودت دنبالش بگردی.</p></div>
 				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E9A23B"><?php echo sp_icon( 'book', 24 ); ?></span><h3>دستورهای آماده</h3><p>کیک‌های پرفروش و غذاهای خونگی، با مقدار مواد. فقط وزن یا تعداد پرس رو عوض کن.</p></div>
 				<div class="sp-feature"><span class="sp-feature__ico" style="--c:#E03A3E"><?php echo sp_icon( 'bell', 24 ); ?></span><h3>هشدار ضرر</h3><p>اگه چیزی رو زیر قیمت تمام‌شده بفروشی، قرمز می‌شه و دقیق می‌گه سر هر سفارش چقدر ضرر می‌کنی.</p></div>
