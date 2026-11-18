@@ -16,6 +16,7 @@ require_once SP_DIR . '/inc/recipe-data.php';
 require_once SP_DIR . '/inc/prices.php';
 require_once SP_DIR . '/inc/price-fetch.php';
 require_once SP_DIR . '/inc/account.php';
+require_once SP_DIR . '/inc/dashboard.php';
 require_once SP_DIR . '/inc/leads.php';
 require_once SP_DIR . '/inc/contact.php';
 require_once SP_DIR . '/inc/content.php';

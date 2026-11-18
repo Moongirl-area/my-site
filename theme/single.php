@@ -31,6 +31,7 @@ while ( have_posts() ) :
 					<span class="sp-post__by"><?php echo sp_logo_svg( 34 ); // phpcs:ignore ?><span><b>تیم سودپز</b><small>حسابدار خوش‌اخلاق آشپزخونه</small></span></span>
 					<span><?php echo sp_icon( 'clock', 16 ); ?><?php echo esc_html( sp_fa( sp_read_minutes( $sp_id ) ) ); ?> دقیقه مطالعه</span>
 					<span><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( sp_post_jdate( $sp_id ) ); ?></time></span>
+					<?php sp_bookmark_btn( $sp_id ); ?>
 					<?php if ( $sp_updated ) : ?>
 						<span class="sp-post__upd"><?php echo sp_icon( 'refresh', 16 ); ?>به‌روزرسانی <time datetime="<?php echo esc_attr( get_the_modified_date( 'c' ) ); ?>"><?php echo esc_html( sp_post_jdate( $sp_id, true ) ); ?></time></span>
 					<?php endif; ?>

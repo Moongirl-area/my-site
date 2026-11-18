@@ -667,6 +667,10 @@
 			$('r-donut-c').textContent = faNum(Math.round(profitAmt / price * 100)) + '٪ سود';
 		}
 
+		// خلاصه‌ی این دستور برای داشبورد (قیمت، سود، سهم هزینه‌ها)
+		R.sum = { p: price, c: unitCost, pr: profitAmt, n: n, u: uu, m: margin, cur: num(R.current), mat: mat / n, wg: wage / n, ot: other / n, miss: missing };
+		if (R.id && store.recipes[R.id]) { store.recipes[R.id].sum = R.sum; }
+
 		var qBox = $('r-quote-box'); qBox.hidden = !(price > 0 && !missing);
 		if (!qBox.hidden) {
 			var nm = R.name || 'سفارش شما';
@@ -718,6 +722,10 @@
 			pr.id = uid('r'); pr.updated = Date.now(); if (isFree()) ME.freeId = pr.id;
 			store.recipes[pr.id] = pr; persist(); open('my:' + pr.id, pr.kitchen); status('دستورت توی حسابت ذخیره شد ✓');
 		}
+	} else if (qs.get('r') && store.recipes[qs.get('r')]) {
+		var rr = store.recipes[qs.get('r')];
+		root.setAttribute('data-k', rr.kitchen === 'food' ? 'food' : 'sweet');
+		open('my:' + qs.get('r'), rr.kitchen);
 	} else if (want && D.recipes[want]) { root.setAttribute('data-k', D.recipes[want].kitchen); open('lib:' + want, D.recipes[want].kitchen); }
 	else if (qs.get('new')) open('new');
 	else open(store.last[kitchen()] || 'lib:');

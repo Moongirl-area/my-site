@@ -37,7 +37,7 @@
 			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'book', 17 ); ?>مجله</a>
 		</nav>
 		<?php if ( is_user_logged_in() ) : ?>
-			<a class="sp-hacc" href="<?php echo esc_url( sp_url( 'login' ) ); ?>" title="حساب من"><?php echo sp_icon( 'user', 18 ); ?><span><?php echo esc_html( wp_get_current_user()->display_name ); ?></span></a>
+			<a class="sp-hacc" href="<?php echo esc_url( sp_dash_url() ); ?>" title="میز کار من"><?php echo sp_icon( 'user', 18 ); ?><span><?php echo esc_html( wp_get_current_user()->display_name ); ?></span></a>
 		<?php else : ?>
 			<a class="sp-hacc" href="<?php echo esc_url( sp_url( 'login' ) ); ?>"><?php echo sp_icon( 'user', 18 ); ?><span>ورود</span></a>
 		<?php endif; ?>
