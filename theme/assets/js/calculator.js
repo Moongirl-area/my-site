@@ -21,6 +21,24 @@
 	}
 	function num(v) { var n = parseFloat(toEn(v)); return isFinite(n) ? n : 0; }
 	function faNum(n, digits) { return Number(n).toLocaleString('fa-IR', { maximumFractionDigits: digits == null ? 0 : digits }); }
+	/* عددهای تومانی موقع تایپ سه‌رقم‌سه‌رقم جدا می‌شوند (۱۰۰٬۰۰۰ به‌جای ۱۰۰۰۰۰) */
+	function groupMoney(inp) {
+		var sel = inp.selectionStart == null ? -1 : inp.selectionStart;
+		var before = sel < 0 ? -1 : toEn(inp.value.slice(0, sel)).replace(/[^0-9]/g, '').length;
+		var digits = toEn(inp.value).replace(/[^0-9]/g, '').replace(/^0+(?=\d)/, '');
+		var out = digits ? faNum(parseFloat(digits)) : '';
+		if (out === inp.value) return;
+		inp.value = out;
+		if (before < 0) return;
+		var seen = 0, pos = out.length;
+		if (before === 0) { pos = 0; } else {
+			for (var i = 0; i < out.length; i++) {
+				if (/[0-9۰-۹]/.test(out[i])) { seen++; if (seen === before) { pos = i + 1; break; } }
+			}
+		}
+		try { inp.setSelectionRange(pos, pos); } catch (e) {}
+	}
+
 	function toman(n) { return faNum(Math.round(n)) + ' تومان'; }
 	function shortToman(n) {
 		n = Math.round(n);
@@ -80,6 +98,31 @@
 		h.innerHTML = esc(msg) + ' <a href="' + esc(ME.upgrade) + '">پرو رو ببین</a>';
 		h.classList.add('is-gate');
 	}
+	/* دکمه‌ی پایین نتیجه: بسته به پلن، «ثبت دستور» یا دعوت به عضویت/پرو */
+	function renderCta() {
+		var box = $('r-cta'); if (!box) return;
+		var note = $('r-cta-note'), btn = $('r-cta-btn');
+		var saved = !!(R && R.id);
+		box.hidden = false;
+		if (!ME.in) {
+			note.textContent = 'دستورت رو ذخیره کن تا گم نشه و هفته‌ی بعد که مواد گرون شد، از اول ننویسیش.';
+			btn.textContent = 'عضو شو، رایگانه'; btn.href = ME.register; btn.removeAttribute('data-act');
+			return;
+		}
+		if (isFree() && (saved ? !canEdit() : !canCreate())) {
+			note.textContent = 'توی پلن رایگان یه دستور ذخیره‌شده داری و قیمت‌هاش خودکار به‌روز نمی‌شه. پرو هر چند تا دستور که بخوای نگه می‌داره و قیمت‌ها رو هر هفته خودش درست می‌کنه.';
+			btn.textContent = 'پرو رو ببین'; btn.href = ME.upgrade; btn.removeAttribute('data-act');
+			return;
+		}
+		if (saved) { box.hidden = true; return; } // ذخیره‌شده و قابل ویرایش: تغییرها خودکار ذخیره می‌شن
+		note.textContent = 'این دستور هنوز توی حسابت ذخیره نشده.';
+		btn.textContent = 'ثبت این دستور توی حسابم'; btn.href = '#'; btn.setAttribute('data-act', 'save');
+	}
+	document.addEventListener('click', function (e) {
+		var b = e.target.closest('#r-cta-btn[data-act="save"]'); if (!b) return;
+		e.preventDefault(); saveRecipe(); renderCta();
+	});
+
 	function renderPlan() {
 		var b = $('sp-plan'); if (!b) return;
 		var html = '';
@@ -261,7 +304,7 @@
 		$('sp-name').value = R.name || '';
 		var badge = $('sp-badge'), hint = $('sp-hint'), save = $('sp-save');
 		hint.classList.remove('is-gate');
-		renderPlan();
+		renderPlan(); renderCta();
 		$('sp-del').hidden = !R.id;
 		if (R.id) {
 			badge.textContent = canEdit() ? 'مال من' : 'فقط‌خواندنی'; badge.className = 'sp-ed-badge is-mine';
@@ -278,7 +321,7 @@
 	}
 	$('sp-name').addEventListener('input', function () { R.name = this.value; touch(); updateResultHead(); if (R.id) renderPicker(); });
 
-	$('sp-save').addEventListener('click', function () {
+	function saveRecipe() {
 		if (!norm(R.name)) { $('sp-name').focus(); $('sp-hint').textContent = 'اول یه اسم برای دستورت بنویس.'; return; }
 		if (!ME.in) { needAccount(); return; }
 		if (!canCreate()) { proGate('توی پلن رایگان یه دستور ذخیره‌شده داری. برای دستورهای بیشتر، پرو بگیر.'); return; }
@@ -287,7 +330,8 @@
 		if (isFree()) ME.freeId = R.id;
 		store.recipes[R.id] = clone(R); store.last[R.kitchen] = currentRef();
 		dirty = false; persist(); renderHead(); renderPicker(); status('ذخیره شد ✓');
-	});
+	}
+	$('sp-save').addEventListener('click', saveRecipe);
 	$('sp-dup').addEventListener('click', function () {
 		if (!ME.in) { needAccount(); return; }
 		if (!canCreate()) { proGate('توی پلن رایگان یه دستور ذخیره‌شده داری. برای کپی و دستورهای بیشتر، پرو بگیر.'); return; }
@@ -349,20 +393,21 @@
 	});
 	$('sp-yu').addEventListener('change', function () { R.yu = this.value; renderPackPer(); touch(); calc(); });
 
-	function bindNum(id, field, prefKey) {
+	function bindNum(id, field, prefKey, money) {
 		$(id).addEventListener('input', function () {
+			if (money) groupMoney(this);
 			R[field] = this.value.trim() === '' ? '' : num(this.value);
 			if (prefKey) { store.prefs[typeof prefKey === 'function' ? prefKey() : prefKey] = num(this.value); persist(); }
 			touch(); calc();
 		});
 	}
 	bindNum('sp-hours', 'hours');
-	bindNum('sp-wage', 'wage', 'wage');
-	bindNum('sp-oven', 'oven', function () { return 'oven_' + R.kitchen; });
+	bindNum('sp-wage', 'wage', 'wage', 1);
+	bindNum('sp-oven', 'oven', function () { return 'oven_' + R.kitchen; }, 1);
 	bindNum('sp-ovenh', 'ovenh');
-	bindNum('sp-pack', 'pack', function () { return 'pack_' + R.kitchen; });
+	bindNum('sp-pack', 'pack', function () { return 'pack_' + R.kitchen; }, 1);
 	bindNum('sp-margin', 'margin', 'margin');
-	$('sp-current').addEventListener('input', function () { R.current = num(this.value); touch(); calc(); });
+	$('sp-current').addEventListener('input', function () { groupMoney(this); R.current = num(this.value); touch(); calc(); });
 	$('sp-packper').addEventListener('change', function () { R.packPer = this.value; touch(); calc(); });
 
 	/* ---------- ردیف‌های مواد ---------- */
@@ -415,6 +460,7 @@
 		var c = rowCtx(e); if (!c) return; var t = e.target, it = c.it;
 		if (t.classList.contains('sp-irow__q')) it.q = t.value.trim() === '' ? '' : num(t.value);
 		else if (t.classList.contains('sp-irow__p')) {
+			groupMoney(t);
 			var v = num(t.value);
 			if (it.k.indexOf('c:') === 0) { store.ings[it.k.slice(2)].p = v; }
 			else if (t.value.trim() === '' || Math.abs(v - refPrice(it.k)) < 0.5) delete store.prices[it.k];
@@ -533,7 +579,7 @@
 	$('sp-xadd').addEventListener('click', function () { R.extras.push({ n: '', a: '', per: 'batch' }); renderExtras(); touch(); $('sp-extras').lastChild.querySelector('input').focus(); });
 	$('sp-extras').addEventListener('input', function (e) {
 		var row = e.target.closest('.sp-xrow'); if (!row) return; var x = R.extras[+row.dataset.i];
-		if (e.target.classList.contains('sp-xrow__n')) x.n = e.target.value; else if (e.target.classList.contains('sp-xrow__a')) x.a = num(e.target.value);
+		if (e.target.classList.contains('sp-xrow__n')) x.n = e.target.value; else if (e.target.classList.contains('sp-xrow__a')) { groupMoney(e.target); x.a = num(e.target.value); }
 		touch(); calc();
 	});
 	$('sp-extras').addEventListener('change', function (e) { var row = e.target.closest('.sp-xrow'); if (row && e.target.classList.contains('sp-xrow__per')) { R.extras[+row.dataset.i].per = e.target.value; touch(); calc(); } });

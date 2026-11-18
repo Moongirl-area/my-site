@@ -152,8 +152,10 @@ $sp_date = sp_prices_latest_date();
 							<textarea id="r-quote" rows="4" aria-label="متن قیمت برای فرستادن به مشتری"></textarea>
 							<button class="sp-btn sp-btn--paper sp-btn--sm" type="button" id="r-copy"><?php echo sp_icon( 'story', 18 ); ?><span>کپی برای دایرکت</span></button>
 						</div>
-						<p class="sp-result__cta">این قیمت مال امروزه. هفته‌ی بعد که مواد گرون شد، باید از اول حساب کنی. سودپز پرو این کار رو خودش برات می‌کنه.</p>
-						<a class="sp-btn sp-btn--primary sp-btn--block" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">عضو بنیان‌گذار شو</a>
+						<div id="r-cta">
+							<p class="sp-result__cta" id="r-cta-note">این قیمت مال امروزه. هفته‌ی بعد که مواد گرون شد، باید از اول حساب کنی. سودپز پرو این کار رو خودش برات می‌کنه.</p>
+							<a class="sp-btn sp-btn--primary sp-btn--block" id="r-cta-btn" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">عضو بنیان‌گذار شو</a>
+						</div>
 					</div>
 				</aside>
 			</div>
