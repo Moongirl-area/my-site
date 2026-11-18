@@ -396,3 +396,28 @@ add_filter( 'gform_field_content', function ( $content, $field, $value, $lead_id
 	}
 	return $content;
 }, 10, 5 );
+
+/*
+ * فیلد phone فرم عضویت (با پرچم و کد کشور) موقع نمایش و ثبت، فیلد متنی ساده‌ی موبایل می‌شود
+ * و توضیح‌ها زیر فیلد می‌آیند. این‌جوری اگر فرم در پیشخوان ویرایش شود، ظاهر به‌هم نمی‌ریزد.
+ */
+function sp_reg_form_runtime( $form ) {
+	if ( ! is_array( $form ) || (int) rgar( $form, 'id' ) !== sp_reg_form_id() ) {
+		return $form;
+	}
+	$form['descriptionPlacement'] = 'below';
+	$form['requiredIndicator']    = 'asterisk';
+	foreach ( $form['fields'] as $i => $f ) {
+		if ( 'phone' === $f->type ) {
+			$p                = json_decode( wp_json_encode( $f ), true );
+			$p['type']        = 'text';
+			$p['placeholder'] = '۰۹۱۲۳۴۵۶۷۸۹';
+			unset( $p['phoneFormat'] );
+			$form['fields'][ $i ] = GF_Fields::create( $p );
+		}
+	}
+	return $form;
+}
+foreach ( array( 'gform_pre_render', 'gform_pre_validation', 'gform_pre_submission_filter', 'gform_pre_process' ) as $sp_h ) {
+	add_filter( $sp_h, 'sp_reg_form_runtime', 5 );
+}
