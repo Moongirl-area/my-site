@@ -1126,7 +1126,18 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-hacc { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; color: var(--ink); font-weight: 700; font-size: 14.5px; white-space: nowrap; text-decoration: none; }
 .sp-hacc:hover { background: #F3EEE7; }
 .sp-hacc span { max-width: 110px; overflow: hidden; text-overflow: ellipsis; }
-@media (max-width: 700px) { .sp-hacc span { display: none; } .sp-hacc { padding: 9px; } }
+/* فقط گوشی: «ورود» دکمه‌ی دورخط‌دار با نوشته، کنار «بنیان‌گذار شو» */
+@media (max-width: 680px) {
+	.sp-header .sp-hacc { margin-inline-start: auto; padding: 8px 14px; gap: 5px; border: 1.5px solid var(--coral); color: var(--coral-d); background: #fff; font-size: 14px; font-weight: 800; }
+	.sp-header .sp-hacc span { display: inline; max-width: 80px; }
+	.sp-header .sp-hacc + .sp-btn--sm { margin-inline-start: 0; }
+}
+@media (max-width: 380px) {
+	.sp-header .sp-hacc { padding: 7px 10px; font-size: 13px; }
+	.sp-header .sp-hacc svg { display: none; }
+	.sp-header .sp-hacc + .sp-btn--sm { padding: 8px 12px; font-size: 13px; }
+	.sp-header .sp-hacc + .sp-btn--sm svg { display: none; }
+}
 .sp-ed-hint.is-gate, #sp-hint.is-gate { color: var(--ink); background: #FFF1EA; border: 1px solid #F6CDB8; border-radius: 12px; padding: 10px 14px; }
 #sp-hint.is-gate a { color: var(--coral, #E8673C); font-weight: 800; }
 .sp-auth { display: flex; justify-content: center; }
