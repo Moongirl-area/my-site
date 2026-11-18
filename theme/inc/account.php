@@ -199,7 +199,8 @@ add_filter( 'gform_userregistration_login_form', function ( $form ) {
 			$f->choices[0]['text'] = 'مرا یادت باشه';
 		}
 	}
-	$form['button']['text'] = 'ورود';
+	$form['button']['text']    = 'ورود';
+	$form['requiredIndicator'] = 'asterisk';
 	return $form;
 } );
 
@@ -273,6 +274,7 @@ add_action( 'template_redirect', function () {
 
 /* برچسب‌های فارسی رمز و نشان «اجباری» به‌جای (Required) */
 function sp_fa_password_labels( $form ) {
+	$form['requiredIndicator'] = 'asterisk';
 	foreach ( $form['fields'] as &$f ) {
 		if ( 'password' === $f->type && is_array( $f->inputs ) ) {
 			$f->inputs[0]['customLabel'] = 'رمز عبور';
