@@ -99,21 +99,37 @@ $sp_date = sp_prices_latest_date();
 								<input id="sp-ovenh" type="text" inputmode="decimal">
 							</div>
 						</div>
-						<div class="sp-field-row">
-							<div class="sp-field">
-								<label for="sp-pack">بسته‌بندی (جعبه، ظرف، روبان…)</label>
-								<div class="sp-qty">
-									<input id="sp-pack" type="text" inputmode="numeric" placeholder="تومان">
-									<select id="sp-packper" aria-label="بسته‌بندی برای"></select>
-								</div>
-							</div>
-							<div class="sp-field">
-								<label for="sp-margin">سود هدف (٪ از قیمت فروش)</label>
-								<input id="sp-margin" type="text" inputmode="decimal">
+						<div class="sp-field">
+							<label for="sp-pack">بسته‌بندی (جعبه، ظرف، روبان…)</label>
+							<div class="sp-qty">
+								<input id="sp-pack" type="text" inputmode="numeric" placeholder="تومان">
+								<select id="sp-packper" aria-label="بسته‌بندی برای"></select>
 							</div>
 						</div>
 						<div class="sp-extras" id="sp-extras"></div>
 						<button type="button" class="sp-linkbtn" id="sp-xadd"><?php echo sp_icon( 'plus', 18 ); ?> هزینه‌ی دیگه (پیک، تبلیغ، اجاره‌ی وسیله، کمیسیون…)</button>
+
+						<div class="sp-margin" id="sp-margin-box">
+							<div class="sp-margin__head">
+								<span class="sp-margin__ico"><?php echo sp_icon( 'spark', 20 ); ?></span>
+								<div>
+									<label class="sp-margin__title" for="sp-margin">سود هدف تو</label>
+									<p class="sp-margin__note">همه‌ی عددهای بالا فقط هزینه‌ان؛ این‌ها پولی نیست که برای خودت می‌مونه. سود هدف یعنی بعد از مواد، دستمزد و بقیه‌ی هزینه‌ها، چند درصد قیمت فروش سود خودت باشه.</p>
+								</div>
+							</div>
+							<div class="sp-margin__row">
+								<div class="sp-margin__input">
+									<input id="sp-margin" type="text" inputmode="decimal" aria-describedby="sp-margin-hint">
+									<span>٪</span>
+								</div>
+								<div class="sp-margin__chips" role="group" aria-label="سود هدف پیشنهادی">
+									<button type="button" data-margin="20">۲۰٪</button>
+									<button type="button" data-margin="30">۳۰٪</button>
+									<button type="button" data-margin="40">۴۰٪</button>
+								</div>
+							</div>
+							<p class="sp-margin__hint" id="sp-margin-hint">عددش رو بنویس تا سودت رو حساب کنم.</p>
+						</div>
 					</div>
 				</div>
 

@@ -434,6 +434,11 @@
 	bindNum('sp-margin', 'margin', 'margin');
 	$('sp-current').addEventListener('input', function () { groupMoney(this); R.current = num(this.value); touch(); calc(); });
 	$('sp-packper').addEventListener('change', function () { R.packPer = this.value; touch(); calc(); });
+	$('sp-margin-box').addEventListener('click', function (e) {
+		var c = e.target.closest('[data-margin]'); if (!c) return;
+		R.margin = +c.dataset.margin; store.prefs.margin = R.margin; persist();
+		$('sp-margin').value = faNum(R.margin, 1); touch(); calc();
+	});
 
 	/* ---------- ردیف‌های مواد ---------- */
 	function srcNote(it) {
@@ -644,6 +649,16 @@
 		var mini = $('r-mini'); if (mini) { mini.textContent = price ? toman(price) : '—'; $('sp-minibar').hidden = !price || resultVisible; }
 
 		var split = $('r-split'), profitAmt = Math.max(price - unitCost, 0);
+		var mh = $('sp-margin-hint');
+		if (mh) {
+			mh.textContent = !margin ? 'بدون سود هدف، فقط هزینه‌هات درمیاد و چیزی برای خودت نمی‌مونه.'
+				: price > 0 && !missing ? 'با ' + faNum(margin, 1) + '٪، از هر ' + uu + ' ' + toman(profitAmt) + ' سود برات می‌مونه' + (one ? '.' : '؛ از کل این ' + faNum(n, 2) + ' ' + uu + ' ' + toman(profitAmt * n) + '.')
+				: 'عددش رو بنویس تا سودت رو حساب کنم.';
+			mh.classList.toggle('is-zero', !margin);
+			Array.prototype.forEach.call($('sp-margin-box').querySelectorAll('[data-margin]'), function (c) {
+				c.classList.toggle('is-on', +c.dataset.margin === Math.round(margin));
+			});
+		}
 		split.hidden = !(price > 0 && !missing);
 		if (!split.hidden) {
 			var parts = [mat / n, wage / n, other / n, profitAmt], colors = ['#F2A33A', '#7FC8C4', '#B9A3D6', '#5FD08F'], ids = ['s-mat', 's-wage', 's-other', 's-profit'], acc = 0, stops = [];
