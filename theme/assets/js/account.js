@@ -25,3 +25,36 @@
 		}
 	});
 })();
+
+/* تب‌های میز کار */
+(function () {
+	var rail = document.querySelector('.sp-rail');
+	if (!rail) return;
+	var btns = rail.querySelectorAll('[data-tab]');
+	var panels = document.querySelectorAll('[data-panel]');
+	function show(name, push) {
+		var found = false;
+		Array.prototype.forEach.call(panels, function (p) {
+			var on = p.dataset.panel === name;
+			if (on) found = true;
+			p.classList.toggle('is-on', on);
+			p.hidden = !on;
+		});
+		if (!found) return false;
+		Array.prototype.forEach.call(btns, function (b) {
+			var on = b.dataset.tab === name;
+			b.classList.toggle('is-on', on);
+			b.setAttribute('aria-selected', on ? 'true' : 'false');
+		});
+		try { localStorage.setItem('sp_dash_tab', name); } catch (e) {}
+		if (push && history.replaceState) history.replaceState(null, '', '#' + name);
+		return true;
+	}
+	Array.prototype.forEach.call(btns, function (b) {
+		b.addEventListener('click', function () { show(b.dataset.tab, true); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+	});
+	var start = (location.hash || '').replace('#', '');
+	if (!start) { try { start = localStorage.getItem('sp_dash_tab') || ''; } catch (e) {} }
+	if (start) show(start, false);
+	window.addEventListener('hashchange', function () { show((location.hash || '').replace('#', ''), false); });
+})();
