@@ -290,3 +290,60 @@ add_filter( 'gform_pre_validation', 'sp_fa_password_labels' );
 add_filter( 'gform_required_indicator', function () {
 	return '<span class="gfield_required"> *</span>';
 } );
+
+/**
+ * قالب مشترک صفحه‌های ورود و عضویت: کارت دوتکه (ستون رنگی با سودی + فرم).
+ * $mode: 'login' | 'register'
+ */
+function sp_auth_page( $mode ) {
+	$to  = isset( $_GET['redirect_to'] ) ? wp_validate_redirect( esc_url_raw( wp_unslash( $_GET['redirect_to'] ) ), '' ) : '';
+	$dst = $to ? $to : sp_url( 'calculator' );
+	$q   = $to ? array( 'redirect_to' => rawurlencode( $to ) ) : array();
+	$reg = 'register' === $mode;
+	$perks = array(
+		array( 'save', 'دستورهات همیشه می‌مونن' ),
+		array( 'refresh', 'قیمت مواد هر هفته به‌روز می‌شه' ),
+		array( 'calc', 'از گوشی و لپ‌تاپ، هر جا بخوای' ),
+		array( 'lock', 'دستورهات فقط مال خودته' ),
+	);
+	?>
+	<section class="sp-authx">
+		<div class="sp-authx__card">
+			<aside class="sp-authx__side">
+				<div class="sp-authx__blob" aria-hidden="true"></div>
+				<?php echo sp_soodi( $reg ? 'happy' : 'waving', 'sp-authx__soodi', 'سودی', true ); // phpcs:ignore ?>
+				<p class="sp-authx__kicker"><?php echo $reg ? 'عضویت رایگان' : 'سلام دوباره'; ?></p>
+				<h2 class="sp-authx__title"><?php echo $reg ? 'یه بار بنویس، همیشه داشته باش' : 'دستورهات منتظرتن'; ?></h2>
+				<ul class="sp-authx__perks">
+					<?php foreach ( $perks as $p ) : ?>
+						<li><span><?php echo sp_icon( $p[0], 18 ); // phpcs:ignore ?></span><?php echo esc_html( $p[1] ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			</aside>
+			<div class="sp-authx__main">
+				<nav class="sp-authx__tabs" aria-label="ورود یا عضویت">
+					<a href="<?php echo esc_url( add_query_arg( $q, sp_url( 'login' ) ) ); ?>"<?php echo $reg ? '' : ' aria-current="page"'; ?>>ورود</a>
+					<a href="<?php echo esc_url( add_query_arg( $q, sp_url( 'register' ) ) ); ?>"<?php echo $reg ? ' aria-current="page"' : ''; ?>>عضویت</a>
+				</nav>
+				<h1 class="sp-authx__h1"><?php echo $reg ? 'حساب سودپزت رو بساز' : 'خوش برگشتی!'; ?></h1>
+				<p class="sp-authx__sub"><?php echo $reg ? 'کمتر از یه دقیقه طول می‌کشه و رایگانه.' : 'با شماره موبایل یا ایمیل و رمزت وارد شو.'; ?></p>
+				<div class="sp-auth">
+					<?php if ( is_user_logged_in() ) : ?>
+						<p class="sp-auth__msg">الان وارد حسابت هستی، <?php echo esc_html( wp_get_current_user()->display_name ); ?>.</p>
+						<a class="sp-btn sp-btn--coral sp-authx__go" href="<?php echo esc_url( $dst ); ?>">برو به ماشین‌حساب</a>
+						<p class="sp-auth__alt"><a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>">خروج از حساب</a></p>
+					<?php elseif ( $reg && function_exists( 'gravity_form' ) && sp_reg_form_id() ) : ?>
+						<?php gravity_form( sp_reg_form_id(), false, false, false, null, false ); ?>
+					<?php elseif ( ! $reg && shortcode_exists( 'gravityform' ) && function_exists( 'gf_user_registration' ) ) : ?>
+						<?php echo do_shortcode( '[gravityform action="login" description="false" title="false" login_redirect="' . esc_url( $dst ) . '" registration_link_text="" forgot_password_text="رمزت یادت رفته؟"]' ); // phpcs:ignore ?>
+					<?php elseif ( ! $reg ) : ?>
+						<?php wp_login_form( array( 'redirect' => $dst, 'label_username' => 'موبایل یا ایمیل', 'label_password' => 'رمز عبور', 'label_remember' => 'مرا یادت باشه', 'label_log_in' => 'ورود' ) ); ?>
+					<?php else : ?>
+						<p class="sp-auth__msg">عضویت به‌زودی باز می‌شه.</p>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php
+}
