@@ -1271,9 +1271,9 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 /* کارت سه‌بعدی بالای خلاصه */
 .sp-d3d { position: relative; display: flex; align-items: center; gap: 20px; min-height: 212px; padding: 28px 30px; margin-bottom: 16px; border-radius: 28px; overflow: hidden; background: linear-gradient(135deg, #2E2E33 0%, #3A2A2A 48%, #6B2E24 100%); box-shadow: 0 24px 50px rgba(30, 20, 18, .28); }
 .sp-d3d__bg { position: absolute; inset: 0; pointer-events: none; }
-.sp-d3d__orb { position: absolute; inset-inline-start: 30%; top: -82px; width: 190px; height: 190px; opacity: .92; border-radius: 50%; background: radial-gradient(circle at 32% 26%, #FFD9A6, #F08A4B 42%, #C13F26 72%, #7E2415); box-shadow: inset -16px -24px 48px rgba(90, 20, 10, .55), 0 30px 60px rgba(232, 103, 60, .4); animation: sp-float3d 7s ease-in-out infinite; }
-.sp-d3d__ring { position: absolute; inset-inline-start: 22%; top: 28px; width: 210px; height: 210px; border-radius: 50%; border: 1.5px dashed rgba(255, 255, 255, .22); transform: rotateX(72deg) rotateZ(12deg); }
-.sp-d3d__cube { position: absolute; inset-inline-start: 24%; bottom: 22px; width: 44px; height: 44px; border-radius: 13px; background: linear-gradient(145deg, rgba(255, 221, 190, .3), rgba(255, 255, 255, .04)); border: 1px solid rgba(255, 255, 255, .25); backdrop-filter: blur(6px); transform: rotate(-18deg); animation: sp-float3d 5.5s ease-in-out infinite reverse; }
+.sp-d3d__orb { position: absolute; inset-inline-end: 7%; top: -58px; width: 190px; height: 190px; opacity: .92; border-radius: 50%; background: radial-gradient(circle at 32% 26%, #FFD9A6, #F08A4B 42%, #C13F26 72%, #7E2415); box-shadow: inset -16px -24px 48px rgba(90, 20, 10, .55), 0 30px 60px rgba(232, 103, 60, .4); animation: sp-float3d 7s ease-in-out infinite; }
+.sp-d3d__ring { position: absolute; inset-inline-end: 1%; top: 34px; width: 230px; height: 230px; border-radius: 50%; border: 1.5px dashed rgba(255, 255, 255, .22); transform: rotateX(72deg) rotateZ(12deg); }
+.sp-d3d__cube { position: absolute; inset-inline-end: 29%; bottom: 26px; width: 44px; height: 44px; border-radius: 13px; background: linear-gradient(145deg, rgba(255, 221, 190, .3), rgba(255, 255, 255, .04)); border: 1px solid rgba(255, 214, 180, .4); backdrop-filter: blur(5px); box-shadow: 0 10px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.5); transform: rotate(-18deg); animation: sp-float3d 5.5s ease-in-out infinite reverse; }
 @keyframes sp-float3d { 50% { transform: translateY(-14px) rotate(4deg); } }
 .sp-d3d__txt { position: relative; z-index: 2; color: #fff; }
 .sp-d3d__hi { margin: 0 0 10px; font-weight: 700; font-size: 15px; color: #F3DCCF; }
@@ -1283,7 +1283,7 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-d3d__big span { font-size: 15px; color: #E8D3C6; }
 .sp-d3d__big--sm b { font-size: 34px; }
 .sp-d3d__sub { margin: -6px 0 14px; max-width: 42ch; font-size: 13.5px; line-height: 1.9; color: #D9C4B8; }
-.sp-d3d__soodi { position: relative; z-index: 2; width: 160px; height: auto; margin-inline-start: auto; filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .45)); animation: sp-float3d 6s ease-in-out infinite; }
+.sp-d3d__soodi { position: relative; z-index: 2; width: 172px; height: auto; margin-inline-start: auto; filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .45)); animation: sp-float3d 6s ease-in-out infinite; }
 
 /* کارت‌های عددی */
 .sp-dstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
