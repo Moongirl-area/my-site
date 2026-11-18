@@ -222,10 +222,14 @@ $sp_tabs = array(
 				<div class="sp-dplan">
 					<div class="sp-dplan__card sp-dplan__card--<?php echo esc_attr( $sp_plan['plan'] ); ?>">
 						<?php
-						$sp_pct = ( 'free' !== $sp_plan['plan'] && $sp_plan['total'] ) ? max( 4, min( 100, round( $sp_plan['days'] / $sp_plan['total'] * 100 ) ) ) : 0;
+						$sp_endless = 'pro' === $sp_plan['plan'] && ! $sp_plan['days'];
+						$sp_pct     = $sp_endless ? 100 : ( ( 'free' !== $sp_plan['plan'] && $sp_plan['total'] ) ? max( 4, min( 100, round( $sp_plan['days'] / $sp_plan['total'] * 100 ) ) ) : 0 );
 						?>
 						<div class="sp-dring" style="--p:<?php echo esc_attr( $sp_pct ); ?>">
-							<span><b><?php echo 'free' === $sp_plan['plan'] ? '—' : esc_html( sp_fa( $sp_plan['days'] ) ); ?></b><small><?php echo 'free' === $sp_plan['plan'] ? 'رایگان' : 'روز مونده'; ?></small></span>
+							<span>
+								<b><?php echo $sp_endless ? '∞' : ( 'free' === $sp_plan['plan'] ? '—' : esc_html( sp_fa( $sp_plan['days'] ) ) ); ?></b>
+								<small><?php echo $sp_endless ? 'همیشه فعال' : ( 'free' === $sp_plan['plan'] ? 'رایگان' : 'روز مونده' ); ?></small>
+							</span>
 						</div>
 						<div class="sp-dplan__txt">
 							<p class="sp-dplan__name"><?php echo esc_html( $sp_plan['label'] ); ?></p>
