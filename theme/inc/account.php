@@ -300,11 +300,11 @@ function sp_calc_user_data() {
 
 /* این صفحه‌ها کش نشوند (محتوایشان به ورود کاربر بستگی دارد) */
 add_action( 'template_redirect', function () {
-	if ( is_page( array( 'login', 'register', 'calculator' ) ) && is_user_logged_in() ) {
+	if ( is_page( array( 'login', 'register', 'calculator', 'dashboard' ) ) && is_user_logged_in() ) {
 		do_action( 'litespeed_control_set_nocache', 'soodpaz user page' );
 		nocache_headers();
 	}
-	if ( is_page( array( 'login', 'register' ) ) ) {
+	if ( is_page( array( 'login', 'register', 'dashboard' ) ) ) {
 		do_action( 'litespeed_control_set_nocache', 'soodpaz auth page' );
 	}
 } );
