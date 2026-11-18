@@ -61,16 +61,21 @@
 	function lsGet(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
 	function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
 	function mergeIn(src, keys) { keys.forEach(function (k) { var o = src && src[k]; if (o && typeof o === 'object') for (var id in o) if (!(id in store[k])) store[k][id] = o[id]; }); }
-	var saveTimer = 0;
+	var saveTimer = 0, savePending = false, saveFail = false;
 	function persist() {
 		if (!ME.in) return; // مهمان: چیزی نگه داشته نمی‌شود
+		savePending = true; saveFail = false; renderCta();
 		clearTimeout(saveTimer);
-		saveTimer = setTimeout(function () {
-			fetch(ME.rest, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': ME.nonce },
-				body: JSON.stringify({ recipes: store.recipes, prices: store.prices, ings: store.ings, prefs: store.prefs, last: store.last }) })
-				.then(function (r) { if (!r.ok) throw 0; })
-				.catch(function () { status('ذخیره نشد؛ اینترنت رو چک کن'); });
-		}, 700);
+		saveTimer = setTimeout(doSave, 700);
+	}
+	function doSave() {
+		clearTimeout(saveTimer);
+		if (!ME.in || !savePending) return;
+		savePending = false;
+		fetch(ME.rest, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': ME.nonce },
+			body: JSON.stringify({ recipes: store.recipes, prices: store.prices, ings: store.ings, prefs: store.prefs, last: store.last }) })
+			.then(function (r) { if (!r.ok) throw 0; saveFail = false; renderCta(); })
+			.catch(function () { saveFail = true; renderCta(); status('ذخیره نشد؛ اینترنت رو چک کن'); });
 	}
 	var migrated = false;
 	if (ME.in) {
@@ -114,13 +119,33 @@
 			btn.textContent = 'پرو رو ببین'; btn.href = ME.upgrade; btn.removeAttribute('data-act');
 			return;
 		}
-		if (saved) { box.hidden = true; return; } // ذخیره‌شده و قابل ویرایش: تغییرها خودکار ذخیره می‌شن
-		note.textContent = 'این دستور هنوز توی حسابت ذخیره نشده.';
-		btn.textContent = 'ثبت این دستور توی حسابم'; btn.href = '#'; btn.setAttribute('data-act', 'save');
+		btn.href = '#';
+		if (!saved) { // هنوز ذخیره نشده
+			note.textContent = 'این دستور هنوز توی حسابت ذخیره نشده.';
+			btn.textContent = 'ثبت این دستور توی حسابم'; btn.setAttribute('data-act', 'save'); ctaStyle(1);
+			return;
+		}
+		if (saveFail) {
+			note.textContent = 'تغییرهات ذخیره نشد. اینترنتت رو چک کن و دوباره بزن.';
+			btn.textContent = 'دوباره ذخیره کن'; btn.setAttribute('data-act', 'flush'); ctaStyle(1);
+		} else if (savePending) {
+			note.textContent = 'تغییرهای تازه‌ات هنوز ذخیره نشده.';
+			btn.textContent = 'ذخیره‌ی تغییرات'; btn.setAttribute('data-act', 'flush'); ctaStyle(1);
+		} else {
+			note.textContent = 'هر تغییری بدی، خودکار توی حسابت ذخیره می‌شه.';
+			btn.textContent = 'تغییرها ذخیره شد ✓'; btn.setAttribute('data-act', 'none'); ctaStyle(0);
+		}
+	}
+	function ctaStyle(on) {
+		var b = $('r-cta-btn');
+		b.className = 'sp-btn sp-btn--block ' + (on ? 'sp-btn--primary' : 'sp-btn--paper is-done');
 	}
 	document.addEventListener('click', function (e) {
-		var b = e.target.closest('#r-cta-btn[data-act="save"]'); if (!b) return;
-		e.preventDefault(); saveRecipe(); renderCta();
+		var b = e.target.closest('#r-cta-btn[data-act]'); if (!b) return;
+		var act = b.getAttribute('data-act');
+		e.preventDefault();
+		if (act === 'save') { saveRecipe(); renderCta(); }
+		else if (act === 'flush') { savePending = true; doSave(); renderCta(); status('ذخیره شد ✓'); }
 	});
 
 	function renderPlan() {
