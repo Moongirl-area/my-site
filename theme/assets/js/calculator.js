@@ -1,6 +1,6 @@
 /*
  * ماشین‌حساب سودپز (نسخه‌ی ۲): دستورهای آماده + «دستور خودم».
- * داده‌ها از SP_DATA (inc/prices.php). دستورها، قیمت‌ها و ماده‌های خودِ کاربر فقط در localStorage همین مرورگر.
+ * داده‌ها از SP_DATA (inc/prices.php). دستورها، قیمت‌ها و ماده‌های خودِ کاربر فقط برای عضوها و در حساب کاربری (inc/account.php) ذخیره می‌شود.
  */
 (function () {
 	'use strict';
@@ -37,14 +37,36 @@
 	function uid(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 	function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
-	/* ---------- ذخیره در مرورگر ---------- */
-	var KEY = 'sp_calc_v2';
+	/* ---------- ذخیره: فقط برای عضوها، در حساب کاربری (نه مرورگر) ---------- */
+	var KEY = 'sp_calc_v2', PEND = 'sp_calc_pending', ME = D.user || { in: false };
 	var store = { recipes: {}, prices: {}, ings: {}, prefs: {}, last: {}, draft: {} };
-	try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); for (var k in store) if (o[k]) store[k] = o[k]; } } catch (e) {}
+	function lsGet(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
+	function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+	function mergeIn(src, keys) { keys.forEach(function (k) { var o = src && src[k]; if (o && typeof o === 'object') for (var id in o) if (!(id in store[k])) store[k][id] = o[id]; }); }
 	var saveTimer = 0;
 	function persist() {
+		if (!ME.in) return; // مهمان: چیزی نگه داشته نمی‌شود
 		clearTimeout(saveTimer);
-		saveTimer = setTimeout(function () { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }, 250);
+		saveTimer = setTimeout(function () {
+			fetch(ME.rest, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': ME.nonce },
+				body: JSON.stringify({ recipes: store.recipes, prices: store.prices, ings: store.ings, prefs: store.prefs, last: store.last }) })
+				.then(function (r) { if (!r.ok) throw 0; })
+				.catch(function () { status('ذخیره نشد؛ اینترنت رو چک کن'); });
+		}, 700);
+	}
+	var migrated = false;
+	if (ME.in) {
+		var srv = ME.store || {};
+		for (var sk in store) if (srv[sk] && typeof srv[sk] === 'object' && !Array.isArray(srv[sk])) store[sk] = srv[sk];
+		var old = lsGet(KEY); // دستورهایی که قبل از عضویت در همین مرورگر مانده بود، به حساب منتقل شود
+		if (old) { mergeIn(old, ['recipes', 'ings', 'prices']); lsDel(KEY); migrated = true; }
+	}
+	/* مهمان «ذخیره» زد: دستور موقتاً نگه داشته می‌شود تا بعد از عضویت/ورود در حسابش ذخیره شود */
+	function needAccount() {
+		try { localStorage.setItem(PEND, JSON.stringify({ r: R, ings: store.ings, prices: store.prices, t: Date.now() })); } catch (e) {}
+		var h = $('sp-hint');
+		h.innerHTML = 'برای ذخیره‌ی دستورت <a href="' + esc(ME.register) + '">عضو شو</a> (رایگانه) یا <a href="' + esc(ME.login) + '">وارد شو</a>. دستوری که نوشتی گم نمی‌شه.';
+		h.classList.add('is-gate');
 	}
 
 	/* ---------- آشپزخونه ---------- */
@@ -207,10 +229,11 @@
 	function renderHead() {
 		$('sp-name').value = R.name || '';
 		var badge = $('sp-badge'), hint = $('sp-hint'), save = $('sp-save');
+		hint.classList.remove('is-gate');
 		$('sp-del').hidden = !R.id;
 		if (R.id) {
 			badge.textContent = 'مال من'; badge.className = 'sp-ed-badge is-mine';
-			save.hidden = true; hint.textContent = 'تغییرهات خودکار ذخیره می‌شه، فقط توی همین مرورگر.';
+			save.hidden = true; hint.textContent = 'تغییرهات خودکار توی حسابت ذخیره می‌شه.';
 		} else if (R.from) {
 			badge.textContent = 'دستور آماده'; badge.className = 'sp-ed-badge';
 			save.hidden = false;
@@ -225,12 +248,14 @@
 
 	$('sp-save').addEventListener('click', function () {
 		if (!norm(R.name)) { $('sp-name').focus(); $('sp-hint').textContent = 'اول یه اسم برای دستورت بنویس.'; return; }
+		if (!ME.in) { needAccount(); return; }
 		if (!R.from) delete store.draft[R.kitchen];
 		R.id = uid('r'); R.from = R.from || null; R.updated = Date.now();
 		store.recipes[R.id] = clone(R); store.last[R.kitchen] = currentRef();
 		dirty = false; persist(); renderHead(); renderPicker(); status('ذخیره شد ✓');
 	});
 	$('sp-dup').addEventListener('click', function () {
+		if (!ME.in) { needAccount(); return; }
 		var c = clone(R); c.id = uid('r'); c.name = (R.name || 'دستور') + ' (کپی)'; c.updated = Date.now();
 		store.recipes[c.id] = c; persist(); open('my:' + c.id); status('کپی ساخته شد ✓');
 	});
@@ -558,7 +583,16 @@
 	/* ---------- شروع ---------- */
 	document.addEventListener('sp:kitchen', function () { open(store.last[kitchen()] || 'lib:'); });
 	var qs = new URLSearchParams(location.search), want = qs.get('dish') || qs.get('cake');
-	if (want && D.recipes[want]) { root.setAttribute('data-k', D.recipes[want].kitchen); open('lib:' + want, D.recipes[want].kitchen); }
+	var pend = ME.in ? lsGet(PEND) : null;
+	if (pend && pend.r && Date.now() - (pend.t || 0) < 7 * 864e5) {
+		lsDel(PEND);
+		mergeIn(pend, ['ings', 'prices']);
+		var pr = pend.r; pr.id = uid('r'); pr.updated = Date.now(); if (!D.recipes[pr.from]) pr.from = null;
+		store.recipes[pr.id] = pr; root.setAttribute('data-k', pr.kitchen === 'food' ? 'food' : 'sweet');
+		persist(); open('my:' + pr.id, pr.kitchen); status('دستورت توی حسابت ذخیره شد ✓');
+	} else if (want && D.recipes[want]) { root.setAttribute('data-k', D.recipes[want].kitchen); open('lib:' + want, D.recipes[want].kitchen); }
 	else if (qs.get('new')) open('new');
 	else open(store.last[kitchen()] || 'lib:');
+	if (migrated) persist();
+	if (ME.in && qs.get('welcome')) status('خوش اومدی! حالا دستورهات ذخیره می‌شه ✓');
 })();

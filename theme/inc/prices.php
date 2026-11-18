@@ -107,6 +107,7 @@ function sp_calculator_data() {
 		$icons[ $ic ] = sp_icon( $ic, 18 );
 	}
 	return array(
+		'user'       => function_exists( 'sp_calc_user_data' ) ? sp_calc_user_data() : array( 'in' => false ),
 		'soodi'       => SP_URI . '/assets/img/soodi/',
 		'units'       => sp_units(),
 		'groups'      => sp_ing_groups(),

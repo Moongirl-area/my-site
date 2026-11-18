@@ -36,6 +36,11 @@
 			<a href="<?php echo esc_url( sp_url( 'pricing' ) ); ?>"<?php echo is_page( 'pricing' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'tag', 17 ); ?>قیمت‌ها</a>
 			<a href="<?php echo esc_url( sp_blog_url() ); ?>"<?php echo sp_is_blog_view() ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'book', 17 ); ?>مجله</a>
 		</nav>
+		<?php if ( is_user_logged_in() ) : ?>
+			<a class="sp-hacc" href="<?php echo esc_url( sp_url( 'login' ) ); ?>" title="حساب من"><?php echo sp_icon( 'user', 18 ); ?><span><?php echo esc_html( wp_get_current_user()->display_name ); ?></span></a>
+		<?php else : ?>
+			<a class="sp-hacc" href="<?php echo esc_url( sp_url( 'login' ) ); ?>"><?php echo sp_icon( 'user', 18 ); ?><span>ورود</span></a>
+		<?php endif; ?>
 		<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>"<?php echo is_page( 'founders' ) ? ' aria-current="page"' : ''; ?>><?php echo sp_icon( 'spark', 17 ); ?>بنیان‌گذار شو</a>
 	</div>
 	<script>(function(){var h=document.querySelector('.sp-header');if(!h)return;var f=function(){h.classList.toggle('is-scrolled',window.scrollY>8);};f();window.addEventListener('scroll',f,{passive:true});})();</script>
