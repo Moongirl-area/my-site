@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_ACCOUNT_VERSION', 1 );
+define( 'SP_ACCOUNT_VERSION', 2 );
 
 function sp_gf_ready() {
 	return class_exists( 'GFAPI' ) && function_exists( 'gf_user_registration' );
@@ -33,6 +33,20 @@ function sp_norm_mobile( $m ) {
 function sp_user_by_mobile( $m ) {
 	$u = get_users( array( 'meta_key' => 'sp_mobile', 'meta_value' => $m, 'number' => 1 ) );
 	return $u ? $u[0] : null;
+}
+
+/** شناسه‌ی فیلد موبایل در فرم عضویت (با برچسب «موبایل» یا نوع phone)؛ تا اگر فرم در پیشخوان ویرایش شد، کد نشکند. */
+function sp_reg_mobile_fid( $form = null ) {
+	$form = $form ? $form : ( class_exists( 'GFAPI' ) ? GFAPI::get_form( sp_reg_form_id() ) : null );
+	if ( ! $form || empty( $form['fields'] ) ) {
+		return 3;
+	}
+	foreach ( $form['fields'] as $f ) {
+		if ( 'phone' === $f->type || false !== mb_strpos( (string) $f->label, 'موبایل' ) ) {
+			return (int) $f->id;
+		}
+	}
+	return 3;
 }
 
 function sp_reg_form_id() {
@@ -98,6 +112,31 @@ add_action( 'admin_init', function () {
 			'feed_condition_conditional_logic' => '0',
 		), 'gravityformsuserregistration' );
 	}
+	// نسخه‌ی ۲: فیلد phone (با پرچم و کد کشور) به فیلد متنی ساده‌ی موبایل تبدیل شود؛ توضیح‌ها زیر فیلد.
+	$form = GFAPI::get_form( $id );
+	if ( $form ) {
+		$form['descriptionPlacement'] = 'below';
+		$both = true;
+		foreach ( $form['fields'] as $i => $f ) {
+			if ( 'phone' === $f->type ) {
+				$props         = (array) $f;
+				$props['type'] = 'text';
+				unset( $props['phoneFormat'], $props['inputType'] );
+				$props['placeholder'] = '۰۹۱۲۳۴۵۶۷۸۹';
+				$form['fields'][ $i ] = GF_Fields::create( $props );
+				$f = $form['fields'][ $i ];
+			}
+			if ( in_array( $f->type, array( 'text', 'email' ), true ) && ( 'email' === $f->type || false !== mb_strpos( (string) $f->label, 'موبایل' ) ) && ! $f->isRequired ) {
+				$both = false;
+			}
+		}
+		foreach ( $form['fields'] as $f ) {
+			if ( 'email' === $f->type && $both && false !== mb_strpos( (string) $f->description, 'یکی کافیه' ) ) {
+				$f->description = '';
+			}
+		}
+		GFAPI::update_form( $form );
+	}
 	update_option( 'sp_account_version', SP_ACCOUNT_VERSION, false );
 } );
 
@@ -106,9 +145,10 @@ add_filter( 'gform_pre_validation', function ( $form ) {
 	if ( (int) $form['id'] !== sp_reg_form_id() ) {
 		return $form;
 	}
-	$m = sp_norm_mobile( rgpost( 'input_3' ) );
+	$mf = 'input_' . sp_reg_mobile_fid( $form );
+	$m  = sp_norm_mobile( rgpost( $mf ) );
 	if ( $m ) {
-		$_POST['input_3'] = $m;
+		$_POST[ $mf ] = $m;
 	}
 	if ( '' === trim( (string) rgpost( 'input_2' ) ) && $m ) {
 		$_POST['input_2'] = $m . '@users.soodpaz.com';
@@ -124,13 +164,14 @@ add_filter( 'gform_validation', function ( $res ) {
 	if ( (int) $form['id'] !== sp_reg_form_id() ) {
 		return $res;
 	}
-	$raw_m = trim( (string) rgpost( 'input_3' ) );
+	$mfid  = sp_reg_mobile_fid( $form );
+	$raw_m = trim( (string) rgpost( 'input_' . $mfid ) );
 	$m     = sp_norm_mobile( $raw_m );
 	$email = trim( (string) rgpost( 'input_2' ) );
 	$pass  = (string) rgpost( 'input_4' );
 	foreach ( $form['fields'] as &$f ) {
 		$err = '';
-		if ( 3 === (int) $f->id ) {
+		if ( $mfid === (int) $f->id ) {
 			if ( '' !== $raw_m && ! $m ) {
 				$err = 'شماره موبایل درست نیست. مثل ۰۹۱۲۳۴۵۶۷۸۹ بنویس.';
 			} elseif ( $m && sp_user_by_mobile( $m ) ) {
@@ -155,7 +196,7 @@ add_filter( 'gform_validation', function ( $res ) {
 
 /* بعد از ساخت کاربر: ذخیره‌ی موبایل و ورود خودکار */
 add_action( 'gform_user_registered', function ( $user_id, $feed, $entry ) {
-	$m = sp_norm_mobile( rgar( $entry, '3' ) );
+	$m = sp_norm_mobile( rgar( $entry, (string) sp_reg_mobile_fid() ) );
 	if ( $m ) {
 		update_user_meta( $user_id, 'sp_mobile', $m );
 	}
@@ -311,7 +352,7 @@ function sp_auth_page( $mode ) {
 		<div class="sp-authx__card">
 			<aside class="sp-authx__side">
 				<div class="sp-authx__blob" aria-hidden="true"></div>
-				<?php echo sp_soodi( $reg ? 'happy' : 'waving', 'sp-authx__soodi', 'سودی', true ); // phpcs:ignore ?>
+				<?php echo sp_soodi( $reg ? 'celebrating' : 'waving', 'sp-authx__soodi', 'سودی', true ); // phpcs:ignore ?>
 				<p class="sp-authx__kicker"><?php echo $reg ? 'عضویت رایگان' : 'سلام دوباره'; ?></p>
 				<h2 class="sp-authx__title"><?php echo $reg ? 'یه بار بنویس، همیشه داشته باش' : 'دستورهات منتظرتن'; ?></h2>
 				<ul class="sp-authx__perks">
@@ -347,3 +388,17 @@ function sp_auth_page( $mode ) {
 	</section>
 	<?php
 }
+
+/* نوشته‌ی انگلیسی «indicates required fields» برداشته شود */
+add_filter( 'gform_required_legend', '__return_empty_string' );
+
+/* فیلد موبایل: صفحه‌کلید عددی گوشی و نوشتن عدد از چپ به راست */
+add_filter( 'gform_field_content', function ( $content, $field, $value, $lead_id, $form_id ) {
+	if ( (int) $form_id === sp_reg_form_id() && $field->id === sp_reg_mobile_fid() && 'text' === $field->type ) {
+		$content = preg_replace( "/type='text'/", "type='tel' inputmode='tel' dir='ltr'", $content, 1 );
+	}
+	if ( (int) $form_id === sp_reg_form_id() && 'email' === $field->type ) {
+		$content = str_replace( "type='email'", "type='email' dir='ltr'", $content );
+	}
+	return $content;
+}, 10, 5 );
