@@ -47,12 +47,20 @@
 			b.setAttribute('aria-selected', on ? 'true' : 'false');
 		});
 		try { localStorage.setItem('sp_dash_tab', name); } catch (e) {}
+		replay(document.querySelector('[data-panel="' + name + '"]'));
 		if (push && history.replaceState) history.replaceState(null, '', '#' + name);
 		return true;
 	}
 	Array.prototype.forEach.call(btns, function (b) {
 		b.addEventListener('click', function () { show(b.dataset.tab, true); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 	});
+	function replay(panel) { // انیمیشن نمودارها با هر بار باز شدن تب دوباره اجرا شود
+		if (!panel) return;
+		var els = panel.querySelectorAll('.sp-chart li, .sp-ring__s, .sp-dpie__key li, .sp-ring__c');
+		Array.prototype.forEach.call(els, function (el) {
+			el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+		});
+	}
 	var start = (location.hash || '').replace('#', '');
 	if (!start) { try { start = localStorage.getItem('sp_dash_tab') || ''; } catch (e) {} }
 	if (start) show(start, false);

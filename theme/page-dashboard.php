@@ -116,18 +116,16 @@ $sp_tabs = array(
 							<p class="sp-dbox__note">سود کل هر دستور، اگه یک بار کامل بپزی و بفروشیش.</p>
 							<?php
 							$sp_max = max( 1, max( array_map( function ( $b ) { return $b['profit']; }, $sp_st['bars'] ) ) );
-							$sp_n   = count( $sp_st['bars'] );
-							$sp_w   = 100 / max( 1, $sp_n );
 							?>
-							<div class="sp-d3chart" style="--cols:<?php echo (int) $sp_n; ?>">
-								<?php foreach ( $sp_st['bars'] as $b ) : ?>
-									<div class="sp-d3col<?php echo $b['food'] ? ' is-food' : ''; ?>" style="--h:<?php echo esc_attr( max( 8, round( $b['profit'] / $sp_max * 100 ) ) ); ?>%">
-										<span class="sp-d3col__v"><?php echo esc_html( $sp_money( $b['profit'] ) ); ?></span>
-										<span class="sp-d3col__bar"><i></i></span>
-										<span class="sp-d3col__n"><?php echo esc_html( $b['name'] ); ?></span>
-									</div>
+							<ul class="sp-chart">
+								<?php foreach ( array_values( $sp_st['bars'] ) as $sp_i => $b ) : ?>
+									<li style="--i:<?php echo (int) $sp_i; ?>;--w:<?php echo esc_attr( max( 6, round( $b['profit'] / $sp_max * 100 ) ) ); ?>%">
+										<span class="sp-chart__n"><?php echo esc_html( $b['name'] ); ?></span>
+										<span class="sp-chart__t"><i class="<?php echo $b['food'] ? 'is-food' : ''; ?>"></i></span>
+										<span class="sp-chart__v"><?php echo esc_html( $sp_money( $b['profit'] ) ); ?></span>
+									</li>
 								<?php endforeach; ?>
-							</div>
+							</ul>
 						<?php else : ?>
 							<p class="sp-dempty">وقتی دستورهات مواد و قیمت کامل داشته باشن، نمودار سودت این‌جا می‌آد.</p>
 						<?php endif; ?>
@@ -144,22 +142,29 @@ $sp_tabs = array(
 								array( 'گاز و بسته‌بندی', $sp_st['ot'] / $sp_tot * 100, '#B9A3D6' ),
 								array( 'سود تو', $sp_st['pr'] / $sp_tot * 100, '#5FD08F' ),
 							);
-							$sp_acc   = 0;
-							$sp_stops = array();
-							foreach ( $sp_pie as $p ) {
-								$sp_stops[] = $p[2] . ' ' . round( $sp_acc, 2 ) . '% ' . round( $sp_acc + $p[1], 2 ) . '%';
-								$sp_acc    += $p[1];
-							}
+							$sp_c   = 301.59; // محیط دایره‌ی r=48
+							$sp_acc = 0;
 							?>
 							<div class="sp-dpie">
 								<div class="sp-dpie__wrap">
-									<div class="sp-dpie__ring" style="background:conic-gradient(<?php echo esc_attr( implode( ',', $sp_stops ) ); ?>)">
-										<span><b><?php echo esc_html( sp_fa( round( $sp_st['pr'] / $sp_tot * 100 ) ) ); ?>٪</b><small>سهم تو</small></span>
-									</div>
+									<svg class="sp-ring" viewBox="0 0 120 120" role="img" aria-label="سهم هزینه‌ها و سود از قیمت فروش">
+										<circle class="sp-ring__bg" cx="60" cy="60" r="48"></circle>
+										<?php
+										foreach ( $sp_pie as $sp_i => $p ) :
+											$len = $p[1] / 100 * $sp_c;
+											?>
+											<circle class="sp-ring__s" cx="60" cy="60" r="48"
+												style="--c:<?php echo esc_attr( $p[2] ); ?>;--len:<?php echo esc_attr( round( $len, 2 ) ); ?>;--gap:<?php echo esc_attr( round( $sp_c - $len, 2 ) ); ?>;--rot:<?php echo esc_attr( round( $sp_acc / 100 * 360 - 90, 2 ) ); ?>deg;--i:<?php echo (int) $sp_i; ?>"></circle>
+											<?php
+											$sp_acc += $p[1];
+										endforeach;
+										?>
+									</svg>
+									<span class="sp-ring__c"><b><?php echo esc_html( sp_fa( round( $sp_st['pr'] / $sp_tot * 100 ) ) ); ?>٪</b><small>سهم تو</small></span>
 								</div>
 								<ul class="sp-dpie__key">
-									<?php foreach ( $sp_pie as $p ) : ?>
-										<li><i style="background:<?php echo esc_attr( $p[2] ); ?>"></i><?php echo esc_html( $p[0] ); ?><b><?php echo esc_html( sp_fa( round( $p[1] ) ) ); ?>٪</b></li>
+									<?php foreach ( $sp_pie as $sp_i => $p ) : ?>
+										<li style="--i:<?php echo (int) $sp_i; ?>"><i style="background:<?php echo esc_attr( $p[2] ); ?>"></i><?php echo esc_html( $p[0] ); ?><b><?php echo esc_html( sp_fa( round( $p[1] ) ) ); ?>٪</b></li>
 									<?php endforeach; ?>
 								</ul>
 							</div>
