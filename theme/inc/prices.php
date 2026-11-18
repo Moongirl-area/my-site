@@ -80,6 +80,7 @@ function sp_settings() {
 		'margin'        => 30,  // درصد سود هدف روی قیمت فروش
 		'prices_date'   => '',  // (قدیمی) تاریخ دستی قیمت‌ها
 		'founders_left' => '',  // تعداد واقعی جای خالی بنیان‌گذار؛ خالی = نمایش داده نشود
+		'trial_days'    => 14,  // روزهای پرو رایگان بعد از عضویت
 	) );
 }
 
@@ -196,6 +197,7 @@ add_action( 'admin_post_sp_save_settings', function () {
 		'margin'        => min( 90, $num( wp_unslash( $_POST['margin'] ?? '' ) ) ),
 		'prices_date'   => $old['prices_date'],
 		'founders_left' => '' === $left_raw ? '' : (int) $left_raw,
+		'trial_days'    => min( 90, (int) $num( wp_unslash( $_POST['trial_days'] ?? '14' ) ) ),
 	) );
 
 	wp_safe_redirect( admin_url( 'admin.php?page=soodpaz&saved=1' ) );
@@ -289,6 +291,12 @@ function sp_admin_page() {
 				<tr><th>غذا: هزینه‌ی گاز هر ساعت اجاق (تومان)</th><td><input type="text" name="stove" value="<?php echo esc_attr( $s['stove'] ? $s['stove'] : '' ); ?>" style="direction:ltr"></td></tr>
 				<tr><th>غذا: ظرف و بسته‌بندی هر پرس (تومان)</th><td><input type="text" name="container" value="<?php echo esc_attr( $s['container'] ? $s['container'] : '' ); ?>" style="direction:ltr"></td></tr>
 				<tr><th>درصد سود هدف (روی قیمت فروش)</th><td><input type="text" name="margin" value="<?php echo esc_attr( $s['margin'] ); ?>" style="direction:ltr"></td></tr>
+			</table>
+
+			<h2>عضویت و پلن‌ها</h2>
+			<table class="form-table" role="presentation">
+				<tr><th>روزهای پرو رایگان بعد از عضویت</th><td><input type="text" name="trial_days" value="<?php echo esc_attr( $s['trial_days'] ); ?>" style="width:80px;direction:ltr"> روز
+				<p class="description">بعد از این مدت، کاربر رایگان فقط یک دستور قابل ویرایش دارد و قیمت دستورهای ذخیره‌شده‌اش دیگر خودکار به‌روز نمی‌شود. برای پرو کردن یک کاربر: کاربران ← ویرایش کاربر ← «اضافه کردن پرو».</p></td></tr>
 			</table>
 
 			<h2>بنیان‌گذارها</h2>

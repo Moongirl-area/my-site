@@ -33,8 +33,8 @@ $sp_s = sp_settings();
 				<p class="sp-plan__price">مجانی <small>برای همیشه</small></p>
 				<ul>
 					<li>ماشین‌حساب عمومی قیمت کیک و غذا</li>
-					<li>۱۴ روز پرو رایگان بعد از ثبت‌نام</li>
-					<li>بعدش یه محصول، برای همیشه رایگان</li>
+					<li><?php echo esc_html( sp_fa( function_exists( 'sp_trial_days' ) ? sp_trial_days() : 14 ) ); ?> روز پرو رایگان بعد از عضویت</li>
+					<li>بعدش یه دستور ذخیره‌شده، برای همیشه رایگان</li>
 				</ul>
 				<a class="sp-btn sp-btn--line sp-btn--block" href="<?php echo esc_url( sp_url( 'calculator' ) ); ?>">همین الان حساب کن</a>
 			</div>

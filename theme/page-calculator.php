@@ -49,6 +49,7 @@ $sp_date = sp_prices_latest_date();
 						</div>
 					</div>
 					<p class="sp-ed-hint" id="sp-hint"></p>
+					<div class="sp-plan" id="sp-plan" hidden></div>
 
 					<div class="sp-field-row sp-field-row--3">
 						<div class="sp-field">

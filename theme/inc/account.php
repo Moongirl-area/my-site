@@ -269,6 +269,7 @@ add_action( 'rest_api_init', function () {
 			foreach ( array( 'recipes', 'prices', 'ings', 'prefs', 'last' ) as $k ) {
 				$keep[ $k ] = isset( $body[ $k ] ) && is_array( $body[ $k ] ) ? $body[ $k ] : array();
 			}
+			$keep = apply_filters( 'sp_store_before_save', $keep, get_current_user_id() );
 			if ( strlen( wp_json_encode( $keep ) ) > 400000 ) {
 				return new WP_Error( 'too_big', 'حجم دستورها زیاده.', array( 'status' => 413 ) );
 			}
@@ -292,6 +293,7 @@ function sp_calc_user_data() {
 		$d['store'] = (object) sp_user_store( $u->ID );
 		$d['rest']  = esc_url_raw( rest_url( 'soodpaz/v1/store' ) );
 		$d['nonce'] = wp_create_nonce( 'wp_rest' );
+		$d          = array_merge( $d, sp_calc_plan_data( $u->ID ) );
 	}
 	return $d;
 }
@@ -421,3 +423,161 @@ function sp_reg_form_runtime( $form ) {
 foreach ( array( 'gform_pre_render', 'gform_pre_validation', 'gform_pre_submission_filter', 'gform_pre_process' ) as $sp_h ) {
 	add_filter( $sp_h, 'sp_reg_form_runtime', 5 );
 }
+
+/* =====================================================================
+ * پلن‌ها: trial (پرو رایگان چند روز اول) / free / pro
+ * - pro: متای sp_pro_until (timestamp) از پیشخوان؛ مدیرها همیشه pro.
+ * - free بعد از آزمایشی: فقط یک دستور قابل ویرایش (sp_free_recipe)، بقیه فقط‌خواندنی؛
+ *   قیمت دستورهای ذخیره‌شده روی قیمت‌های روز پایان آزمایشی ثابت می‌ماند (sp_price_snap).
+ * ===================================================================== */
+function sp_trial_days() {
+	$s = sp_settings();
+	return max( 0, (int) ( $s['trial_days'] ?? 14 ) );
+}
+
+function sp_trial_start( $uid ) {
+	$t = (int) get_user_meta( $uid, 'sp_trial_start', true );
+	if ( ! $t ) {
+		$u = get_userdata( $uid );
+		$t = max( $u ? strtotime( $u->user_registered . ' UTC' ) : time(), (int) get_option( 'sp_plans_since', time() ) );
+		update_user_meta( $uid, 'sp_trial_start', $t );
+	}
+	return $t;
+}
+
+function sp_user_plan( $uid ) {
+	if ( user_can( $uid, 'manage_options' ) || (int) get_user_meta( $uid, 'sp_pro_until', true ) > time() ) {
+		return 'pro';
+	}
+	return time() < sp_trial_start( $uid ) + sp_trial_days() * DAY_IN_SECONDS ? 'trial' : 'free';
+}
+if ( ! get_option( 'sp_plans_since' ) ) {
+	add_option( 'sp_plans_since', time() ); // کاربرهای قدیمی از امروز دوره‌ی آزمایشی می‌گیرند
+}
+
+add_action( 'gform_user_registered', function ( $user_id ) {
+	update_user_meta( $user_id, 'sp_trial_start', time() );
+}, 5 );
+
+/** کاربر تازه رایگان شده: دستور رایگانش (آخرین ویرایش‌شده) و قیمت‌های همان روز ثبت شود. */
+function sp_free_setup( $uid ) {
+	if ( ! get_user_meta( $uid, 'sp_price_snap', true ) ) {
+		$snap = array();
+		foreach ( sp_price_info() as $k => $i ) {
+			if ( $i['p'] > 0 ) {
+				$snap[ $k ] = $i['p'];
+			}
+		}
+		update_user_meta( $uid, 'sp_price_snap', array( 'prices' => $snap, 'date' => current_time( 'Y-m-d' ) ) );
+	}
+	$fid  = (string) get_user_meta( $uid, 'sp_free_recipe', true );
+	$recs = sp_user_store( $uid )['recipes'] ?? array();
+	if ( ( ! $fid || ! isset( $recs[ $fid ] ) ) && $recs ) {
+		uasort( $recs, function ( $a, $b ) { return ( $b['updated'] ?? 0 ) <=> ( $a['updated'] ?? 0 ); } );
+		$fid = (string) key( $recs );
+		update_user_meta( $uid, 'sp_free_recipe', $fid );
+	}
+	return $fid;
+}
+
+/** محدودیت پلن رایگان روی ذخیره (سمت سرور؛ دور زدن از مرورگر ممکن نیست). */
+add_filter( 'sp_store_before_save', function ( $keep, $uid ) {
+	if ( 'free' !== sp_user_plan( $uid ) ) {
+		if ( get_user_meta( $uid, 'sp_price_snap', true ) ) { // دوباره پرو شد
+			delete_user_meta( $uid, 'sp_price_snap' );
+		}
+		return $keep;
+	}
+	$fid = sp_free_setup( $uid );
+	$old = sp_user_store( $uid )['recipes'] ?? array();
+	$new = $keep['recipes'];
+	$out = array();
+	foreach ( $old as $id => $r ) {
+		if ( isset( $new[ $id ] ) ) {
+			$out[ $id ] = (string) $id === $fid ? $new[ $id ] : $r; // بقیه فقط‌خواندنی
+		}
+	}
+	foreach ( $new as $id => $r ) {
+		if ( ! isset( $old[ $id ] ) && ( ! $fid || ! isset( $out[ $fid ] ) ) ) {
+			$out[ $id ] = $r;
+			$fid        = (string) $id;
+			update_user_meta( $uid, 'sp_free_recipe', $fid );
+		}
+	}
+	$keep['recipes'] = $out;
+	return $keep;
+}, 10, 2 );
+
+/** اطلاعات پلن برای ماشین‌حساب. */
+function sp_calc_plan_data( $uid ) {
+	$plan = sp_user_plan( $uid );
+	$d    = array( 'plan' => $plan, 'upgrade' => sp_url( 'pricing' ) );
+	if ( 'trial' === $plan ) {
+		$d['daysLeft'] = max( 1, (int) ceil( ( sp_trial_start( $uid ) + sp_trial_days() * DAY_IN_SECONDS - time() ) / DAY_IN_SECONDS ) );
+	} elseif ( 'free' === $plan ) {
+		$d['freeId'] = sp_free_setup( $uid );
+		$snap        = get_user_meta( $uid, 'sp_price_snap', true );
+		$d['snap']   = array( 'prices' => (object) ( $snap['prices'] ?? array() ), 'date' => function_exists( 'sp_jdate' ) ? sp_jdate( $snap['date'] ?? '' ) : '' );
+	}
+	return $d;
+}
+
+/* ---------- پیشخوان: پلن هر کاربر و اضافه کردن روز پرو ---------- */
+function sp_plan_label( $uid ) {
+	$p = sp_user_plan( $uid );
+	if ( 'pro' === $p ) {
+		$t = (int) get_user_meta( $uid, 'sp_pro_until', true );
+		return 'پرو' . ( $t ? ' تا ' . ( function_exists( 'sp_jdate' ) ? sp_jdate( gmdate( 'Y-m-d', $t ) ) : gmdate( 'Y-m-d', $t ) ) : '' );
+	}
+	return 'trial' === $p ? 'پرو رایگان (آزمایشی)' : 'رایگان';
+}
+add_filter( 'manage_users_columns', function ( $c ) {
+	$c['sp_plan']   = 'پلن سودپز';
+	$c['sp_mobile'] = 'موبایل';
+	return $c;
+} );
+add_filter( 'manage_users_custom_column', function ( $v, $col, $uid ) {
+	if ( 'sp_plan' === $col ) {
+		return esc_html( sp_plan_label( $uid ) );
+	}
+	if ( 'sp_mobile' === $col ) {
+		return esc_html( (string) get_user_meta( $uid, 'sp_mobile', true ) );
+	}
+	return $v;
+}, 10, 3 );
+function sp_user_plan_fields( $user ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	?>
+	<h2>سودپز</h2>
+	<table class="form-table" role="presentation">
+		<tr><th>پلن فعلی</th><td><b><?php echo esc_html( sp_plan_label( $user->ID ) ); ?></b></td></tr>
+		<tr><th>موبایل</th><td><?php echo esc_html( (string) get_user_meta( $user->ID, 'sp_mobile', true ) ); ?></td></tr>
+		<tr><th><label for="sp_pro_add">اضافه کردن پرو (روز)</label></th><td>
+			<input type="number" min="0" name="sp_pro_add" id="sp_pro_add" style="width:100px"> روز
+			<p class="description">مثلاً ۳۶۵ برای یک سال (بنیان‌گذارها و خریدها). از پایان پرو فعلی یا از امروز حساب می‌شود.</p>
+			<label><input type="checkbox" name="sp_pro_end" value="1"> پرو همین الان تمام شود</label>
+		</td></tr>
+	</table>
+	<?php
+}
+add_action( 'edit_user_profile', 'sp_user_plan_fields' );
+add_action( 'show_user_profile', 'sp_user_plan_fields' );
+function sp_user_plan_save( $uid ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	if ( ! empty( $_POST['sp_pro_end'] ) ) {
+		delete_user_meta( $uid, 'sp_pro_until' );
+		return;
+	}
+	$add = isset( $_POST['sp_pro_add'] ) ? (int) sp_en_digits( wp_unslash( $_POST['sp_pro_add'] ) ) : 0;
+	if ( $add > 0 ) {
+		$from = max( time(), (int) get_user_meta( $uid, 'sp_pro_until', true ) );
+		update_user_meta( $uid, 'sp_pro_until', $from + $add * DAY_IN_SECONDS );
+		delete_user_meta( $uid, 'sp_price_snap' );
+	}
+}
+add_action( 'edit_user_profile_update', 'sp_user_plan_save' );
+add_action( 'personal_options_update', 'sp_user_plan_save' );

@@ -1209,3 +1209,6 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-authx .gform_wrapper input[dir=ltr] { text-align: left !important; direction: ltr !important; }
 .sp-authx .gform_wrapper input[dir=ltr]::placeholder { text-align: left; }
 .sp-authx .gform_wrapper .gform_heading { display: none; }
+/* نوار پلن در ماشین‌حساب */
+.sp-plan { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: #FFF6E5; border: 1px solid #F3D9A4; color: var(--ink); font-size: 13.5px; line-height: 1.9; }
+.sp-plan a, .sp-plan .sp-linkbtn { color: var(--coral-d); font-weight: 800; }

@@ -68,6 +68,36 @@
 		h.innerHTML = 'برای ذخیره‌ی دستورت <a href="' + esc(ME.register) + '">عضو شو</a> (رایگانه) یا <a href="' + esc(ME.login) + '">وارد شو</a>. دستوری که نوشتی گم نمی‌شه.';
 		h.classList.add('is-gate');
 	}
+	/* ---------- پلن: trial / free / pro ---------- */
+	var PLAN = ME.in ? (ME.plan || 'trial') : 'guest', todayView = false;
+	function isFree() { return PLAN === 'free'; }
+	function freeSlotUsed() { return !!(ME.freeId && store.recipes[ME.freeId]); }
+	function canEdit() { return !isFree() || !R.id || R.id === ME.freeId; }
+	function canCreate() { return !isFree() || !freeSlotUsed(); }
+	function useSnap() { return isFree() && R && R.id && !todayView && ME.snap; }
+	function proGate(msg) {
+		var h = $('sp-hint');
+		h.innerHTML = esc(msg) + ' <a href="' + esc(ME.upgrade) + '">پرو رو ببین</a>';
+		h.classList.add('is-gate');
+	}
+	function renderPlan() {
+		var b = $('sp-plan'); if (!b) return;
+		var html = '';
+		if (PLAN === 'trial' && ME.daysLeft) {
+			html = '<b>پرو رایگانت فعاله:</b> ' + faNum(ME.daysLeft) + ' روز مونده. <a href="' + esc(ME.upgrade) + '">پلن‌ها</a>';
+		} else if (isFree() && R.id) {
+			if (!canEdit()) html = '<b>این دستور فقط‌خواندنیه.</b> توی پلن رایگان یه دستور رو می‌تونی ویرایش کنی. ';
+			html += todayView
+				? 'داری با <b>قیمت امروز</b> می‌بینی. <button type="button" class="sp-linkbtn" data-plan="snap">قیمت‌های ذخیره‌شده</button>'
+				: 'قیمت مواد این دستور مال <b>' + esc(ME.snap && ME.snap.date || 'قبل') + '</b> هستن. <button type="button" class="sp-linkbtn" data-plan="today">با قیمت امروز ببین</button>';
+			html += ' · به‌روز شدن خودکار مال پروئه. <a href="' + esc(ME.upgrade) + '">پرو بگیر</a>';
+		}
+		b.innerHTML = html; b.hidden = !html;
+	}
+	document.addEventListener('click', function (e) {
+		var t = e.target.closest('[data-plan]'); if (!t) return;
+		todayView = t.dataset.plan === 'today'; renderPlan(); renderItems(); calc();
+	});
 
 	/* ---------- آشپزخونه ---------- */
 	function kitchen() { return root.getAttribute('data-k') === 'food' ? 'food' : 'sweet'; }
@@ -82,7 +112,7 @@
 		}
 		return D.ingredients[k];
 	}
-	function refPrice(k) { var i = ingOf(k); return i && !i.custom ? (i.p || 0) : 0; }
+	function refPrice(k) { var i = ingOf(k); if (!i || i.custom) return 0; if (useSnap() && ME.snap.prices[k] != null) return +ME.snap.prices[k]; return i.p || 0; }
 	function priceOf(k) {
 		if (k.indexOf('c:') === 0) { var c = store.ings[k.slice(2)]; return c ? (c.p || 0) : 0; }
 		return Object.prototype.hasOwnProperty.call(store.prices, k) ? store.prices[k] : refPrice(k);
@@ -170,13 +200,14 @@
 			}
 			R = fromLibrary(key);
 		}
-		dirty = false;
+		dirty = false; todayView = false;
 		store.last[k] = currentRef(); persist();
 		renderAll();
 	}
 
 	/* ---------- ذخیره‌ی خودکار دستورهای من ---------- */
 	function touch() {
+		if (R.id && !canEdit()) { proGate('تغییرهای این دستور ذخیره نمی‌شه؛ توی پلن رایگان فقط یه دستور قابل ویرایشه.'); return; }
 		if (R.id) {
 			R.updated = Date.now();
 			store.recipes[R.id] = clone(R);
@@ -230,10 +261,11 @@
 		$('sp-name').value = R.name || '';
 		var badge = $('sp-badge'), hint = $('sp-hint'), save = $('sp-save');
 		hint.classList.remove('is-gate');
+		renderPlan();
 		$('sp-del').hidden = !R.id;
 		if (R.id) {
-			badge.textContent = 'مال من'; badge.className = 'sp-ed-badge is-mine';
-			save.hidden = true; hint.textContent = 'تغییرهات خودکار توی حسابت ذخیره می‌شه.';
+			badge.textContent = canEdit() ? 'مال من' : 'فقط‌خواندنی'; badge.className = 'sp-ed-badge is-mine';
+			save.hidden = true; hint.textContent = canEdit() ? 'تغییرهات خودکار توی حسابت ذخیره می‌شه.' : 'می‌تونی عددها رو عوض کنی و حساب کنی، ولی ذخیره نمی‌شه.';
 		} else if (R.from) {
 			badge.textContent = 'دستور آماده'; badge.className = 'sp-ed-badge';
 			save.hidden = false;
@@ -249,14 +281,18 @@
 	$('sp-save').addEventListener('click', function () {
 		if (!norm(R.name)) { $('sp-name').focus(); $('sp-hint').textContent = 'اول یه اسم برای دستورت بنویس.'; return; }
 		if (!ME.in) { needAccount(); return; }
+		if (!canCreate()) { proGate('توی پلن رایگان یه دستور ذخیره‌شده داری. برای دستورهای بیشتر، پرو بگیر.'); return; }
 		if (!R.from) delete store.draft[R.kitchen];
 		R.id = uid('r'); R.from = R.from || null; R.updated = Date.now();
+		if (isFree()) ME.freeId = R.id;
 		store.recipes[R.id] = clone(R); store.last[R.kitchen] = currentRef();
 		dirty = false; persist(); renderHead(); renderPicker(); status('ذخیره شد ✓');
 	});
 	$('sp-dup').addEventListener('click', function () {
 		if (!ME.in) { needAccount(); return; }
+		if (!canCreate()) { proGate('توی پلن رایگان یه دستور ذخیره‌شده داری. برای کپی و دستورهای بیشتر، پرو بگیر.'); return; }
 		var c = clone(R); c.id = uid('r'); c.name = (R.name || 'دستور') + ' (کپی)'; c.updated = Date.now();
+		if (isFree()) ME.freeId = c.id;
 		store.recipes[c.id] = c; persist(); open('my:' + c.id); status('کپی ساخته شد ✓');
 	});
 	var delArmed = 0;
@@ -587,9 +623,15 @@
 	if (pend && pend.r && Date.now() - (pend.t || 0) < 7 * 864e5) {
 		lsDel(PEND);
 		mergeIn(pend, ['ings', 'prices']);
-		var pr = pend.r; pr.id = uid('r'); pr.updated = Date.now(); if (!D.recipes[pr.from]) pr.from = null;
-		store.recipes[pr.id] = pr; root.setAttribute('data-k', pr.kitchen === 'food' ? 'food' : 'sweet');
-		persist(); open('my:' + pr.id, pr.kitchen); status('دستورت توی حسابت ذخیره شد ✓');
+		var pr = pend.r; if (!D.recipes[pr.from]) pr.from = null;
+		root.setAttribute('data-k', pr.kitchen === 'food' ? 'food' : 'sweet');
+		if (!canCreate()) { // رایگان و جای دستور رایگان پر است: فقط باز شود
+			pr.id = null; pr.from = null; store.draft[pr.kitchen] = pr; open('new', pr.kitchen);
+			proGate('توی پلن رایگان یه دستور ذخیره‌شده داری. برای ذخیره‌ی این یکی، پرو بگیر.');
+		} else {
+			pr.id = uid('r'); pr.updated = Date.now(); if (isFree()) ME.freeId = pr.id;
+			store.recipes[pr.id] = pr; persist(); open('my:' + pr.id, pr.kitchen); status('دستورت توی حسابت ذخیره شد ✓');
+		}
 	} else if (want && D.recipes[want]) { root.setAttribute('data-k', D.recipes[want].kitchen); open('lib:' + want, D.recipes[want].kitchen); }
 	else if (qs.get('new')) open('new');
 	else open(store.last[kitchen()] || 'lib:');
