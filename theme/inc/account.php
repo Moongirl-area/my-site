@@ -270,3 +270,21 @@ add_action( 'template_redirect', function () {
 		do_action( 'litespeed_control_set_nocache', 'soodpaz auth page' );
 	}
 } );
+
+/* برچسب‌های فارسی رمز و نشان «اجباری» به‌جای (Required) */
+function sp_fa_password_labels( $form ) {
+	foreach ( $form['fields'] as &$f ) {
+		if ( 'password' === $f->type && is_array( $f->inputs ) ) {
+			$f->inputs[0]['customLabel'] = 'رمز عبور';
+			if ( isset( $f->inputs[1] ) ) {
+				$f->inputs[1]['customLabel'] = 'تکرار رمز';
+			}
+		}
+	}
+	return $form;
+}
+add_filter( 'gform_pre_render', 'sp_fa_password_labels' );
+add_filter( 'gform_pre_validation', 'sp_fa_password_labels' );
+add_filter( 'gform_required_indicator', function () {
+	return '<span class="gfield_required"> *</span>';
+} );
