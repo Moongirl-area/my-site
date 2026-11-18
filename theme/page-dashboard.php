@@ -113,19 +113,19 @@ $sp_tabs = array(
 					<section class="sp-dbox">
 						<h2><?php echo sp_icon( 'calc', 20 ); // phpcs:ignore ?>سود هر دستور</h2>
 						<?php if ( $sp_st['bars'] ) : ?>
-							<p class="sp-dbox__note">سود کل هر دستور، اگه یک بار کامل بپزی و بفروشیش.</p>
+							<p class="sp-dbox__note">۵ دستوری که بیشترین سود رو برات دارن؛ سود کل هر کدوم، اگه یک بار کامل بپزی و بفروشیش.</p>
 							<?php
 							$sp_max = max( 1, max( array_map( function ( $b ) { return $b['profit']; }, $sp_st['bars'] ) ) );
 							?>
-							<ul class="sp-chart">
+							<div class="sp-cols">
 								<?php foreach ( array_values( $sp_st['bars'] ) as $sp_i => $b ) : ?>
-									<li style="--i:<?php echo (int) $sp_i; ?>;--w:<?php echo esc_attr( max( 6, round( $b['profit'] / $sp_max * 100 ) ) ); ?>%">
-										<span class="sp-chart__n"><?php echo esc_html( $b['name'] ); ?></span>
-										<span class="sp-chart__t"><i class="<?php echo $b['food'] ? 'is-food' : ''; ?>"></i></span>
-										<span class="sp-chart__v"><?php echo esc_html( $sp_money( $b['profit'] ) ); ?></span>
-									</li>
+									<div class="sp-col<?php echo $b['food'] ? ' is-food' : ''; ?>" style="--i:<?php echo (int) $sp_i; ?>;--h:<?php echo esc_attr( max( 8, round( $b['profit'] / $sp_max * 100 ) ) ); ?>%">
+										<span class="sp-col__v"><?php echo esc_html( $sp_money( $b['profit'] ) ); ?></span>
+										<span class="sp-col__t"><i></i></span>
+										<span class="sp-col__n" title="<?php echo esc_attr( $b['name'] ); ?>"><?php echo esc_html( $b['name'] ); ?></span>
+									</div>
 								<?php endforeach; ?>
-							</ul>
+							</div>
 						<?php else : ?>
 							<p class="sp-dempty">وقتی دستورهات مواد و قیمت کامل داشته باشن، نمودار سودت این‌جا می‌آد.</p>
 						<?php endif; ?>

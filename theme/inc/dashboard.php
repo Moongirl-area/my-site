@@ -67,7 +67,7 @@ function sp_dash_stats( $recipes ) {
 		$o['margin'] = $o['margin'] / $o['ready'];
 	}
 	usort( $o['bars'], function ( $a, $b ) { return $b['profit'] <=> $a['profit']; } );
-	$o['bars'] = array_slice( $o['bars'], 0, 6 );
+	$o['bars'] = array_slice( $o['bars'], 0, 5 ); // ۵ دستور پرسودتر
 	return $o;
 }
 

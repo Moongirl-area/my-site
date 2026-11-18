@@ -1305,19 +1305,17 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-dempty { margin: 8px 0 14px; color: var(--muted); }
 .sp-dempty__soodi { width: 110px; height: auto; margin: 0 auto 6px; display: block; }
 
-/* نمودار سود (تخت، با موشن) */
-.sp-chart { list-style: none; margin: 0; padding: 4px 0 0; display: grid; gap: 14px; }
-.sp-chart li { display: grid; grid-template-columns: minmax(84px, 136px) 1fr auto; align-items: center; gap: 12px; }
-.sp-chart__n { font-weight: 700; font-size: 13.5px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sp-chart__t { position: relative; height: 12px; border-radius: 999px; background: #F3EEE7; overflow: hidden; }
-.sp-chart__t i { display: block; width: var(--w); height: 100%; border-radius: 999px; background: linear-gradient(90deg, #F7B45C, #E8673C); transform-origin: right center; animation: sp-grow .85s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i) * 110ms); }
-.sp-chart__t i.is-food { background: linear-gradient(90deg, #8FD6C5, #3FA169); }
-.sp-chart__t i::after { content: ""; position: absolute; inset: 0; border-radius: 999px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent); transform: translateX(-100%); animation: sp-sheen 2.6s ease-in-out infinite; animation-delay: calc(var(--i) * 110ms + .8s); }
-.sp-chart__v { font-family: var(--display); font-weight: 800; font-size: 13.5px; white-space: nowrap; opacity: 0; animation: sp-vin .5s ease both; animation-delay: calc(var(--i) * 110ms + .45s); }
-.sp-chart li:hover .sp-chart__t i { filter: brightness(1.06); }
-@keyframes sp-grow { from { transform: scaleX(0); } }
+/* نمودار سود: ستون‌های تخت با موشن */
+.sp-cols { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 12px; align-items: end; padding: 6px 2px 0; }
+.sp-col { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.sp-col__v { font-family: var(--display); font-weight: 800; font-size: 12.5px; color: var(--ink); white-space: nowrap; opacity: 0; animation: sp-vin .5s ease both; animation-delay: calc(var(--i) * 110ms + .5s); }
+.sp-col__t { display: flex; align-items: flex-end; width: 100%; max-width: 46px; height: 150px; border-radius: 999px; background: #F5F0E9; overflow: hidden; }
+.sp-col__t i { display: block; width: 100%; height: var(--h); border-radius: 999px; background: linear-gradient(180deg, #F7B45C, #E8673C); animation: sp-colup .9s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i) * 110ms); transition: filter .18s; }
+.sp-col.is-food .sp-col__t i { background: linear-gradient(180deg, #8FD6C5, #3FA169); }
+.sp-col:hover .sp-col__t i { filter: brightness(1.07) saturate(1.05); }
+.sp-col__n { width: 100%; font-size: 12px; color: var(--muted); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@keyframes sp-colup { from { height: 0; } }
 @keyframes sp-vin { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-@keyframes sp-sheen { 0%, 55% { transform: translateX(-100%); } 85%, 100% { transform: translateX(100%); } }
 
 /* حلقه‌ی سهم‌ها (SVG، با موشن کشیده‌شدن) */
 .sp-dpie { display: grid; gap: 18px; justify-items: center; }
@@ -1408,10 +1406,11 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 	.sp-d3d__sub, .sp-d3d__big { max-width: 60%; }
 	.sp-d3d__orb { inset-inline-start: 55%; }
 	.sp-dstat b { font-size: 21px; }
-	.sp-chart li { grid-template-columns: minmax(70px, 110px) 1fr auto; gap: 9px; }
-	.sp-chart__n, .sp-chart__v { font-size: 12.5px; }
+	.sp-cols { gap: 8px; }
+	.sp-col__t { height: 112px; max-width: 36px; }
+	.sp-col__n, .sp-col__v { font-size: 11px; }
 	.sp-dplan__card { padding: 20px; gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-	.sp-chart__t i, .sp-ring__s, .sp-chart__v, .sp-dpie__key li, .sp-ring__c, .sp-d3d__orb, .sp-d3d__cube, .sp-d3d__soodi, .sp-dpanel { animation: none; }
+	.sp-col__t i, .sp-col__v, .sp-ring__s, .sp-dpie__key li, .sp-ring__c, .sp-d3d__orb, .sp-d3d__cube, .sp-d3d__soodi, .sp-dpanel { animation: none; }
 }

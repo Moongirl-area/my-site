@@ -56,7 +56,7 @@
 	});
 	function replay(panel) { // انیمیشن نمودارها با هر بار باز شدن تب دوباره اجرا شود
 		if (!panel) return;
-		var els = panel.querySelectorAll('.sp-chart li, .sp-ring__s, .sp-dpie__key li, .sp-ring__c');
+		var els = panel.querySelectorAll('.sp-col__t i, .sp-col__v, .sp-ring__s, .sp-dpie__key li, .sp-ring__c');
 		Array.prototype.forEach.call(els, function (el) {
 			el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
 		});
