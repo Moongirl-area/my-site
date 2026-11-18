@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_ACCOUNT_VERSION', 2 );
+define( 'SP_ACCOUNT_VERSION', 3 );
 
 function sp_gf_ready() {
 	return class_exists( 'GFAPI' ) && function_exists( 'gf_user_registration' );
@@ -112,30 +112,24 @@ add_action( 'admin_init', function () {
 			'feed_condition_conditional_logic' => '0',
 		), 'gravityformsuserregistration' );
 	}
-	// نسخه‌ی ۲: فیلد phone (با پرچم و کد کشور) به فیلد متنی ساده‌ی موبایل تبدیل شود؛ توضیح‌ها زیر فیلد.
+	// نسخه‌ی ۳: فیلد phone (با پرچم و کد کشور) به فیلد متنی ساده‌ی موبایل تبدیل شود؛ توضیح‌ها زیر فیلد.
 	$form = GFAPI::get_form( $id );
 	if ( $form ) {
-		$form['descriptionPlacement'] = 'below';
-		$both = true;
-		foreach ( $form['fields'] as $i => $f ) {
-			if ( 'phone' === $f->type ) {
-				$props         = (array) $f;
-				$props['type'] = 'text';
-				unset( $props['phoneFormat'], $props['inputType'] );
-				$props['placeholder'] = '۰۹۱۲۳۴۵۶۷۸۹';
-				$form['fields'][ $i ] = GF_Fields::create( $props );
-				$f = $form['fields'][ $i ];
+		$arr                         = json_decode( wp_json_encode( $form ), true );
+		$arr['descriptionPlacement'] = 'below';
+		foreach ( $arr['fields'] as $i => $f ) {
+			if ( 'phone' === $f['type'] ) {
+				$f['type']        = 'text';
+				$f['placeholder'] = '۰۹۱۲۳۴۵۶۷۸۹';
+				unset( $f['phoneFormat'] );
 			}
-			if ( in_array( $f->type, array( 'text', 'email' ), true ) && ( 'email' === $f->type || false !== mb_strpos( (string) $f->label, 'موبایل' ) ) && ! $f->isRequired ) {
-				$both = false;
+			if ( 'email' === $f['type'] && ! empty( $f['isRequired'] ) && false !== mb_strpos( (string) $f['description'], 'یکی کافیه' ) ) {
+				$f['description'] = '';
 			}
+			$arr['fields'][ $i ] = $f;
 		}
-		foreach ( $form['fields'] as $f ) {
-			if ( 'email' === $f->type && $both && false !== mb_strpos( (string) $f->description, 'یکی کافیه' ) ) {
-				$f->description = '';
-			}
-		}
-		GFAPI::update_form( $form );
+		$r = GFAPI::update_form( $arr );
+		update_option( 'sp_account_err', is_wp_error( $r ) ? $r->get_error_message() : 'ok', false );
 	}
 	update_option( 'sp_account_version', SP_ACCOUNT_VERSION, false );
 } );
