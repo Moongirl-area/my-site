@@ -1141,3 +1141,5 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-auth .gform_wrapper .gfield_description { font-size: 12.5px !important; color: var(--muted) !important; }
 .sp-auth .gform_wrapper .gform_button, .sp-auth .gform_wrapper input[type=submit] { width: 100% !important; padding: 14px !important; border: 0 !important; border-radius: 999px !important; background: #E8673C !important; color: #fff !important; font-weight: 800 !important; font-size: 16px !important; cursor: pointer; }
 .sp-auth .gform_wrapper .gfield_required { color: #E03A3E !important; }
+.sp-auth .gfield_required_text { font-size: 0 !important; }
+.sp-auth .gfield_required_text::after { content: " *"; font-size: 15px; color: #E03A3E; }
