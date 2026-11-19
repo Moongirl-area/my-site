@@ -702,3 +702,13 @@ function sp_resetpass() {
 	wp_safe_redirect( add_query_arg( 'reset', '1', sp_url( 'login' ) ) );
 	exit;
 }
+
+/* ایمیل‌های سایت از آدرس خود دامنه فرستاده شوند (وگرنه جیمیل اسپمشان می‌کند). */
+add_filter( 'wp_mail_from', function ( $from ) {
+	$s = sp_settings();
+	return ! empty( $s['mail_from'] ) && is_email( $s['mail_from'] ) ? $s['mail_from'] : $from;
+}, 20 );
+add_filter( 'wp_mail_from_name', function ( $name ) {
+	$s = sp_settings();
+	return ! empty( $s['mail_name'] ) ? $s['mail_name'] : $name;
+}, 20 );

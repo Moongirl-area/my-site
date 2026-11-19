@@ -87,6 +87,8 @@ function sp_settings() {
 		'price_year'    => 690000,
 		'price_month'   => 99000,
 		'price_founder' => 390000,
+		'mail_from'     => '',  // آدرس فرستنده‌ی ایمیل‌های سایت
+		'mail_name'     => 'سودپز',
 	) );
 }
 
@@ -210,6 +212,8 @@ add_action( 'admin_post_sp_save_settings', function () {
 		'price_year'    => (int) $num( wp_unslash( $_POST['price_year'] ?? '690000' ) ),
 		'price_month'   => (int) $num( wp_unslash( $_POST['price_month'] ?? '99000' ) ),
 		'price_founder' => (int) $num( wp_unslash( $_POST['price_founder'] ?? '390000' ) ),
+		'mail_from'     => sanitize_email( wp_unslash( $_POST['mail_from'] ?? '' ) ),
+		'mail_name'     => sanitize_text_field( wp_unslash( $_POST['mail_name'] ?? 'سودپز' ) ),
 	) );
 
 	wp_safe_redirect( admin_url( 'admin.php?page=soodpaz&saved=1' ) );
@@ -320,6 +324,14 @@ function sp_admin_page() {
 				<tr><th>قیمت پرو سالانه</th><td><input type="text" name="price_year" value="<?php echo esc_attr( $s['price_year'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
 				<tr><th>قیمت پرو ماهانه</th><td><input type="text" name="price_month" value="<?php echo esc_attr( $s['price_month'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
 				<tr><th>قیمت بنیان‌گذار</th><td><input type="text" name="price_founder" value="<?php echo esc_attr( $s['price_founder'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
+			</table>
+
+			<h2>ایمیل‌های سایت</h2>
+			<p class="description">ایمیل‌های سایت (بازیابی رمز، تأیید پرداخت) باید از یک آدرس روی دامنه‌ی خودت فرستاده شوند، وگرنه جیمیل آن‌ها را اسپم می‌کند. آدرسی را بنویس که واقعاً در سی‌پنل ساخته‌ای.</p>
+			<table class="form-table" role="presentation">
+				<tr><th>آدرس فرستنده</th><td><input type="email" name="mail_from" value="<?php echo esc_attr( $s['mail_from'] ); ?>" style="width:280px;direction:ltr" placeholder="no-reply@soodpaz.com">
+				<p class="description">خالی بگذاری، وردپرس از آدرس سیستمی هاست استفاده می‌کند که به اسپم می‌خورد.</p></td></tr>
+				<tr><th>نام فرستنده</th><td><input type="text" name="mail_name" value="<?php echo esc_attr( $s['mail_name'] ); ?>" style="width:200px"></td></tr>
 			</table>
 
 			<h2>بنیان‌گذارها</h2>
