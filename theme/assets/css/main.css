@@ -340,7 +340,8 @@ p { margin: 0 0 1em; }
 	.sp-nav { order: 3; width: 100%; margin: 0; overflow-x: auto; scrollbar-width: none; justify-content: space-between; }
 	.sp-nav::-webkit-scrollbar { display: none; }
 	.sp-nav a { padding: 8px 12px; font-size: 14px; }
-	.sp-nav a .sp-ico, .sp-nav__free { display: none; }
+	.sp-nav a .sp-ico { display: none; }
+	.sp-nav__free { display: inline-block; font-size: 10px; padding: 1px 6px; margin-inline-start: 4px; }
 	.sp-hero { padding-top: 20px; }
 	.sp-hero__art { min-height: 440px; }
 	.sp-plate--hero { width: 290px; top: 40px; }
