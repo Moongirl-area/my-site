@@ -255,6 +255,13 @@ function sp_jalali( $gy, $gm, $gd ) {
 
 /** «۲۲ آبان ۱۴۰۵» از یک زمان (timestamp محلی وردپرس). */
 function sp_jdate( $ts ) {
+	if ( ! is_numeric( $ts ) ) { // تاریخ به شکل رشته (مثل 2026-11-19) هم قبول است
+		$ts = strtotime( (string) $ts );
+	}
+	if ( ! $ts ) {
+		return '';
+	}
+	$ts     = (int) $ts;
 	$months = array( '', 'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند' );
 	list( $y, $m, $d ) = sp_jalali( (int) gmdate( 'Y', $ts ), (int) gmdate( 'n', $ts ), (int) gmdate( 'j', $ts ) );
 	return sp_fa( $d, false ) . ' ' . $months[ $m ] . ' ' . sp_fa( $y, false );
