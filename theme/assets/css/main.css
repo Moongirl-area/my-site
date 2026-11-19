@@ -1455,3 +1455,8 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-paylist li.is-no i { background: #FFECE7; color: #A33A22; }
 .sp-paylist small { width: 100%; color: var(--muted); }
 @media (max-width: 560px) { .sp-cardbox__num { letter-spacing: 1px; } }
+.sp-buynow { padding: 18px; margin-bottom: 18px; border: 1.5px solid #F0C98E; border-radius: 18px; background: linear-gradient(145deg, #FFF8EC, #FFF1E2); }
+.sp-buynow b { display: block; margin-bottom: 6px; font-family: var(--display); font-weight: 900; font-size: 18px; }
+.sp-buynow p { margin: 0 0 14px; font-size: 13.5px; line-height: 1.95; color: var(--muted); }
+.sp-or { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+.sp-or::before, .sp-or::after { content: ""; flex: 1; height: 1px; background: #E4DDD2; }

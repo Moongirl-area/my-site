@@ -54,7 +54,8 @@ $sp_s = sp_settings();
 					<li>دستورهای آماده‌ی کیک و غذای خونگی، با مقدار مواد</li>
 					<li>عکس لیست قیمت و منوی هفتگی برای استوری (به‌زودی)</li>
 				</ul>
-				<a class="sp-btn sp-btn--coral sp-btn--block" href="<?php echo esc_url( sp_url( 'founders' ) ); ?>">اول بنیان‌گذار شو: ۳۹۰ هزار</a>
+				<a class="sp-btn sp-btn--coral sp-btn--block" href="<?php echo esc_url( sp_buy_url( 'founder' ) ); ?>">اول بنیان‌گذار شو: ۳۹۰ هزار</a>
+				<p class="sp-small" style="margin-top:10px;text-align:center">عضو می‌شی، کارت‌به‌کارت می‌کنی و رسیدت رو توی میز کارت می‌فرستی. تا ۲۴ ساعت پروت فعال می‌شه.</p>
 				<p class="sp-small sp-center">پرو اول برای این ۵۰ نفر باز می‌شه.</p>
 			</div>
 		</div>

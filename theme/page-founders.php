@@ -35,7 +35,8 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 		<div class="sp-founders__form" id="join">
 			<?php if ( 'sent' === $sp_state ) : ?>
 				<div class="sp-verdict sp-verdict--good" role="status">
-					<b>رسید، مرسی!</b><br>جات نگه داشته شد. تا ۲۴ ساعت بهت پیام می‌دیم.
+					<b>رسید، مرسی!</b><br>جات نگه داشته شد. تا ۲۴ ساعت بهت پیام می‌دیم.<br>
+					<a class="sp-btn sp-btn--coral sp-btn--sm" style="margin-top:12px" href="<?php echo esc_url( sp_buy_url( 'founder' ) ); ?>">یا همین الان پرداخت کن</a>
 				</div>
 			<?php else : ?>
 				<?php if ( 'invalid' === $sp_state ) : ?>
@@ -43,6 +44,12 @@ $sp_state = isset( $_GET['sp'] ) ? sanitize_key( wp_unslash( $_GET['sp'] ) ) : '
 				<?php elseif ( 'expired' === $sp_state ) : ?>
 					<div class="sp-verdict sp-verdict--warn" role="alert">صفحه خیلی وقت باز مونده بود. یه بار دیگه بفرست.</div>
 				<?php endif; ?>
+				<div class="sp-buynow">
+					<b>همین الان بنیان‌گذار شو</b>
+					<p>اگه تصمیمت رو گرفتی، لازم نیست منتظر بمونی: عضو شو، مبلغ رو کارت‌به‌کارت کن و رسیدش رو توی میز کارت بفرست. حداکثر تا ۲۴ ساعت پروت فعال می‌شه.</p>
+					<a class="sp-btn sp-btn--coral sp-btn--block" href="<?php echo esc_url( sp_buy_url( 'founder' ) ); ?>"><?php echo sp_icon( 'spark', 18 ); ?>عضو شو و پرداخت کن</a>
+				</div>
+				<p class="sp-or"><span>یا فعلاً فقط جات رو نگه دار</span></p>
 				<h2>جات رو نگه دار</h2>
 				<form class="sp-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<input type="hidden" name="action" value="sp_founder">
