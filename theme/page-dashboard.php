@@ -59,7 +59,7 @@ $sp_pick    = isset( $_GET['plan'] ) ? sanitize_key( wp_unslash( $_GET['plan'] )
 		<nav class="sp-rail" aria-label="بخش‌های میز کار">
 			<div class="sp-rail__me">
 				<span class="sp-rail__av"><?php echo esc_html( mb_substr( $sp_u->display_name, 0, 1 ) ); ?></span>
-				<span class="sp-rail__name"><b><?php echo esc_html( $sp_u->display_name ); ?></b><small><?php echo esc_html( $sp_plan['label'] ); ?></small></span>
+				<span class="sp-rail__name"><b><?php echo esc_html( $sp_u->display_name ); ?></b><small><?php echo sp_is_founder( $sp_uid ) ? '★ بنیان‌گذار' : esc_html( $sp_plan['label'] ); ?></small></span>
 			</div>
 			<ul class="sp-rail__list">
 				<?php foreach ( $sp_tabs as $k => $t ) : ?>
@@ -242,7 +242,10 @@ $sp_pick    = isset( $_GET['plan'] ) ? sanitize_key( wp_unslash( $_GET['plan'] )
 							</span>
 						</div>
 						<div class="sp-dplan__txt">
-							<p class="sp-dplan__name"><?php echo esc_html( $sp_plan['label'] ); ?></p>
+							<p class="sp-dplan__name"><?php echo esc_html( $sp_plan['label'] ); ?><?php if ( sp_is_founder( $sp_uid ) ) : ?><span class="sp-fbadge">★ بنیان‌گذار</span><?php endif; ?></p>
+							<?php if ( sp_is_founder( $sp_uid ) ) : ?>
+								<p class="sp-dplan__note">تو جزو ۵۰ نفر اولی؛ قیمت تمدیدت همیشه <?php echo esc_html( sp_fa( sp_pay_plan( 'founder' )['price'] ) ); ?> تومان می‌مونه، حتی وقتی قیمت پرو بالا بره.</p>
+							<?php endif; ?>
 							<p class="sp-dplan__note">
 								<?php
 								if ( 'free' === $sp_plan['plan'] ) {

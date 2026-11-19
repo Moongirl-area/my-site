@@ -533,7 +533,8 @@ function sp_plan_label( $uid ) {
 }
 add_filter( 'manage_users_columns', function ( $c ) {
 	$c['sp_plan']   = 'پلن سودپز';
-	$c['sp_mobile'] = 'موبایل';
+	$c['sp_mobile']  = 'موبایل';
+	$c['sp_founder'] = 'بنیان‌گذار';
 	return $c;
 } );
 add_filter( 'manage_users_custom_column', function ( $v, $col, $uid ) {
@@ -542,6 +543,10 @@ add_filter( 'manage_users_custom_column', function ( $v, $col, $uid ) {
 	}
 	if ( 'sp_mobile' === $col ) {
 		return esc_html( (string) get_user_meta( $uid, 'sp_mobile', true ) );
+	}
+	if ( 'sp_founder' === $col ) {
+		$f = (string) get_user_meta( $uid, 'sp_founder', true );
+		return $f ? '★ بنیان‌گذار<br><small>' . esc_html( function_exists( 'sp_jdate' ) ? sp_jdate( $f ) : $f ) . '</small>' : '—';
 	}
 	return $v;
 }, 10, 3 );
@@ -554,6 +559,10 @@ function sp_user_plan_fields( $user ) {
 	<table class="form-table" role="presentation">
 		<tr><th>پلن فعلی</th><td><b><?php echo esc_html( sp_plan_label( $user->ID ) ); ?></b></td></tr>
 		<tr><th>موبایل</th><td><?php echo esc_html( (string) get_user_meta( $user->ID, 'sp_mobile', true ) ); ?></td></tr>
+		<tr><th>بنیان‌گذار</th><td>
+			<?php $sp_f = (string) get_user_meta( $user->ID, 'sp_founder', true ); ?>
+			<label><input type="checkbox" name="sp_founder" value="1" <?php checked( (bool) $sp_f ); ?>> بنیان‌گذاره؛ قیمت تمدیدش همیشه قیمت بنیان‌گذاره<?php echo $sp_f ? ' (از ' . esc_html( function_exists( 'sp_jdate' ) ? sp_jdate( $sp_f ) : $sp_f ) . ')' : ''; ?></label>
+		</td></tr>
 		<tr><th><label for="sp_pro_add">اضافه کردن پرو (روز)</label></th><td>
 			<input type="number" min="0" name="sp_pro_add" id="sp_pro_add" style="width:100px"> روز
 			<p class="description">مثلاً ۳۶۵ برای یک سال (بنیان‌گذارها و خریدها). از پایان پرو فعلی یا از امروز حساب می‌شود.</p>
@@ -567,6 +576,13 @@ add_action( 'show_user_profile', 'sp_user_plan_fields' );
 function sp_user_plan_save( $uid ) {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
+	}
+	if ( ! empty( $_POST['sp_founder'] ) ) {
+		if ( ! get_user_meta( $uid, 'sp_founder', true ) ) {
+			update_user_meta( $uid, 'sp_founder', current_time( 'Y-m-d' ) );
+		}
+	} else {
+		delete_user_meta( $uid, 'sp_founder' );
 	}
 	if ( ! empty( $_POST['sp_pro_end'] ) ) {
 		delete_user_meta( $uid, 'sp_pro_until' );

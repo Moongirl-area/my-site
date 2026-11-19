@@ -1460,3 +1460,4 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-buynow p { margin: 0 0 14px; font-size: 13.5px; line-height: 1.95; color: var(--muted); }
 .sp-or { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; color: var(--muted); font-size: 13px; }
 .sp-or::before, .sp-or::after { content: ""; flex: 1; height: 1px; background: #E4DDD2; }
+.sp-fbadge { display: inline-block; margin-inline-start: 10px; padding: 4px 12px; border-radius: 999px; background: rgba(255, 220, 180, .22); border: 1px solid rgba(255, 210, 160, .45); font-family: inherit; font-size: 13px; font-weight: 800; color: #FFD9A6; vertical-align: middle; }

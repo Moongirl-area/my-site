@@ -10,10 +10,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** پلن‌های خریدنی: کلید => [اسم، روز، کلید قیمت در تنظیمات، توضیح]. */
+function sp_is_founder( $uid = 0 ) {
+	$uid = $uid ? $uid : get_current_user_id();
+	return $uid && get_user_meta( $uid, 'sp_founder', true );
+}
+
 function sp_pay_plans() {
-	$s = sp_settings();
+	$s   = sp_settings();
+	$fdr = sp_is_founder();
 	return array(
-		'founder' => array( 'name' => 'بنیان‌گذار (یک سال پرو)', 'days' => 365, 'price' => (int) $s['price_founder'], 'note' => 'قیمت قفل‌شده برای ۵۰ نفر اول؛ تا هر وقت تمدید کنی همین قیمت می‌مونه.' ),
+		'founder' => array(
+			'name'  => $fdr ? 'تمدید بنیان‌گذار (یک سال پرو)' : 'بنیان‌گذار (یک سال پرو)',
+			'days'  => 365,
+			'price' => (int) $s['price_founder'],
+			'note'  => $fdr ? 'قیمت بنیان‌گذاریت قفله؛ تا هر وقت تمدید کنی همین می‌مونه.' : 'قیمت قفل‌شده برای ۵۰ نفر اول؛ تا هر وقت تمدید کنی همین قیمت می‌مونه.',
+		),
 		'year'    => array( 'name' => 'پرو، یک‌ساله', 'days' => 365, 'price' => (int) $s['price_year'], 'note' => 'معادل ماهی کمتر از ۶۰ هزار تومان.' ),
 		'month'   => array( 'name' => 'پرو، یک‌ماهه', 'days' => 30, 'price' => (int) $s['price_month'], 'note' => 'برای امتحان کردن؛ هر وقت خواستی قطعش کن.' ),
 	);
@@ -164,6 +175,9 @@ add_action( 'admin_post_sp_pay_act', function () {
 		$from = max( time(), (int) get_user_meta( $uid, 'sp_pro_until', true ) );
 		update_user_meta( $uid, 'sp_pro_until', $from + $days * DAY_IN_SECONDS );
 		delete_user_meta( $uid, 'sp_price_snap' );
+		if ( 'founder' === (string) get_post_meta( $id, 'sp_plan', true ) && ! get_user_meta( $uid, 'sp_founder', true ) ) {
+			update_user_meta( $uid, 'sp_founder', current_time( 'Y-m-d' ) ); // قیمت قفل‌شده‌ی بنیان‌گذار
+		}
 		update_post_meta( $id, 'sp_status', 'ok' );
 		update_post_meta( $id, 'sp_done', current_time( 'Y-m-d H:i' ) );
 		$u = get_userdata( $uid );
@@ -215,6 +229,9 @@ function sp_pays_page() {
 						<b><?php echo esc_html( $u ? $u->display_name : '—' ); ?></b><br>
 						<small><?php echo esc_html( (string) get_user_meta( $p->post_author, 'sp_mobile', true ) ); ?></small><br>
 						<small><a href="<?php echo esc_url( get_edit_user_link( $p->post_author ) ); ?>">پرونده‌ی کاربر</a> · <?php echo esc_html( sp_plan_label( (int) $p->post_author ) ); ?></small>
+						<?php if ( sp_is_founder( (int) $p->post_author ) ) : ?>
+							<br><span style="display:inline-block;margin-top:4px;padding:1px 8px;border-radius:999px;background:#FFF1E2;color:#9A5A18;font-size:11px">بنیان‌گذار · قیمت قفل</span>
+						<?php endif; ?>
 					</td>
 					<td><?php echo esc_html( $plan['name'] ); ?></td>
 					<td><?php echo esc_html( number_format( (int) get_post_meta( $p->ID, 'sp_amount', true ) ) ); ?> تومان<br>
