@@ -45,7 +45,12 @@ $sp_tabs = array(
 	'recs'  => array( 'دستورهای من', 'cake', count( $sp_recs ) ),
 	'reads' => array( 'خوندنی‌ها', 'book', count( $sp_posts ) ),
 	'plan'  => array( 'اشتراک', 'clock' ),
+	'pay'   => array( 'ارتقا به پرو', 'spark' ),
 );
+$sp_pays    = sp_user_pays( $sp_uid );
+$sp_pending = sp_has_pending_pay( $sp_uid );
+$sp_card    = sp_settings();
+$sp_pick    = isset( $_GET['plan'] ) ? sanitize_key( wp_unslash( $_GET['plan'] ) ) : ( 'free' === $sp_plan['plan'] ? 'year' : 'founder' );
 ?>
 <section class="sp-dash" id="sp-dash">
 	<div class="sp-wrap sp-dash__shell">
@@ -252,7 +257,7 @@ $sp_tabs = array(
 								?>
 							</p>
 							<?php if ( 'pro' !== $sp_plan['plan'] ) : ?>
-								<a class="sp-btn sp-btn--coral sp-btn--sm" href="<?php echo esc_url( sp_url( 'free' === $sp_plan['plan'] ? 'pricing' : 'founders' ) ); ?>"><?php echo 'free' === $sp_plan['plan'] ? 'پرو رو ببین' : 'عضو بنیان‌گذار شو'; ?></a>
+								<button type="button" class="sp-btn sp-btn--coral sp-btn--sm" data-tab-go="pay"><?php echo 'free' === $sp_plan['plan'] ? 'پرو رو بگیر' : 'عضو بنیان‌گذار شو'; ?></button>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -271,6 +276,104 @@ $sp_tabs = array(
 						<?php endforeach; ?>
 					</ul>
 				</div>
+			</div>
+
+			<!-- ===== تب ارتقا به پرو (کارت‌به‌کارت) ===== -->
+			<div class="sp-dpanel" data-panel="pay" hidden>
+				<div class="sp-dhead"><h2><?php echo sp_icon( 'spark', 22 ); // phpcs:ignore ?>ارتقا به پرو</h2></div>
+
+				<?php if ( isset( $_GET['paid'] ) ) : ?>
+					<div class="sp-note sp-note--ok">
+						<b>رسیدت رسید، ممنون!</b>
+						<p>حداکثر تا ۲۴ ساعت آینده پرداختت چک می‌شه و حساب پروت فعال می‌شه. لازم نیست کار دیگه‌ای بکنی؛ همین‌جا وضعیتش رو می‌بینی.</p>
+					</div>
+				<?php endif; ?>
+				<?php if ( isset( $_GET['payerr'] ) ) : ?>
+					<div class="sp-note sp-note--bad"><b>فرستاده نشد:</b> <?php echo esc_html( wp_unslash( $_GET['payerr'] ) ); ?></div>
+				<?php endif; ?>
+
+				<?php if ( $sp_pending ) : ?>
+					<div class="sp-note sp-note--wait">
+						<b>یه رسید در انتظار تأییده.</b>
+						<p>رسیدی که <?php echo esc_html( sp_jdate( get_the_date( 'Y-m-d', $sp_pending ) ) ); ?> فرستادی داره بررسی می‌شه. حداکثر تا ۲۴ ساعت بعد از ارسال، حسابت فعال می‌شه. اگه عجله داری، به پشتیبانی پیام بده.</p>
+					</div>
+				<?php endif; ?>
+
+				<?php if ( ! $sp_card['card_number'] ) : ?>
+					<div class="sp-dbox"><p class="sp-dempty">فعلاً راه پرداخت باز نیست. کمی بعد دوباره سر بزن.</p></div>
+				<?php else : ?>
+					<form class="sp-pay" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" enctype="multipart/form-data">
+						<?php wp_nonce_field( 'sp_pay_submit' ); ?>
+						<input type="hidden" name="action" value="sp_pay_submit">
+
+						<section class="sp-dbox">
+							<h2><span class="sp-pay__n">۱</span>پلنت رو انتخاب کن</h2>
+							<div class="sp-plans">
+								<?php foreach ( sp_pay_plans() as $sp_k => $sp_pl ) : ?>
+									<label class="sp-planpick">
+										<input type="radio" name="plan" value="<?php echo esc_attr( $sp_k ); ?>" data-price="<?php echo (int) $sp_pl['price']; ?>" <?php checked( $sp_k, $sp_pick ); ?>>
+										<span class="sp-planpick__box">
+											<b><?php echo esc_html( $sp_pl['name'] ); ?></b>
+											<span class="sp-planpick__p"><?php echo esc_html( sp_fa( $sp_pl['price'] ) ); ?><small>تومان</small></span>
+											<small><?php echo esc_html( $sp_pl['note'] ); ?></small>
+										</span>
+									</label>
+								<?php endforeach; ?>
+							</div>
+						</section>
+
+						<section class="sp-dbox">
+							<h2><span class="sp-pay__n">۲</span>مبلغ رو به این کارت واریز کن</h2>
+							<div class="sp-cardbox">
+								<div class="sp-cardbox__top">
+									<span><?php echo esc_html( $sp_card['card_bank'] ? $sp_card['card_bank'] : 'کارت بانکی' ); ?></span>
+									<?php echo sp_icon( 'tag', 20 ); // phpcs:ignore ?>
+								</div>
+								<p class="sp-cardbox__num" id="sp-card-num"><?php echo esc_html( sp_fa_digits_group( $sp_card['card_number'] ) ); ?></p>
+								<div class="sp-cardbox__bot">
+									<span>به نام <b><?php echo esc_html( $sp_card['card_name'] ); ?></b></span>
+									<button type="button" class="sp-btn sp-btn--paper sp-btn--sm" data-copy="<?php echo esc_attr( $sp_card['card_number'] ); ?>"><?php echo sp_icon( 'copy', 16 ); // phpcs:ignore ?>کپی شماره کارت</button>
+								</div>
+							</div>
+							<p class="sp-dbox__note">از هر اپ بانکی یا همراه‌بانک می‌تونی واریز کنی. بعد از واریز، رسیدش رو همین پایین بفرست.</p>
+						</section>
+
+						<section class="sp-dbox">
+							<h2><span class="sp-pay__n">۳</span>رسیدت رو بفرست</h2>
+							<div class="sp-payf">
+								<label>مبلغی که واریز کردی (تومان)
+									<input type="text" name="amount" id="sp-pay-amount" inputmode="numeric" value="<?php echo esc_attr( sp_fa( sp_pay_plan( $sp_pick )['price'] ) ); ?>" required>
+								</label>
+								<label>شماره پیگیری یا ۴ رقم آخر کارتت
+									<input type="text" name="ref" inputmode="numeric" dir="ltr" placeholder="مثلاً ۱۲۳۴۵۶" required>
+								</label>
+								<label class="sp-payf__file">عکس رسید (JPG، PNG یا PDF، کمتر از ۵ مگابایت)
+									<input type="file" name="receipt" accept=".jpg,.jpeg,.png,.webp,.pdf,image/*,application/pdf" required>
+								</label>
+							</div>
+							<button class="sp-btn sp-btn--coral sp-btn--block" type="submit">فرستادن رسید</button>
+							<p class="sp-dbox__note">بعد از فرستادن، حداکثر تا ۲۴ ساعت حسابت پرو می‌شه. اگه مشکلی بود، همین‌جا بهت می‌گیم.</p>
+						</section>
+					</form>
+				<?php endif; ?>
+
+				<?php if ( $sp_pays ) : ?>
+					<section class="sp-dbox">
+						<h2><?php echo sp_icon( 'clock', 20 ); // phpcs:ignore ?>پرداخت‌های من</h2>
+						<ul class="sp-paylist">
+							<?php foreach ( $sp_pays as $sp_p ) : $sp_s = sp_pay_status( $sp_p->ID ); ?>
+								<li class="is-<?php echo esc_attr( $sp_s ); ?>">
+									<b><?php echo esc_html( sp_pay_plan( (string) get_post_meta( $sp_p->ID, 'sp_plan', true ) )['name'] ); ?></b>
+									<span><?php echo esc_html( sp_fa( (int) get_post_meta( $sp_p->ID, 'sp_amount', true ) ) ); ?> تومان · <?php echo esc_html( sp_jdate( get_the_date( 'Y-m-d', $sp_p ) ) ); ?></span>
+									<i><?php echo esc_html( sp_pay_status_label( $sp_s ) ); ?></i>
+									<?php if ( 'no' === $sp_s && get_post_meta( $sp_p->ID, 'sp_why', true ) ) : ?>
+										<small><?php echo esc_html( (string) get_post_meta( $sp_p->ID, 'sp_why', true ) ); ?></small>
+									<?php endif; ?>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</section>
+				<?php endif; ?>
 			</div>
 
 		</div>

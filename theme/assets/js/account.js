@@ -66,3 +66,38 @@
 	if (start) show(start, false);
 	window.addEventListener('hashchange', function () { show((location.hash || '').replace('#', ''), false); });
 })();
+
+/* میز کار: کپی شماره کارت، هماهنگی مبلغ با پلن، دکمه‌های رفتن به تب */
+(function () {
+	document.addEventListener('click', function (e) {
+		var c = e.target.closest('[data-copy]');
+		if (c) {
+			var t = c.dataset.copy, done = function () {
+				var s = c.querySelector('span') || c, old = c.textContent;
+				c.textContent = 'کپی شد ✓';
+				setTimeout(function () { c.textContent = old; }, 1600);
+			};
+			if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, done);
+			else {
+				var i = document.createElement('input');
+				i.value = t; document.body.appendChild(i); i.select();
+				try { document.execCommand('copy'); } catch (err) {}
+				document.body.removeChild(i); done();
+			}
+			return;
+		}
+		var g = e.target.closest('[data-tab-go]');
+		if (g) {
+			var b = document.querySelector('.sp-rail [data-tab="' + g.dataset.tabGo + '"]');
+			if (b) b.click();
+		}
+	});
+	var amt = document.getElementById('sp-pay-amount');
+	if (amt) {
+		Array.prototype.forEach.call(document.querySelectorAll('input[name="plan"]'), function (r) {
+			r.addEventListener('change', function () {
+				amt.value = (+r.dataset.price || 0).toLocaleString('fa-IR');
+			});
+		});
+	}
+})();

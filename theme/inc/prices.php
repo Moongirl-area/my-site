@@ -81,6 +81,12 @@ function sp_settings() {
 		'prices_date'   => '',  // (قدیمی) تاریخ دستی قیمت‌ها
 		'founders_left' => '',  // تعداد واقعی جای خالی بنیان‌گذار؛ خالی = نمایش داده نشود
 		'trial_days'    => 14,  // روزهای پرو رایگان بعد از عضویت
+		'card_number'   => '',  // شماره کارت برای پرداخت کارت‌به‌کارت
+		'card_name'     => '',  // اسم صاحب کارت
+		'card_bank'     => '',  // اسم بانک
+		'price_year'    => 690000,
+		'price_month'   => 99000,
+		'price_founder' => 390000,
 	) );
 }
 
@@ -198,6 +204,12 @@ add_action( 'admin_post_sp_save_settings', function () {
 		'prices_date'   => $old['prices_date'],
 		'founders_left' => '' === $left_raw ? '' : (int) $left_raw,
 		'trial_days'    => min( 90, (int) $num( wp_unslash( $_POST['trial_days'] ?? '14' ) ) ),
+		'card_number'   => preg_replace( '/[^0-9]/', '', sp_en_digits( wp_unslash( $_POST['card_number'] ?? '' ) ) ),
+		'card_name'     => sanitize_text_field( wp_unslash( $_POST['card_name'] ?? '' ) ),
+		'card_bank'     => sanitize_text_field( wp_unslash( $_POST['card_bank'] ?? '' ) ),
+		'price_year'    => (int) $num( wp_unslash( $_POST['price_year'] ?? '690000' ) ),
+		'price_month'   => (int) $num( wp_unslash( $_POST['price_month'] ?? '99000' ) ),
+		'price_founder' => (int) $num( wp_unslash( $_POST['price_founder'] ?? '390000' ) ),
 	) );
 
 	wp_safe_redirect( admin_url( 'admin.php?page=soodpaz&saved=1' ) );
@@ -297,6 +309,17 @@ function sp_admin_page() {
 			<table class="form-table" role="presentation">
 				<tr><th>روزهای پرو رایگان بعد از عضویت</th><td><input type="text" name="trial_days" value="<?php echo esc_attr( $s['trial_days'] ); ?>" style="width:80px;direction:ltr"> روز
 				<p class="description">بعد از این مدت، کاربر رایگان فقط یک دستور قابل ویرایش دارد و قیمت دستورهای ذخیره‌شده‌اش دیگر خودکار به‌روز نمی‌شود. برای پرو کردن یک کاربر: کاربران ← ویرایش کاربر ← «اضافه کردن پرو».</p></td></tr>
+			</table>
+
+			<h2>پرداخت کارت‌به‌کارت</h2>
+			<p class="description">تا وقتی درگاه آنلاین وصل نشده، کاربر این شماره کارت را در میز کارش می‌بیند و رسیدش را همان‌جا می‌فرستد. رسیدها در «سودپز ← پرداخت‌ها» می‌آیند.</p>
+			<table class="form-table" role="presentation">
+				<tr><th>شماره کارت</th><td><input type="text" name="card_number" value="<?php echo esc_attr( $s['card_number'] ); ?>" style="width:220px;direction:ltr" placeholder="۱۶ رقم، بدون خط فاصله"></td></tr>
+				<tr><th>به نام</th><td><input type="text" name="card_name" value="<?php echo esc_attr( $s['card_name'] ); ?>" style="width:220px"></td></tr>
+				<tr><th>بانک</th><td><input type="text" name="card_bank" value="<?php echo esc_attr( $s['card_bank'] ); ?>" style="width:220px" placeholder="مثلاً ملت"></td></tr>
+				<tr><th>قیمت پرو سالانه</th><td><input type="text" name="price_year" value="<?php echo esc_attr( $s['price_year'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
+				<tr><th>قیمت پرو ماهانه</th><td><input type="text" name="price_month" value="<?php echo esc_attr( $s['price_month'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
+				<tr><th>قیمت بنیان‌گذار</th><td><input type="text" name="price_founder" value="<?php echo esc_attr( $s['price_founder'] ); ?>" style="width:140px;direction:ltr"> تومان</td></tr>
 			</table>
 
 			<h2>بنیان‌گذارها</h2>
