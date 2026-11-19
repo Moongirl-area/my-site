@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SP_CONTENT_VERSION', 6 );
+define( 'SP_CONTENT_VERSION', 7 );
 
 add_action( 'init', function () {
 	if ( (int) get_option( 'sp_content_version', 0 ) >= SP_CONTENT_VERSION ) {
@@ -43,7 +43,9 @@ function sp_pages() {
 		'privacy'    => 'حریم خصوصی',
 		'terms'      => 'قوانین و مقررات',
 		'dashboard'  => 'میز کار من',
-		'login'      => 'ورود',
+		'login'          => 'ورود',
+		'lostpassword'   => 'فراموشی رمز',
+		'reset-password' => 'رمز تازه',
 		'register'   => 'عضویت',
 	);
 }

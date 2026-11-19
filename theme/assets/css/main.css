@@ -1461,3 +1461,8 @@ html[data-k="food"] .sp-calc-hero .sp-plate { box-shadow: 0 30px 60px rgba(0, 0,
 .sp-or { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; color: var(--muted); font-size: 13px; }
 .sp-or::before, .sp-or::after { content: ""; flex: 1; height: 1px; background: #E4DDD2; }
 .sp-fbadge { display: inline-block; margin-inline-start: 10px; padding: 4px 12px; border-radius: 999px; background: rgba(255, 220, 180, .22); border: 1px solid rgba(255, 210, 160, .45); font-family: inherit; font-size: 13px; font-weight: 800; color: #FFD9A6; vertical-align: middle; }
+.sp-authx__card--one { grid-template-columns: 1fr; max-width: 520px; }
+.sp-authx__card--one .sp-authx__main { padding: 34px 32px 36px; }
+.sp-authx .sp-payf input[type=password] { padding: 12px 14px; border: 1px solid #E4DDD2; border-radius: 12px; background: #FCFAF7; font-family: inherit; font-size: 15px; }
+.sp-authx .sp-payf input:focus { border-color: var(--coral); outline: 3px solid rgba(232, 103, 60, .15); }
+.sp-authx .sp-payf { margin-top: 18px; }

@@ -363,6 +363,9 @@ function sp_auth_page( $mode ) {
 					<a href="<?php echo esc_url( add_query_arg( $q, sp_url( 'register' ) ) ); ?>"<?php echo $reg ? ' aria-current="page"' : ''; ?>>عضویت</a>
 				</nav>
 				<h1 class="sp-authx__h1"><?php echo $reg ? 'حساب سودپزت رو بساز' : 'خوش برگشتی!'; ?></h1>
+				<?php if ( ! $reg && isset( $_GET['reset'] ) ) : ?>
+					<div class="sp-note sp-note--ok"><b>رمزت عوض شد.</b><p>حالا با رمز تازه‌ات وارد شو.</p></div>
+				<?php endif; ?>
 				<p class="sp-authx__sub"><?php echo $reg ? 'کمتر از یه دقیقه طول می‌کشه و رایگانه.' : 'با شماره موبایل یا ایمیل و رمزت وارد شو.'; ?></p>
 				<div class="sp-auth">
 					<?php if ( is_user_logged_in() ) : ?>
@@ -597,3 +600,105 @@ function sp_user_plan_save( $uid ) {
 }
 add_action( 'edit_user_profile_update', 'sp_user_plan_save' );
 add_action( 'personal_options_update', 'sp_user_plan_save' );
+
+/* =====================================================================
+ * فراموشی و بازنشانی رمز، با ظاهر خود سایت (به‌جای صفحه‌ی انگلیسی وردپرس)
+ * ===================================================================== */
+
+/** هر مسیری که به صفحه‌ی رمز وردپرس می‌رود، به صفحه‌ی فارسی خودمان بیاید. */
+add_action( 'login_init', function () {
+	$a = isset( $_GET['action'] ) ? sanitize_key( wp_unslash( $_GET['action'] ) ) : '';
+	if ( in_array( $a, array( 'lostpassword', 'retrievepassword' ), true ) && 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+		wp_safe_redirect( sp_url( 'lostpassword' ) );
+		exit;
+	}
+	if ( 'rp' === $a && ! empty( $_GET['key'] ) && ! empty( $_GET['login'] ) ) {
+		wp_safe_redirect( add_query_arg(
+			array( 'key' => rawurlencode( wp_unslash( $_GET['key'] ) ), 'login' => rawurlencode( wp_unslash( $_GET['login'] ) ) ),
+			sp_url( 'reset-password' )
+		) );
+		exit;
+	}
+} );
+
+/** ایمیل بازیابی رمز، فارسی و با لینک صفحه‌ی خودمان. */
+add_filter( 'retrieve_password_title', function () {
+	return 'سودپز: رمز تازه بساز';
+} );
+add_filter( 'retrieve_password_message', function ( $msg, $key, $login, $user ) {
+	$url = add_query_arg(
+		array( 'key' => rawurlencode( $key ), 'login' => rawurlencode( $login ) ),
+		sp_url( 'reset-password' )
+	);
+	return "سلام " . ( $user ? $user->display_name : '' ) . "،\n\n" .
+		"برای حساب سودپزت درخواست رمز تازه ثبت شده.\n" .
+		"روی این لینک بزن و رمز جدیدت رو بساز:\n" . $url . "\n\n" .
+		"اگه خودت این درخواست رو ندادی، این ایمیل رو نادیده بگیر؛ رمزت عوض نمی‌شه.\n";
+}, 10, 4 );
+
+/** فرستادن ایمیل بازیابی؛ با موبایل هم کاربر را پیدا می‌کند. */
+add_action( 'admin_post_nopriv_sp_lostpass', 'sp_lostpass' );
+add_action( 'admin_post_sp_lostpass', 'sp_lostpass' );
+function sp_lostpass() {
+	check_admin_referer( 'sp_lostpass' );
+	$who  = trim( (string) wp_unslash( $_POST['who'] ?? '' ) );
+	$back = sp_url( 'lostpassword' );
+	$go   = function ( $args ) use ( $back ) {
+		wp_safe_redirect( add_query_arg( $args, $back ) );
+		exit;
+	};
+	if ( '' === $who ) {
+		$go( array( 'err' => 'empty' ) );
+	}
+	$user = null;
+	$m    = sp_norm_mobile( $who );
+	if ( $m ) {
+		$user = sp_user_by_mobile( $m );
+	}
+	if ( ! $user && is_email( $who ) ) {
+		$user = get_user_by( 'email', $who );
+	}
+	if ( ! $user ) {
+		$user = get_user_by( 'login', $who );
+	}
+	if ( ! $user ) {
+		$go( array( 'err' => 'nouser' ) );
+	}
+	// حساب‌هایی که فقط با موبایل ساخته شده‌اند ایمیل واقعی ندارند.
+	if ( false !== strpos( (string) $user->user_email, '@users.soodpaz.com' ) ) {
+		$go( array( 'err' => 'noemail' ) );
+	}
+	$res = retrieve_password( $user->user_login );
+	if ( is_wp_error( $res ) ) {
+		$go( array( 'err' => 'failed' ) );
+	}
+	$go( array( 'sent' => '1' ) );
+}
+
+/** ثبت رمز تازه. */
+add_action( 'admin_post_nopriv_sp_resetpass', 'sp_resetpass' );
+add_action( 'admin_post_sp_resetpass', 'sp_resetpass' );
+function sp_resetpass() {
+	check_admin_referer( 'sp_resetpass' );
+	$key   = (string) wp_unslash( $_POST['key'] ?? '' );
+	$login = (string) wp_unslash( $_POST['login'] ?? '' );
+	$p1    = (string) ( $_POST['pass1'] ?? '' );
+	$p2    = (string) ( $_POST['pass2'] ?? '' );
+	$back  = add_query_arg( array( 'key' => rawurlencode( $key ), 'login' => rawurlencode( $login ) ), sp_url( 'reset-password' ) );
+	$user  = check_password_reset_key( $key, $login );
+	if ( is_wp_error( $user ) ) {
+		wp_safe_redirect( add_query_arg( 'err', 'badkey', sp_url( 'lostpassword' ) ) );
+		exit;
+	}
+	if ( strlen( $p1 ) < 6 ) {
+		wp_safe_redirect( add_query_arg( 'err', 'short', $back ) );
+		exit;
+	}
+	if ( $p1 !== $p2 ) {
+		wp_safe_redirect( add_query_arg( 'err', 'match', $back ) );
+		exit;
+	}
+	reset_password( $user, $p1 );
+	wp_safe_redirect( add_query_arg( 'reset', '1', sp_url( 'login' ) ) );
+	exit;
+}
