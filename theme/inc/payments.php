@@ -41,7 +41,7 @@ function sp_user_pays( $uid ) {
 		'post_type'   => 'sp_pay',
 		'author'      => $uid,
 		'numberposts' => 20,
-		'post_status' => 'any',
+		'post_status' => array( 'private', 'publish', 'draft', 'pending' ),
 	) );
 }
 
@@ -187,13 +187,13 @@ add_action( 'admin_post_sp_pay_act', function () {
 
 /* ---------- صفحه‌ی «پرداخت‌ها» در پیشخوان ---------- */
 add_action( 'admin_menu', function () {
-	$pend  = count( get_posts( array( 'post_type' => 'sp_pay', 'post_status' => 'any', 'numberposts' => 50, 'meta_key' => 'sp_status', 'meta_value' => 'pending' ) ) );
+	$pend  = count( get_posts( array( 'post_type' => 'sp_pay', 'post_status' => array( 'private', 'publish' ), 'numberposts' => 50, 'meta_key' => 'sp_status', 'meta_value' => 'pending' ) ) );
 	$label = 'پرداخت‌ها' . ( $pend ? ' <span class="awaiting-mod">' . sp_fa( $pend ) . '</span>' : '' );
 	add_submenu_page( 'soodpaz', 'پرداخت‌ها', $label, 'manage_options', 'soodpaz-pays', 'sp_pays_page', 1 );
 }, 11 );
 
 function sp_pays_page() {
-	$pays = get_posts( array( 'post_type' => 'sp_pay', 'post_status' => 'any', 'numberposts' => 200 ) );
+	$pays = get_posts( array( 'post_type' => 'sp_pay', 'post_status' => array( 'private', 'publish' ), 'numberposts' => 200 ) );
 	?>
 	<div class="wrap">
 		<h1>پرداخت‌های کارت‌به‌کارت</h1>
